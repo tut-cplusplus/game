@@ -1,4 +1,4 @@
-#include "Character.h"
+#include "Character.hpp"
 
 Character::Character(int x, int y,int size) : x(x),y(y),direction(WEST) {
 	this->texture_id = new int[size];
