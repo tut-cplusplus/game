@@ -61,7 +61,40 @@ public:
 	 * @throws FileCannotOpenException ファイルが開けなかった場合
 	 */
 	void writePPM(const std::string& fpath);
+	/**
+	 * ゲッター及びセッター
+	 */
+	int getWidth(void) const;
+	int getHeight(void) const;
+	const unsigned char* getData(void) const;
+	void setWidth(int width);
+	void setHeight(int height);
 };
+
+inline int Image::getWidth(void) const 
+{
+	return width;
+}
+
+inline int Image::getHeight(void) const
+{
+	return height;
+}
+
+inline const unsigned char* Image::getData(void) const
+{
+	return data;
+}
+
+inline void Image::setWidth(int width)
+{
+	this->width = width;
+}
+
+inline void Image::setHeight(int height)
+{
+	this->height = height;
+}
 
 #endif
 
