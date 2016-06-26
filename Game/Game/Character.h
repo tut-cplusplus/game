@@ -1,16 +1,45 @@
 enum Direction { NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3 };
 class Character {
 private:
-	int texture_id[20];
-	int x;					//x座標
-	int y;					//y座標
-	Direction direction;	//キャラクターの向き
+	int *texture_id;	//テクスチャIDの配列
+	int x;				//x座標
+	int y;				//y座標
+	Direction direction;//キャラクターの向き
 	
+	/**
+	 * キャラクターの向きを指定する関数
+	 * @param d 向く方向
+	 */
 	void face(Direction d);
-	void breakWall(void);
+
+	/**
+	 * 向いている方へ1歩移動する関数
+	 */
+	virtual void move(void);
+
+	/**
+	 * 壁を壊す関数
+	 */
+	virtual void breakWall(void);
+
 public:
-	Character(int x, int y);
+	Character() {}
+	/**
+	 * コンストラクタ
+	 * @param x		Characterのx座標
+	 * @param y		Characterのy座標
+	 * @param size	テクスチャIDの配列のサイズ
+	 */
+	Character(int x, int y, int size);
 	~Character();
+	
+	/**
+	 * 初期化関数
+	 * @param x		Characterのx座標
+	 * @param y		Characterのy座標
+	 * @param size	テクスチャIDの配列のサイズ
+	 */
+	virtual void init(int x, int y, int size);
 
 	/**
 	 * displayに対応する関数
