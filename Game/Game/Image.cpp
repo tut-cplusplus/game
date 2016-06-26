@@ -14,10 +14,23 @@ void Image::allocate(void)
 		throw CannotAllocateException();
 }
 
+Image::Image()
+	: data(nullptr)
+{
+
+}
+
 Image::Image(const string& fpath)
 	: data(nullptr)
 {
 	readPPM(fpath);
+}
+
+Image::Image(const Image& image)
+	: width(image.width), height(image.height), data(nullptr)
+{
+	allocate();
+	copy(image.data, image.data + width * height * 4 - 1, data);
 }
 
 Image::~Image()

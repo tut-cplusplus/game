@@ -33,6 +33,11 @@ private:
 
 public:
 	/**
+	 * デフォルトコンストラクタ
+	 * dataがnullptrであることのみを保証する
+	 */
+	Image();
+	/**
 	 * コンストラクタ
 	 *
 	 * @param fpath 画像ファイルのパス
@@ -41,6 +46,13 @@ public:
 	 * @throws CannotAllocateException メモリ確保ができなかった場合
 	 */
 	Image(const std::string& fpath);
+	/**
+	 * コンストラクタ
+	 *
+	 * @param image 画像
+	 * @throws CannotAllocateException メモリ確保ができなかった場合
+	 */
+	Image(const Image& image);
 	/**
 	 * デストラクタ
 	 */
