@@ -135,7 +135,7 @@ int main(int argc, char** argv)
 
 void init(void)
 {
-	glClearColor(0.0, 0.0, 1.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 }
 
 
