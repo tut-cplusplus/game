@@ -106,6 +106,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(640, 480);
 	//glutの初期化
 	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 
 	//ウィンドウの作成
 	glutCreateWindow(argv[0]);
@@ -147,7 +148,7 @@ void display(void)
 	glVertex2d(640.0, 240.0);
 	glVertex2d(320.0, 0.0);
 	glEnd();
-	glFlush();
+	glutSwapBuffers();
 }
 
 
