@@ -1,6 +1,8 @@
 #include <GL/glut.h>
 #include <iostream>
 
+#include "Block.h"
+
 using namespace std;
 
 /**
@@ -150,9 +152,14 @@ void display(void)
 	glVertex2d(320.0, 0.0);
 	glEnd();
 	glTranslated(320.0, 240.0, 0.0);
+	glPushMatrix();
 	static int angle = 0;
 	glRotated(angle++, 0.0, 1.0, 0.0);
 	glutWireTeapot(100.0);
+	glPopMatrix();
+	glTranslated(160.0, 0.0, 0.0);
+	Block block(50, 50);
+	block.draw();
 	glutSwapBuffers();
 }
 

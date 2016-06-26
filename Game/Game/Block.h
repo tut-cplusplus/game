@@ -10,6 +10,7 @@ private:
 	int width;	/* 幅 */
 	int height;	/* 高さ */
 public:
+	Block(int width, int height);
 	/**
 	 * 透明ブロックかどうか．
 	 *
@@ -20,11 +21,11 @@ public:
 	/**
 	 * ブロックの破壊時に呼ばれる．将来的にブロックアイテムのドロップやアニメーションインスタンスの生成を行う．
 	 */
-	virtual void destroy(void) = 0;
+	virtual void destroy(void);
 	/**
 	 * 描画時に呼ばれる．
 	 */
-	virtual void draw(void) = 0;
+	virtual void draw(void);
 
 	/**
 	 * セッター及びゲッター
@@ -36,9 +37,30 @@ public:
 
 };
 
+Block::Block(int width, int height)
+	: width(width), height(height)
+{
+
+}
+
 bool Block::isTransparent(void) const
 {
 	return false;
+}
+
+void Block::destroy(void)
+{
+
+}
+
+void Block::draw(void)
+{
+	glBegin(GL_LINE_LOOP);
+	glVertex2d(0.0, 0.0);
+	glVertex2d(width, 0.0);
+	glVertex2d(width, height);
+	glVertex2d(0.0, height);
+	glEnd();
 }
 
 inline int Block::getWidth(void) const
