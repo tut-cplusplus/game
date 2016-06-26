@@ -103,6 +103,7 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
+	glutInitWindowSize(640, 480);
 	//glutの初期化
 	glutInit(&argc, argv);
 
