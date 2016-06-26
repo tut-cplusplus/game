@@ -1,6 +1,8 @@
 #include <GL/glut.h>
 #include <iostream>
 
+#include "BlockAir.h"
+
 using namespace std;
 
 /**
@@ -143,6 +145,7 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
+	glColor3d(1.0, 1.0, 1.0);
 	glBegin(GL_LINE_LOOP);
 	glVertex2d(0.0, 240.0);
 	glVertex2d(320.0, 480.0);
@@ -155,6 +158,9 @@ void display(void)
 	glRotated(angle++, 0.0, 1.0, 0.0);
 	glutWireTeapot(100.0);
 	glPopMatrix();
+	glTranslated(160.0, 0.0, 0.0);
+	BlockAir blockAir(50, 50);
+	blockAir.draw();
 	glutSwapBuffers();
 }
 
