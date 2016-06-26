@@ -168,8 +168,12 @@ void passiveMotion(int x, int y)
 
 void keyboard(unsigned char key, int x, int y)
 {
-	cout << "keyboard" << endl;
-	return ;
+	switch (key) {
+	case 'q':
+	case 'Q':
+	case '\033':
+		exit(0);
+	}
 }
 
 
