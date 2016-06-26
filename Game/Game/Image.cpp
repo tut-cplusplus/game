@@ -35,7 +35,6 @@ Image::Image(const Image& image)
 
 Image::~Image()
 {
-	cout << "destructor" << endl;
 	delete[] data;
 }
 
