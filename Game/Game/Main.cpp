@@ -142,12 +142,17 @@ void init(void)
 void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+	glLoadIdentity();
 	glBegin(GL_LINE_LOOP);
 	glVertex2d(0.0, 240.0);
 	glVertex2d(320.0, 480.0);
 	glVertex2d(640.0, 240.0);
 	glVertex2d(320.0, 0.0);
 	glEnd();
+	glTranslated(320.0, 240.0, 0.0);
+	static int angle = 0;
+	glRotated(angle++, 0.0, 1.0, 0.0);
+	glutWireTeapot(100.0);
 	glutSwapBuffers();
 }
 
@@ -164,7 +169,7 @@ void resize(int w, int h)
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0.0, 640.0, 0.0, 480.0, -1.0, 1.0);
+	glOrtho(0.0, 640.0, 0.0, 480.0, -1000.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
