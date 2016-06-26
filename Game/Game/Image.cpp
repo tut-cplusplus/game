@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Image.h"
+#include "Image.hpp"
 
 using namespace std;
 

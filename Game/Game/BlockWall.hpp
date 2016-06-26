@@ -1,7 +1,7 @@
 #ifndef ___Class_BlockWall
 #define ___Class_BlockWall
 
-#include "Block.h"
+#include "Block.hpp"
 
 class BlockWall : public Block {
 public:

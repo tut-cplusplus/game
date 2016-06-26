@@ -1,7 +1,7 @@
 #ifndef ___Class_BlockNormalWall
 #define ___Class_BlockNormalWall
 
-#include "BlockWall.h"
+#include "BlockWall.hpp"
 
 class BlockNormalWall : public BlockWall {
 public:
