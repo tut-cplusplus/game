@@ -1,6 +1,8 @@
 #include <GL/glut.h>
 #include <iostream>
 
+#include "BlockWall.h"
+
 using namespace std;
 
 /**
@@ -156,6 +158,9 @@ void display(void)
 	glRotated(angle++, 0.0, 1.0, 0.0);
 	glutWireTeapot(100.0);
 	glPopMatrix();
+	glTranslated(160.0, 0.0, 0.0);
+	BlockWall blockWall(50, 50);
+	blockWall.draw();
 	glutSwapBuffers();
 }
 
