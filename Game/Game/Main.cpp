@@ -200,6 +200,5 @@ void specialup(int key, int x, int y)
 
 void idle(void)
 {
-	//cout << "idle" << endl;
-	return ;
+	glutPostRedisplay();
 }
