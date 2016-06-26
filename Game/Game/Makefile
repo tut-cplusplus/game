@@ -1,4 +1,4 @@
-OBJS=Main.o Image.o
+OBJS=Main.o Image.o Character.o
 CPPFLAGS=$(INCLUDE) -std=c++14
 LDFLAGS=-lglut -lGLU -lGL
 
