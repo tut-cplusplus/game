@@ -4,13 +4,13 @@
 #include "Block.hpp"
 
 /**
- * $B6u5$%V%m%C%/%/%i%9!%(B
+ * 空気ブロッククラス．
  */
 class BlockAir : public Block {
 public:
 	BlockAir(int width, int height);
 	/**
-	 * $BIA2h;~$K8F$P$l$k!%(B
+	 * 描画時に呼ばれる．
 	 */
 	virtual void draw(void);
 };

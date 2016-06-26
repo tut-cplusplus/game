@@ -4,77 +4,77 @@
 #include <string>
 
 /**
- * $B2hA|%/%i%9(B
+ * 画像クラス
  */
 class Image {
 public:
-	class FileCannotOpenException{};	//$B%U%!%$%k$r3+$1$J$+$C$?(B
-	class InvalidFileException{};		//$BL$BP1~$N%U%!%$%k$r3+$$$?(B
-	class CannotAllocateException{};	//$B%a%b%j3NJ]$,$G$-$J$+$C$?(B
+	class FileCannotOpenException{};	//ファイルを開けなかった
+	class InvalidFileException{};		//未対応のファイルを開いた
+	class CannotAllocateException{};	//メモリ確保ができなかった
 
 private:
-	//$BFI$_9~$_%P%C%U%!%5%$%:(B
+	//読み込みバッファサイズ
 	const int BUF_SIZE = 256;
 
 private:
-	//$B2hA|$NI}!$9b$5(B
+	//画像の幅，高さ
 	int width;
 	int height;
-	//$B2hA|%G!<%?(B
+	//画像データ
 	unsigned char* data;
 
 private:
 	/**
-	 * width,height$B$NCM$K4p$E$$$F!$2hA|%G!<%?NN0h$r3NJ]$9$k(B
+	 * width,heightの値に基づいて，画像データ領域を確保する
 	 *
-	 * @throws CannotAllocateException $BNN0h$N3NJ]$K<:GT$7$?>l9g(B
+	 * @throws CannotAllocateException 領域の確保に失敗した場合
 	 */
 	void allocate(void);
 
 public:
 	/**
-	 * $B%G%U%)%k%H%3%s%9%H%i%/%?(B
-	 * data$B$,(Bnullptr$B$G$"$k$3$H$N$_$rJ]>Z$9$k(B
+	 * デフォルトコンストラクタ
+	 * dataがnullptrであることのみを保証する
 	 */
 	Image();
 	/**
-	 * $B%3%s%9%H%i%/%?(B
+	 * コンストラクタ
 	 *
-	 * @param fpath $B2hA|%U%!%$%k$N%Q%9(B
-	 * @throws FileCannotOpenException $B%U%!%$%k$,3+$1$J$+$C$?>l9g(B
-	 * @throws InvalidFileException $B2hA|$N%U%)!<%^%C%H$,BP1~$7$F$$$J$+$C$?>l9g(B
-	 * @throws CannotAllocateException $B%a%b%j3NJ]$,$G$-$J$+$C$?>l9g(B
+	 * @param fpath 画像ファイルのパス
+	 * @throws FileCannotOpenException ファイルが開けなかった場合
+	 * @throws InvalidFileException 画像のフォーマットが対応していなかった場合
+	 * @throws CannotAllocateException メモリ確保ができなかった場合
 	 */
 	Image(const std::string& fpath);
 	/**
-	 * $B%3%s%9%H%i%/%?(B
+	 * コンストラクタ
 	 *
-	 * @param image $B2hA|(B
-	 * @throws CannotAllocateException $B%a%b%j3NJ]$,$G$-$J$+$C$?>l9g(B
+	 * @param image 画像
+	 * @throws CannotAllocateException メモリ確保ができなかった場合
 	 */
 	Image(const Image& image);
 	/**
-	 * $B%G%9%H%i%/%?(B
+	 * デストラクタ
 	 */
 	~Image();
 	/**
-	 * $B%P%$%J%j(BPPM$B%U%!%$%k$rFI$_9~$`(B
+	 * バイナリPPMファイルを読み込む
 	 *
-	 * @param fpath $B2hA|%U%!%$%k$N%Q%9(B
-	 * @throws FileCannotOpenException $B%U%!%$%k$,3+$1$J$+$C$?>l9g(B
-	 * @throws InvalidFileException $B2hA|$N%U%)!<%^%C%H$,BP1~$7$F$$$J$+$C$?>l9g(B
-	 * @throws CannotAllocateException $B%a%b%j3NJ]$,$G$-$J$+$C$?>l9g(B
+	 * @param fpath 画像ファイルのパス
+	 * @throws FileCannotOpenException ファイルが開けなかった場合
+	 * @throws InvalidFileException 画像のフォーマットが対応していなかった場合
+	 * @throws CannotAllocateException メモリ確保ができなかった場合
 	 */
 	void readPPM(const std::string& fpath);
 	/**
-	 * $B%P%$%J%j(BPPM$B%U%!%$%k$r=q$-9~$`(B
+	 * バイナリPPMファイルを書き込む
 	 *
-	 * @param fpath $B2hA|%U%!%$%k$N%Q%9(B
-	 * @throws FileCannotOpenException $B%U%!%$%k$,3+$1$J$+$C$?>l9g(B
+	 * @param fpath 画像ファイルのパス
+	 * @throws FileCannotOpenException ファイルが開けなかった場合
 	 */
 	void writePPM(const std::string& fpath);
 	/**
-	 * $B%2%C%?!<5Z$S%;%C%?!<(B
+	 * ゲッター及びセッター
 	 */
 	int getWidth(void) const;
 	int getHeight(void) const;

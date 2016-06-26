@@ -2,33 +2,33 @@
 #define ___Class_Block
 
 /**
- * $B%V%m%C%/%/%i%9!%(B
- * $BJI$d%H%i%C%W$N4p$H$J$k!%(B
+ * ブロッククラス．
+ * 壁やトラップの基となる．
  */
 class Block {
 private:
-	int width;	/* $BI}(B */
-	int height;	/* $B9b$5(B */
+	int width;	/* 幅 */
+	int height;	/* 高さ */
 public:
 	Block(int width, int height);
 	/**
-	 * $BF)L@%V%m%C%/$+$I$&$+!%(B
+	 * 透明ブロックかどうか．
 	 *
-	 * @return true $BF)L@$G$"$k>l9g(B
-	 * @return false $BF)L@$G$J$$>l9g(B
+	 * @return true 透明である場合
+	 * @return false 透明でない場合
 	 */
 	virtual bool isTransparent(void) const;
 	/**
-	 * $B%V%m%C%/$NGK2u;~$K8F$P$l$k!%>-MhE*$K%V%m%C%/%"%$%F%`$N%I%m%C%W$d%"%K%a!<%7%g%s%$%s%9%?%s%9$N@8@.$r9T$&!%(B
+	 * ブロックの破壊時に呼ばれる．将来的にブロックアイテムのドロップやアニメーションインスタンスの生成を行う．
 	 */
 	virtual void destroy(void);
 	/**
-	 * $BIA2h;~$K8F$P$l$k!%(B
+	 * 描画時に呼ばれる．
 	 */
 	virtual void draw(void);
 
 	/**
-	 * $B%;%C%?!<5Z$S%2%C%?!<(B
+	 * セッター及びゲッター
 	 */
 	int getWidth(void) const;
 	int getHeight(void) const;

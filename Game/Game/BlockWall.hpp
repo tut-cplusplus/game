@@ -4,13 +4,13 @@
 #include "Block.hpp"
 
 /**
- * $BJI%/%i%9!%(B
+ * 壁クラス．
  */
 class BlockWall : public Block {
 public:
 	BlockWall(int width, int height);
 	/**
-	 * $BIA2h;~$K8F$P$l$k!%(B
+	 * 描画時に呼ばれる．
 	 */
 	virtual void draw(void);
 };

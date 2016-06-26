@@ -4,7 +4,7 @@
 #include "BlockWall.hpp"
 
 /**
- * $BIaDL$NJI%/%i%9!%(B
+ * 普通の壁クラス．
  */
 class BlockNormalWall : public BlockWall {
 public:
