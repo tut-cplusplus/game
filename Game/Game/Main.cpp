@@ -4,6 +4,11 @@
 using namespace std;
 
 /**
+ * ゲーム独自の初期化処理を行う関数
+ */
+void init(void);
+
+/**
  * glutDisplayFuncに登録する関数
  */
 void display(void);
@@ -116,6 +121,8 @@ int main(int argc, char** argv)
 	glutSpecialFunc(special);
 	glutSpecialUpFunc(specialup);
 	glutIdleFunc(idle);
+	//独自の初期化処理
+	init();
 
 	//glutメインループ開始
 	glutMainLoop();
@@ -124,10 +131,22 @@ int main(int argc, char** argv)
 }
 
 
+void init(void)
+{
+	glClearColor(0.0, 0.0, 1.0, 1.0);
+}
+
+
 void display(void)
 {
-	cout << "display" << endl;
-	return ;
+	glClear(GL_COLOR_BUFFER_BIT);
+	glBegin(GL_LINE_LOOP);
+	glVertex2d(0.0, 240.0);
+	glVertex2d(320.0, 480.0);
+	glVertex2d(640.0, 240.0);
+	glVertex2d(320.0, 0.0);
+	glEnd();
+	glFlush();
 }
 
 
@@ -140,8 +159,9 @@ void visibility(int state)
 
 void resize(int w, int h)
 {
-	cout << "resize" << endl;
-	return ;
+	glViewport(0, 0, w, h);
+	glLoadIdentity();
+	glOrtho(0.0, 640.0, 0.0, 480.0, -1.0, 1.0);
 }
 
 
