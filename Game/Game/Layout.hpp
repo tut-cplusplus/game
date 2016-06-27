@@ -50,23 +50,6 @@ inline void Layout::add(Component* component)
 	components.push_back(component);
 }
 
-Layout::Layout(int width, int height)
-	: Component(width, height)
-{
-
-}
-
-Layout::~Layout()
-{
-	for (auto itr = components.begin(); itr != components.end(); ++itr)
-		delete *itr;
-}
-
-void Layout::init(void)
-{
-
-}
-
 inline void Layout::mouse(int button, int state, int x, int y)
 {
 	for (auto itr = components.begin(); itr != components.end(); ++itr)

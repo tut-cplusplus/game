@@ -1,12 +1,11 @@
 #include <GL/glut.h>
 #include <iostream>
 
+#include "LayoutManager.hpp"
 #include "RelativeLayout.hpp"
 #include "ComponentTeapot.hpp"
 
 using namespace std;
-
-RelativeLayout layout(640, 480);
 
 /**
  * ゲーム独自の初期化処理を行う関数
@@ -108,9 +107,11 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
-	layout.add(new ComponentTeapot(320, 240), Position<double>(0.0, 0.0));
-	layout.add(new ComponentTeapot(320, 240), Position<double>(320.0, 0.0));
-	layout.add(new ComponentTeapot(640, 240), Position<double>(0.0, 240.0));
+	RelativeLayout* layout = new RelativeLayout(640, 480);
+	layout->add(new ComponentTeapot(320, 240), Position<double>(0.0, 0.0));
+	layout->add(new ComponentTeapot(320, 240), Position<double>(320.0, 0.0));
+	layout->add(new ComponentTeapot(640, 240), Position<double>(0.0, 240.0));
+	LayoutManager::registerLayout(layout);
 	glutInitWindowSize(640, 480);
 	//glutの初期化
 	glutInit(&argc, argv);
@@ -151,14 +152,13 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
-	layout.draw();
+	LayoutManager::getLayout()->draw();
 	glutSwapBuffers();
 }
 
 
 void visibility(int state)
 {
-	cout << "visibility" << endl;
 	return ;
 }
 
@@ -175,21 +175,19 @@ void resize(int w, int h)
 
 void mouse(int button, int state, int x, int y)
 {
-	cout << "mouse" << endl;
+	LayoutManager::mouse(button, state, x, y);
 	return ;
 }
 
 
 void activeMotion(int x, int y)
 {
-	cout << "activeMotion" << endl;
 	return ;
 }
 
 
 void passiveMotion(int x, int y)
 {
-	cout << "passiveMotion" << endl;
 	return ;
 }
 
@@ -202,26 +200,27 @@ void keyboard(unsigned char key, int x, int y)
 	case '\033':
 		exit(0);
 	}
+	LayoutManager::keyboard(key, x, y);
 }
 
 
 void keyboardup(unsigned char key, int x, int y)
 {
-	cout << "keyboard-up" << endl;
+	LayoutManager::keyboardup(key, x, y);
 	return ;
 }
 
 
 void special(int key, int x, int y)
 {
-	cout << "special" << endl;
+	LayoutManager::special(key, x, y);
 	return ;
 }
 
 
 void specialup(int key, int x, int y)
 {
-	cout << "special-up" << endl;
+	LayoutManager::specialup(key, x, y);
 	return ;
 }
 
