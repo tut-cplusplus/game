@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "RelativeLayout.hpp"
+#include "ComponentTeapot.hpp"
 
 using namespace std;
 
@@ -107,6 +108,9 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
+	layout.add(new ComponentTeapot(320, 240), Position<double>(0.0, 0.0));
+	layout.add(new ComponentTeapot(320, 240), Position<double>(320.0, 0.0));
+	layout.add(new ComponentTeapot(640, 240), Position<double>(0.0, 240.0));
 	glutInitWindowSize(640, 480);
 	//glutの初期化
 	glutInit(&argc, argv);
@@ -148,19 +152,6 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	layout.draw();
-	glColor3d(1.0, 1.0, 1.0);
-	glBegin(GL_LINE_LOOP);
-	glVertex2d(0.0, 240.0);
-	glVertex2d(320.0, 480.0);
-	glVertex2d(640.0, 240.0);
-	glVertex2d(320.0, 0.0);
-	glEnd();
-	glTranslated(320.0, 240.0, 0.0);
-	glPushMatrix();
-	static int angle = 0;
-	glRotated(angle++, 0.0, 1.0, 0.0);
-	glutWireTeapot(100.0);
-	glPopMatrix();
 	glutSwapBuffers();
 }
 

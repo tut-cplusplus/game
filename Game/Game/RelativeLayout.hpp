@@ -23,7 +23,7 @@ public:
 	 * @param component コンポーネント
 	 * @param position 位置
 	 */
-	void add(const Component& component, const Position<double>& position);
+	void add(Component* component, const Position<double>& position);
 };
 
 RelativeLayout::RelativeLayout(int width, int height)
@@ -48,13 +48,19 @@ void RelativeLayout::draw(void)
 	glEnd();
 	unsigned n = components.size();
 	for (unsigned i = 0; i < n; i++) {
-		Component& component = components[i];
+		Component* component = components[i];
 		const Position<double>& position = positions[i];
 		glPushMatrix();
 		glTranslated(position.getX(), position.getY(), 0.0);
-		component.draw();
+		component->draw();
 		glPopMatrix();
 	}
+}
+
+inline void RelativeLayout::add(Component* component, const Position<double>& position)
+{
+	components.push_back(component);
+	positions.push_back(position);
 }
 
 #endif
