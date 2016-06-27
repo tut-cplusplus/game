@@ -1,4 +1,4 @@
-OBJS=Main.o Image.o Character.o Component.o LayoutManager.o Layout.o Block.o BlockAir.o BlockNormalWall.o BlockWall.o RelativeLayout.o
+OBJS=Main.o Image.o Character.o Component.o LayoutManager.o Layout.o Block.o BlockAir.o BlockNormalWall.o BlockWall.o RelativeLayout.o ComponentTeapot.o
 CPPFLAGS=$(INCLUDE) -std=c++14
 LDFLAGS=-lglut -lGLU -lGL
 
