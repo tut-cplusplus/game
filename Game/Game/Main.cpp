@@ -1,6 +1,8 @@
 #include <GL/glut.h>
 #include <iostream>
 
+#include "Position.hpp"
+
 using namespace std;
 
 /**
@@ -103,6 +105,14 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
+	Position<int> position(5, 10);
+	cout << position.getX() << endl;
+	cout << position.getY() << endl;
+	position.setX(10);
+	position.setY(20);
+	cout << position.getX() << endl;
+	cout << position.getY() << endl;
+
 	glutInitWindowSize(640, 480);
 	//glutの初期化
 	glutInit(&argc, argv);
