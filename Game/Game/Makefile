@@ -1,5 +1,5 @@
 OBJS=Main.o Image.o Character.o Component.o LayoutManager.o Layout.o Block.o BlockAir.o BlockNormalWall.o BlockWall.o RelativeLayout.o ComponentTeapot.o
-CPPFLAGS=$(INCLUDE) -std=c++14
+CPPFLAGS=$(INCLUDE) -std=c++14 -MD
 LDFLAGS=-lglut -lGLU -lGL
 
 all : $(OBJS)
@@ -8,4 +8,7 @@ all : $(OBJS)
 clean :
 	$(RM) *.o
 	$(RM) Main
+	$(RM) *.d
+
+-include *.d
 
