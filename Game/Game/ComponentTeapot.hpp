@@ -1,6 +1,8 @@
 #ifndef ___Class_ComponentTeapot
 #define ___Class_ComponentTeapot
 
+#include <random>
+
 #include "Component.hpp"
 
 /**
@@ -9,7 +11,12 @@
  */
 class ComponentTeapot : public Component {
 private:
-	int angle;
+	static std::random_device rd;
+	static std::mt19937 mt;
+	static std::uniform_int_distribution<int> rnd;
+private:
+	double angle;
+	int step;
 
 public:
 	ComponentTeapot();
