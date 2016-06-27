@@ -10,7 +10,7 @@
  * コンポーネントを保持するだけで，レイアウト管理する機能の無い抽象クラス．
  */
 class Layout : public Component {
-private:
+protected:
 	std::vector<Component> components;	/* コンポーネント */
 
 protected:
@@ -22,7 +22,7 @@ protected:
 	void add(const Component& component);
 
 public:
-	Layout();
+	Layout(int width, int height);
 	virtual void init(void);
 	/**
 	 * 描画する．
@@ -49,7 +49,8 @@ inline void Layout::add(const Component& component)
 	components.push_back(component);
 }
 
-Layout::Layout()
+Layout::Layout(int width, int height)
+	: Component(width, height)
 {
 
 }

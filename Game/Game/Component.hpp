@@ -2,7 +2,7 @@
 #define _COMPONENT
 
 class Component {
-private:
+protected:
   int width;
   int height;
 

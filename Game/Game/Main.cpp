@@ -1,7 +1,11 @@
 #include <GL/glut.h>
 #include <iostream>
 
+#include "RelativeLayout.hpp"
+
 using namespace std;
+
+RelativeLayout layout(640, 480);
 
 /**
  * ゲーム独自の初期化処理を行う関数
@@ -143,6 +147,7 @@ void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
+	layout.draw();
 	glColor3d(1.0, 1.0, 1.0);
 	glBegin(GL_LINE_LOOP);
 	glVertex2d(0.0, 240.0);
