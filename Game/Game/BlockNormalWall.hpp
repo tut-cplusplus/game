@@ -11,11 +11,5 @@ public:
 	BlockNormalWall(int width, int height);
 };
 
-BlockNormalWall::BlockNormalWall(int width, int height)
-	: BlockWall(width, height)
-{
-
-}
-
 #endif
 
