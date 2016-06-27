@@ -119,6 +119,7 @@ int main(int argc, char** argv)
 
 	//ウィンドウの作成
 	glutCreateWindow(argv[0]);
+	glutSetWindowTitle("Block Hacking");
 
 	//CALLBACK登録
 	glutDisplayFunc(display);
