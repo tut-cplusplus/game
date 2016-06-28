@@ -4,8 +4,12 @@
 #include "LayoutManager.hpp"
 #include "RelativeLayout.hpp"
 #include "ComponentTeapot.hpp"
+#include "TextureManager.hpp"
 
 using namespace std;
+
+GLuint ID1;
+GLuint ID2;
 
 /**
  * ゲーム独自の初期化処理を行う関数
@@ -145,6 +149,9 @@ int main(int argc, char** argv)
 
 void init(void)
 {
+	TextureManager::init();
+	ID1 = TextureManager::registerTexture("Images/Wall.ppm");
+	ID2 = TextureManager::registerTexture("Images/Enemy.ppm");
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 }
 
@@ -154,6 +161,36 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	LayoutManager::getLayout()->draw();
+	glEnable(GL_TEXTURE_2D);
+	glPushMatrix();
+	glTranslated(480, 240, 0);
+	glBindTexture(GL_TEXTURE_2D, ID1);
+	glBegin(GL_QUADS);
+	glTexCoord2d(0.0, 1.0);
+	glVertex2d(0.0, 0.0);
+	glTexCoord2d(1.0, 1.0);
+	glVertex2d(50.0, 0.0);
+	glTexCoord2d(1.0, 0.0);
+	glVertex2d(50.0, 50.0);
+	glTexCoord2d(0.0, 0.0);
+	glVertex2d(0.0, 50.0);
+	glEnd();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(480, 360, 0);
+	glBindTexture(GL_TEXTURE_2D, ID2);
+	glBegin(GL_QUADS);
+	glTexCoord2d(0.0, 1.0);
+	glVertex2d(0.0, 0.0);
+	glTexCoord2d(1.0, 1.0);
+	glVertex2d(50.0, 0.0);
+	glTexCoord2d(1.0, 0.0);
+	glVertex2d(50.0, 50.0);
+	glTexCoord2d(0.0, 0.0);
+	glVertex2d(0.0, 50.0);
+	glEnd();
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
 	glutSwapBuffers();
 }
 
