@@ -4,6 +4,7 @@
 #include "LayoutManager.hpp"
 #include "RelativeLayout.hpp"
 #include "ComponentTeapot.hpp"
+#include "FPS.hpp"
 
 using namespace std;
 
@@ -111,6 +112,7 @@ int main(int argc, char** argv)
 	layout->add(new ComponentTeapot(320, 240), Position<double>(0.0, 0.0));
 	layout->add(new ComponentTeapot(320, 240), Position<double>(320.0, 0.0));
 	layout->add(new ComponentTeapot(640, 240), Position<double>(0.0, 240.0));
+	layout->add(new FPS(10, 10), Position<double>(0.0, 0.0));
 	LayoutManager::registerLayout(layout);
 	glutInitWindowSize(640, 480);
 	//glutの初期化
