@@ -21,6 +21,8 @@ GLuint TextureManager::registerTexture(const std::string& path)
 		if (paths[i] == path)
 			return IDs[i];
 	}
+	if (num == MAX_TEXTURE)
+		throw NotEnoughIDsException();
 	try {
 		images.push_back(Image(path));
 	}
