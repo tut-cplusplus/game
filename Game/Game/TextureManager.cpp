@@ -17,6 +17,10 @@ void TextureManager::init(void)
 
 GLuint TextureManager::registerTexture(const std::string& path)
 {
+	for (unsigned i = 0; i < num; i++) {
+		if (paths[i] == path)
+			return IDs[i];
+	}
 	try {
 		images.push_back(Image(path));
 	}
