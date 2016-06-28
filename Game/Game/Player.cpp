@@ -27,6 +27,12 @@ Player::~Player()
 
 void Player::drawDisplay(void)
 {
+	glBegin(GL_QUADS);
+	glVertex2d(x, y + y_width);
+	glVertex2d(x, y);
+	glVertex2d(x + x_width, y);
+	glVertex2d(x + x_width, y + y_width);
+	glEnd();
 }
 
 void Player::visibility(int state)
