@@ -1,14 +1,16 @@
 #pragma once
 #include "Character.hpp"
 class Player : public Character {
-private:
+protected:
+	int x_width;
+	int y_width;
 	void move(void);
 	void breakWall(void);
 public:
 	Player();
+	Player(int x, int y, int size, int x_w, int y_w);
 	~Player();
 
-	void init(int x, int y, int size);
 	void drawDisplay(void);
 	void visibility(int state);
 	void resize(int w, int h);
