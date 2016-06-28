@@ -1,7 +1,6 @@
 #include <GL/glut.h>
 #include <iostream>
 
-#include "Player.hpp"
 using namespace std;
 
 /**
@@ -157,9 +156,6 @@ void display(void)
 	glRotated(angle++, 0.0, 1.0, 0.0);
 	glutWireTeapot(100.0);
 	glPopMatrix();
-	//Playerの実装
-	Player player(100, 200, 10, 30, 30);
-	player.drawDisplay();
 	glutSwapBuffers();
 }
 
