@@ -1,14 +1,23 @@
 OBJS=Main.o Image.o Character.o Component.o LayoutManager.o Layout.o Block.o BlockAir.o BlockNormalWall.o BlockWall.o RelativeLayout.o ComponentTeapot.o
+OBJPATHS=$(addprefix $(BUILDPATH)/, $(OBJS))
 CPPFLAGS=$(INCLUDE) -std=c++14 -MMD
 LDFLAGS=-lglut -lGLU -lGL
+BUILDPATH=./build
 
-all : $(OBJS)
-	$(CXX) -o Main $(LDFLAGS) $(OBJS)
+all : makefolder $(OBJPATHS)
+	$(CXX) -o Main $(LDFLAGS) $(OBJPATHS)
+
+$(BUILDPATH)/%.o : %.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) -o $@ -c $<
+
+makefolder:
+	@mkdir -p $(BUILDPATH)
 
 clean :
 	$(RM) *.o
 	$(RM) Main
-	$(RM) *.d
+	$(RM) -r -f $(BUILDPATH)
 
--include *.d
+-include $(BUILDPATH)/*.d
 
