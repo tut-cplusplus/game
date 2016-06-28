@@ -3,6 +3,7 @@
 
 #include "LayoutManager.hpp"
 #include "RelativeLayout.hpp"
+#include "VerticalSplitLayout.hpp"
 #include "ComponentTeapot.hpp"
 #include "ComponentTexture.hpp"
 #include "TextureManager.hpp"
@@ -144,9 +145,10 @@ void init(void)
 {
 	TextureManager::init();
 	RelativeLayout* layout = new RelativeLayout(640, 480);
-	layout->add(new ComponentTeapot(320, 240), Position<double>(0.0, 0.0));
-	layout->add(new ComponentTeapot(320, 240), Position<double>(320.0, 0.0));
-	layout->add(new ComponentTeapot(640, 240), Position<double>(0.0, 240.0));
+	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(640, 480, 0.5);
+	layout->add(verticalSplitLayout, Position<double>(0.0, 0.0));
+	verticalSplitLayout->setComponent1(new ComponentTeapot(0, 0));
+	verticalSplitLayout->setComponent2(new ComponentTeapot(0, 0));
 	layout->add(new ComponentTexture(50, 50, "Images/Wall.ppm"), Position<double>(480, 240));
 	layout->add(new ComponentTexture(50, 50, "Images/Enemy.ppm"), Position<double>(480, 360));
 	LayoutManager::registerLayout(layout);
@@ -159,38 +161,6 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	LayoutManager::getLayout()->draw();
-	/*
-	glEnable(GL_TEXTURE_2D);
-	glPushMatrix();
-	glTranslated(480, 240, 0);
-	glBindTexture(GL_TEXTURE_2D, ID1);
-	glBegin(GL_QUADS);
-	glTexCoord2d(0.0, 1.0);
-	glVertex2d(0.0, 0.0);
-	glTexCoord2d(1.0, 1.0);
-	glVertex2d(50.0, 0.0);
-	glTexCoord2d(1.0, 0.0);
-	glVertex2d(50.0, 50.0);
-	glTexCoord2d(0.0, 0.0);
-	glVertex2d(0.0, 50.0);
-	glEnd();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslated(480, 360, 0);
-	glBindTexture(GL_TEXTURE_2D, ID2);
-	glBegin(GL_QUADS);
-	glTexCoord2d(0.0, 1.0);
-	glVertex2d(0.0, 0.0);
-	glTexCoord2d(1.0, 1.0);
-	glVertex2d(50.0, 0.0);
-	glTexCoord2d(1.0, 0.0);
-	glVertex2d(50.0, 50.0);
-	glTexCoord2d(0.0, 0.0);
-	glVertex2d(0.0, 50.0);
-	glEnd();
-	glPopMatrix();
-	glDisable(GL_TEXTURE_2D);
-	*/
 	glutSwapBuffers();
 }
 

@@ -25,8 +25,8 @@ public:
 	/**
 	 * セッタ
 	 */
-	void setComponent1(Component* component);
-	void setComponent2(Component* component);
+	virtual void setComponent1(Component* component);
+	virtual void setComponent2(Component* component);
 };
 
 #endif
