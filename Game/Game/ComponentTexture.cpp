@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "ComponentTexture.hpp"
 
 using namespace std;
@@ -13,7 +11,6 @@ ComponentTexture::ComponentTexture(int width, int height, const string& path)
 	: Component(width, height)
 {
 	ID = TextureManager::registerTexture(path);
-	std::cout << ID << std::endl;
 }
 
 void ComponentTexture::draw(void)
