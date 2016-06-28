@@ -1,4 +1,4 @@
-OBJS=Main.o Image.o Character.o Component.o LayoutManager.o Layout.o Block.o BlockAir.o BlockNormalWall.o BlockWall.o RelativeLayout.o ComponentTeapot.o
+OBJS=Main.o Image.o Character.o Component.o LayoutManager.o Layout.o Block.o BlockAir.o BlockNormalWall.o BlockWall.o RelativeLayout.o ComponentTeapot.o Player.o
 OBJPATHS=$(addprefix $(BUILDPATH)/, $(OBJS))
 CPPFLAGS=$(INCLUDE) -std=c++14 -MMD
 LDFLAGS=-lglut -lGLU -lGL
