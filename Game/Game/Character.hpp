@@ -1,6 +1,6 @@
 enum Direction { NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3 };
 class Character {
-private:
+protected:
 	int *texture_id;	//テクスチャIDの配列
 	int x;				//x座標
 	int y;				//y座標
