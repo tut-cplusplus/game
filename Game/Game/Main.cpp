@@ -5,7 +5,6 @@
 #include "VerticalSplitLayout.hpp"
 #include "HorizontalSplitLayout.hpp"
 #include "ComponentTeapot.hpp"
-#include "ComponentTexture.hpp"
 #include "TextureManager.hpp"
 #include "FPS.hpp"
 
@@ -148,18 +147,9 @@ void init(void)
 {
 	TextureManager::init();
 	RelativeLayout* layout = new RelativeLayout(640, 480);
-	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(640, 480, 0.5);
+	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(640, 480, 0.05);
 	layout->add(verticalSplitLayout, Position<double>(0.0, 0.0));
 	verticalSplitLayout->setComponent2(new ComponentTeapot(0, 0));
-	HorizontalSplitLayout* horizontalSplitLayout = new HorizontalSplitLayout(0, 0, 0.5);
-	verticalSplitLayout->setComponent1(horizontalSplitLayout);
-	horizontalSplitLayout->setComponent1(new ComponentTeapot(0, 0));
-	verticalSplitLayout = new VerticalSplitLayout(0, 0, 0.5);
-	horizontalSplitLayout->setComponent2(verticalSplitLayout);
-	verticalSplitLayout->setComponent1(new ComponentTeapot(0, 0));
-	verticalSplitLayout->setComponent2(new ComponentTeapot(0, 0));
-	layout->add(new ComponentTexture(50, 50, "Images/Wall.ppm"), Position<double>(480, 240));
-	layout->add(new ComponentTexture(50, 50, "Images/Enemy.ppm"), Position<double>(480, 360));
 	layout->add(new FPS(10, 10), Position<double>(0.0, 0.0));
 	LayoutManager::registerLayout(layout);
 	glClearColor(0.0, 0.0, 0.0, 1.0);

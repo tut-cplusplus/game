@@ -11,9 +11,11 @@ VerticalSplitLayout::VerticalSplitLayout(int width, int height, double pow)
 void VerticalSplitLayout::draw(void)
 {
 	glPushMatrix();
-	component1->draw();
+	if (component1 != nullptr)
+		component1->draw();
 	glTranslated(0.0, height * pow, 0.0);
-	component2->draw();
+	if (component2 != nullptr)
+		component2->draw();
 	glPopMatrix();
 }
 
