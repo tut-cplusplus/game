@@ -19,9 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockAir.cpp" />
+    <ClCompile Include="BlockNormalWall.cpp" />
+    <ClCompile Include="BlockWall.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentTeapot.cpp" />
+    <ClCompile Include="ComponentTexture.cpp" />
+    <ClCompile Include="FPS.cpp" />
+    <ClCompile Include="HorizontalSplitLayout.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Layout.cpp" />
+    <ClCompile Include="LayoutManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RelativeLayout.cpp" />
+    <ClCompile Include="SplitLayout.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="VerticalSplitLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -96,6 +112,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

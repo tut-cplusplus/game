@@ -44,7 +44,7 @@ void Image::readPPM(const string& fpath)
 	if (!fin)
 		throw FileCannotOpenException();
 
-	char buf[BUF_SIZE];
+	char* buf = new char[BUF_SIZE];
 	fin.getline(buf, BUF_SIZE);
 	if (string(buf) != "P6")
 		throw InvalidFileException();
@@ -55,11 +55,12 @@ void Image::readPPM(const string& fpath)
 	if (colorNum != 255)
 		throw InvalidFileException();
 	fin.read(buf, 1);
+	delete[] buf;
 	allocate();
 	unsigned char* ptr = data;
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			int n = 3;
+			const int n = 3;
 			unsigned char color[n];
 			fin.read((char*)color, n);
 			for (int k = 0; k < n; k++)
