@@ -6,7 +6,7 @@
 #include "HorizontalSplitLayout.hpp"
 #include "ComponentTeapot.hpp"
 #include "TextureManager.hpp"
-#include "FPS.hpp"
+#include "ComponentFPS.hpp"
 
 #include <GL/glut.h>
 
@@ -150,7 +150,7 @@ void init(void)
 	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(640, 480, 0.05);
 	layout->add(verticalSplitLayout, Position<double>(0.0, 0.0));
 	verticalSplitLayout->setComponent2(new ComponentTeapot(0, 0));
-	layout->add(new FPS(10, 10), Position<double>(0.0, 0.0));
+	layout->add(new ComponentFPS(10, 10), Position<double>(0.0, 0.0));
 	LayoutManager::registerLayout(layout);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 }

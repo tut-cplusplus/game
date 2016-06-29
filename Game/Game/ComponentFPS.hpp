@@ -1,5 +1,5 @@
-#ifndef _FPS
-#define _FPS
+#ifndef _ComponentFPS
+#define _ComponentFPS
 
 #include "Component.hpp"
 #ifndef __GNUG__
@@ -14,11 +14,11 @@
 // TODO: コメントを書く
 // TODO: setFPS()などの機能拡張
 
-class FPS : public Component{
+class ComponentFPS : public Component{
 public:
-  FPS();
-  FPS(int width, int height);
-  ~FPS();
+  ComponentFPS();
+  ComponentFPS(int width, int height);
+  ~ComponentFPS();
 
   void draw();
 

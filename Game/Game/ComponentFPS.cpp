@@ -1,18 +1,18 @@
 #include <sstream>
 #include <string>
 
-#include "FPS.hpp"
+#include "ComponentFPS.hpp"
 
 #include <GL/glut.h>
 
 void DrawString(std::string str, int w, int h);
 
-FPS::FPS()
+ComponentFPS::ComponentFPS()
 {
   return ;
 }
 
-FPS::FPS(int width, int height) : Component(width, height)
+ComponentFPS::ComponentFPS(int width, int height) : Component(width, height)
 {
   count = 0;
   now_fps = 0;
@@ -22,12 +22,12 @@ FPS::FPS(int width, int height) : Component(width, height)
   return ;
 }
 
-FPS::~FPS()
+ComponentFPS::~ComponentFPS()
 {
   return ;
 }
 
-void FPS::draw()
+void ComponentFPS::draw()
 {
   #ifndef __GNUG__
     if (count == 0) {
