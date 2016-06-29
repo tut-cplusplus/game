@@ -8,6 +8,7 @@
 #include "ComponentTeapot.hpp"
 #include "ComponentTexture.hpp"
 #include "TextureManager.hpp"
+#include "FPS.hpp"
 
 using namespace std;
 
@@ -158,6 +159,7 @@ void init(void)
 	verticalSplitLayout->setComponent2(new ComponentTeapot(0, 0));
 	layout->add(new ComponentTexture(50, 50, "Images/Wall.ppm"), Position<double>(480, 240));
 	layout->add(new ComponentTexture(50, 50, "Images/Enemy.ppm"), Position<double>(480, 360));
+	layout->add(new FPS(10, 10), Position<double>(0.0, 0.0));
 	LayoutManager::registerLayout(layout);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 }
