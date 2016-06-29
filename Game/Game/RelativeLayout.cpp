@@ -1,6 +1,6 @@
-#include "GL/glut.h"
-
 #include "RelativeLayout.hpp"
+
+#include "GL/glut.h"
 
 RelativeLayout::RelativeLayout(int width, int height)
 	: Layout(width, height)

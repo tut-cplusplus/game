@@ -1,6 +1,6 @@
-#include "GL/glut.h"
-
 #include "Block.hpp"
+
+#include "GL/glut.h"
 
 Block::Block(int width, int height)
 	: width(width), height(height)

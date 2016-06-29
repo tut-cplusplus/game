@@ -1,7 +1,6 @@
 #include "Player.hpp"
+
 #include <GL/glut.h>
-
-
 
 void Player::move(void)
 {

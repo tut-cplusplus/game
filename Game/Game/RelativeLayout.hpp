@@ -1,10 +1,10 @@
 #ifndef ___Class_RelativeLayout
 #define ___Class_RelativeLayout
 
-#include <GL/glut.h>
-
 #include "Layout.hpp"
 #include "Position.hpp"
+
+#include <GL/glut.h>
 
 class RelativeLayout : public Layout {
 protected:

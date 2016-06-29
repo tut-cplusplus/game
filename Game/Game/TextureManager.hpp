@@ -4,9 +4,9 @@
 #include <vector>
 #include <string>
 
-#include "GL/glut.h"
-
 #include "Image.hpp"
+
+#include "GL/glut.h"
 
 /**
  * テクスチャマネージャクラス

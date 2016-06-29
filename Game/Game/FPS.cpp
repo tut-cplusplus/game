@@ -1,7 +1,9 @@
-#include "FPS.hpp"
-#include <GL/glut.h>
 #include <sstream>
 #include <string>
+
+#include "FPS.hpp"
+
+#include <GL/glut.h>
 
 void DrawString(std::string str, int w, int h);
 

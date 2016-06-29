@@ -1,6 +1,6 @@
-#include "GL/glut.h"
-
 #include "VerticalSplitLayout.hpp"
+
+#include "GL/glut.h"
 
 VerticalSplitLayout::VerticalSplitLayout(int width, int height, double pow)
 	: SplitLayout(width, height, pow)

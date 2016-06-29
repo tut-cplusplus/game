@@ -1,6 +1,6 @@
-#include "GL/glut.h"
-
 #include "BlockWall.hpp"
+
+#include "GL/glut.h"
 
 BlockWall::BlockWall(int width, int height)
 	: Block(width, height)

@@ -1,6 +1,6 @@
-#include "GL/glut.h"
-
 #include "HorizontalSplitLayout.hpp"
+
+#include "GL/glut.h"
 
 HorizontalSplitLayout::HorizontalSplitLayout(int width, int height, double pow)
 	: SplitLayout(width, height, pow)

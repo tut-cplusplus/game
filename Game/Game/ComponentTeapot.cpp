@@ -1,6 +1,6 @@
-#include "GL/glut.h"
-
 #include "ComponentTeapot.hpp"
+
+#include "GL/glut.h"
 
 using namespace std;
 

@@ -1,4 +1,3 @@
-#include <GL/glut.h>
 #include <iostream>
 
 #include "LayoutManager.hpp"
@@ -9,6 +8,8 @@
 #include "ComponentTexture.hpp"
 #include "TextureManager.hpp"
 #include "FPS.hpp"
+
+#include <GL/glut.h>
 
 using namespace std;
 

@@ -1,6 +1,6 @@
-#include "GL/glut.h"
-
 #include "BlockAir.hpp"
+
+#include "GL/glut.h"
 
 BlockAir::BlockAir(int width, int height)
 	: Block(width, height)
