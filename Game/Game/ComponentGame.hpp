@@ -22,6 +22,7 @@ private:
 	void clearMap(void);
 	void generateMap(void);
 	void deleteMap(void);
+	void setBlockSize(void);
 
 public:
 	ComponentGame();

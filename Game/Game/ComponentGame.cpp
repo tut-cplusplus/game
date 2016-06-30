@@ -59,6 +59,16 @@ void ComponentGame::deleteMap(void)
 	delete[] map;
 }
 
+void ComponentGame::setBlockSize(void)
+{
+	for (int i = 0; i < MAP_HEIGHT; i++) {
+		for (int j = 0; j < MAP_WIDTH; j++) {
+			map[i][j]->setWidth(blockWidth);
+			map[i][j]->setHeight(blockHeight);
+		}
+	}
+}
+
 ComponentGame::ComponentGame()
 {
 
@@ -79,12 +89,14 @@ void ComponentGame::setWidth(int width)
 {
 	this->width = width;
 	blockWidth = (double)width / MAP_WIDTH;
+	setBlockSize();
 }
 
 void ComponentGame::setHeight(int height)
 {
 	this->height = height;
 	blockHeight = (double)height / MAP_HEIGHT;
+	setBlockSize();
 }
 
 void ComponentGame::init(void)
@@ -95,18 +107,12 @@ void ComponentGame::init(void)
 
 void ComponentGame::draw(void)
 {
-	//cout << blockWidth << ", " << blockHeight << endl;
 	glColor3d(1.0, 1.0, 1.0);
 	glPushMatrix();
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		glPushMatrix();
 		for (int j = 0; j < MAP_WIDTH; j++) {
-			glBegin(GL_LINE_LOOP);
-			glVertex2d(0.0, 0.0);
-			glVertex2d(blockWidth, 0.0);
-			glVertex2d(blockWidth, blockHeight);
-			glVertex2d(0.0, blockHeight);
-			glEnd();
+			map[i][j]->draw();
 			glTranslated(blockWidth, 0.0, 0.0);
 		}
 		glPopMatrix();

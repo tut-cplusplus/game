@@ -1,6 +1,10 @@
+#include <iostream>
+
 #include "Block.hpp"
 
 #include "GL/glut.h"
+
+using namespace std;
 
 Block::Block(double width, double height)
 	: width(width), height(height)

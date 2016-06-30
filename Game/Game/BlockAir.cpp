@@ -10,7 +10,6 @@ BlockAir::BlockAir(double width, double height)
 
 void BlockAir::draw(void)
 {
-	glColor3d(1.0, 1.0, 0.0);
-	Block::draw();
+
 }
 

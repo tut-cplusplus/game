@@ -6,9 +6,10 @@
  * 壁やトラップの基となる．
  */
 class Block {
-private:
+protected:
 	double width;	/* 幅 */
 	double height;	/* 高さ */
+
 public:
 	Block();
 	Block(double width, double height);
