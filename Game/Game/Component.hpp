@@ -13,8 +13,8 @@ public:
 
   int getWidth(void) const;
   int getHeight(void) const;
-  void setWidth(int width);
-  void setHeight(int height);
+  virtual void setWidth(int width);
+  virtual void setHeight(int height);
 
   virtual void init(void);
   virtual void draw(void);
@@ -33,16 +33,6 @@ inline int Component::getWidth(void) const
 inline int Component::getHeight(void) const
 {
 	return height;
-}
-
-inline void Component::setWidth(int width)
-{
-	this->width = width;
-}
-
-inline void Component::setHeight(int height)
-{
-	this->height = height;
 }
 
 #endif

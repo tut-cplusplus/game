@@ -10,7 +10,9 @@ private:
 	int width;	/* 幅 */
 	int height;	/* 高さ */
 public:
+	Block();
 	Block(int width, int height);
+	virtual ~Block();
 	/**
 	 * 透明ブロックかどうか．
 	 *

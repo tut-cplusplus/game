@@ -17,6 +17,16 @@ Component::~Component()
   
 }
 
+void Component::setWidth(int width)
+{
+	this->width = width;
+}
+
+void Component::setHeight(int height)
+{
+	this->height = height;
+}
+
 void Component::init(void)
 {
 

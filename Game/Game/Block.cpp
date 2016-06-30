@@ -8,6 +8,11 @@ Block::Block(int width, int height)
 
 }
 
+Block::~Block()
+{
+
+}
+
 bool Block::isTransparent(void) const
 {
 	return false;
