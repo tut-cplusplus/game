@@ -18,7 +18,14 @@ protected:
 	 */
 	void breakWall(void);
 
+	/**
+	 * î•ñ“`’B‚ğs‚¤ŠÖ”
+	 */
+	virtual void message(void);
+
 public:
+	static int enemy_number; //“G‚Ì”
+	
 	Enemy();
 
 	/**
@@ -121,3 +128,4 @@ public:
 	virtual void idle(void);
 };
 
+int Enemy::enemy_number = 0;
