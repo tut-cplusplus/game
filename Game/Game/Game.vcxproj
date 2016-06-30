@@ -26,6 +26,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentFPS.cpp" />
+    <ClCompile Include="ComponentGame.cpp" />
     <ClCompile Include="ComponentTeapot.cpp" />
     <ClCompile Include="ComponentTexture.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -42,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
+    <ClInclude Include="ComponentGame.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Player.hpp" />
   </ItemGroup>
