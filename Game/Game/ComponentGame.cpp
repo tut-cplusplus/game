@@ -8,8 +8,8 @@
 
 using namespace std;
 
-const int ComponentGame::MAP_WIDTH = 15;
-const int ComponentGame::MAP_HEIGHT = 15;
+const int ComponentGame::MAP_WIDTH = 30;
+const int ComponentGame::MAP_HEIGHT = 30;
 
 void ComponentGame::allocMap(void)
 {
