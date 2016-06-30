@@ -17,6 +17,19 @@ Player::Player()
 Player::Player(int x, int y, int width, int height, int size)
 	: Character(x, y, width, height, size)
 {
+
+}
+
+Player::Player(int x, int y, int size)
+	: Character(x, y, size)
+{
+
+}
+
+Player::Player(int x, int y)
+	: Character(x, y)
+{
+
 }
 
 

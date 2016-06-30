@@ -1,12 +1,12 @@
 enum Direction { NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3 };
 class Character {
 protected:
-	int *texture_id;	//テクスチャIDの配列
 	int x;				//x座標
 	int y;				//y座標
 	int width;
 	int height;
 	Direction direction;//キャラクターの向き
+	int *texture_id;	//テクスチャIDの配列
 	
 	/**
 	 * キャラクターの向きを指定する関数
@@ -34,6 +34,7 @@ public:
 	 * @param size	テクスチャIDの配列のサイズ
 	 */
 	Character(int x, int y, int size);
+	Character(int x, int y);
 	~Character();
 	
 	/**

@@ -1,18 +1,27 @@
 #include "Character.hpp"
 
 Character::Character(int x, int y, int width, int height, int size)
-	: x(x), y(y), width(width), height(height)
+	: x(x), y(y), width(width), height(height), direction(WEST), texture_id(nullptr)
 {
-	this->texture_id = new int[size];
+
 }
 
-Character::Character(int x, int y,int size) : x(x),y(y),direction(WEST) {
-	this->texture_id = new int[size];
+Character::Character(int x, int y,int size)
+	: x(x) ,y(y), width(0), height(0), direction(WEST), texture_id(nullptr)
+{
+
+}
+
+Character::Character(int x, int y)
+	: x(x), y(y), width(0), height(0), direction(WEST), texture_id(nullptr)
+{
+
 }
 
 
 Character::~Character() {
-	delete texture_id;
+	if (texture_id != nullptr)
+		delete texture_id;
 }
 
 void Character::init(int x, int y, int size) {

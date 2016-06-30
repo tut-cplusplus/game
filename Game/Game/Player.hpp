@@ -22,6 +22,8 @@ public:
 	* @param size	テクスチャIDの配列のサイズ
 	*/
 	Player(int x, int y, int width, int height, int size);
+	Player(int x, int y, int size);
+	Player(int x, int y);
 	~Player();
 
 	/**

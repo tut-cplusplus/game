@@ -34,6 +34,8 @@ public:
 	 * @param size	テクスチャIDの配列のサイズ
 	 */
 	Enemy(int x, int y, int width, int height, int size);
+	Enemy(int x, int y, int size);
+	Enemy(int x, int y);
 	~Enemy();
 
 	/**
