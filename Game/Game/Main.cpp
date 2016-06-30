@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "Global.hpp"
 #include "LayoutManager.hpp"
 #include "RelativeLayout.hpp"
 #include "VerticalSplitLayout.hpp"
@@ -112,7 +113,7 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
-	glutInitWindowSize(640, 480);
+	glutInitWindowSize(Global::WINDOW_WIDTH, Global::WINDOW_HEIGHT);
 	//glutの初期化
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
@@ -146,8 +147,8 @@ int main(int argc, char** argv)
 void init(void)
 {
 	TextureManager::init();
-	RelativeLayout* layout = new RelativeLayout(640, 480);
-	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(640, 480, 0.05);
+	RelativeLayout* layout = new RelativeLayout(Global::WINDOW_WIDTH, Global::WINDOW_HEIGHT);
+	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(Global::WINDOW_WIDTH, Global::WINDOW_HEIGHT, 0.05);
 	layout->add(verticalSplitLayout, Position<double>(0.0, 0.0));
 	verticalSplitLayout->setComponent2(new ComponentTeapot(0, 0));
 	layout->add(new ComponentFPS(10, 10), Position<double>(0.0, 0.0));
@@ -176,7 +177,7 @@ void resize(int w, int h)
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0.0, 640.0, 0.0, 480.0, -1000.0, 1000.0);
+	glOrtho(0.0, Global::WINDOW_WIDTH, 0.0, Global::WINDOW_HEIGHT, -1000.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
