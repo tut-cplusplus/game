@@ -36,6 +36,7 @@ void ComponentFPS::draw()
 
     if (count == number_of_sample) {
       GetSystemTime(&end);
+	  end.wSecond += (end.wSecond < start.wSecond) ? 60 : 0;
 
       now_fps = 1.0 / ((end.wSecond - start.wSecond) + (end.wMilliseconds - start.wMilliseconds) / 1000.0) * (double)number_of_sample;
       count = 0;
@@ -51,10 +52,11 @@ void ComponentFPS::draw()
 
     SYSTEMTIME tmp;
     GetSystemTime(&tmp);
+	tmp.wSecond += (tmp.wSecond < start.wSecond) ? 60 : 0;
     double took_time = (tmp.wSecond - start.wSecond) + (tmp.wMilliseconds - start.wMilliseconds) / 1000.0;
     double wait_time = (double)count / set_fps - took_time;
 
-    if (wait_time > 0 && wait_time < 1) {
+    if (wait_time > 0) {
       Sleep(wait_time * 1000);
     }
   #else
