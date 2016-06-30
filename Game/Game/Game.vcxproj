@@ -28,6 +28,7 @@
     <ClCompile Include="ComponentFPS.cpp" />
     <ClCompile Include="ComponentTeapot.cpp" />
     <ClCompile Include="ComponentTexture.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="HorizontalSplitLayout.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Layout.cpp" />
@@ -41,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Player.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
