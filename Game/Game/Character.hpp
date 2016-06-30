@@ -4,6 +4,8 @@ protected:
 	int *texture_id;	//テクスチャIDの配列
 	int x;				//x座標
 	int y;				//y座標
+	int width;
+	int height;
 	Direction direction;//キャラクターの向き
 	
 	/**
@@ -24,6 +26,7 @@ protected:
 
 public:
 	Character() {}
+	Character(int x, int y, int width, int height, int size);
 	/**
 	 * コンストラクタ
 	 * @param x		Characterのx座標

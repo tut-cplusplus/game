@@ -18,7 +18,9 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(int x, int y, int size, int x_w, int y_w) : x_width(x_w),y_width(y_w) {
+Enemy::Enemy(int x, int y, int width, int height, int size)
+	: Character(x, y, width, height, size)
+{
 }
 
 
@@ -29,10 +31,10 @@ Enemy::~Enemy()
 void Enemy::drawDisplay(void)
 {
 	glBegin(GL_QUADS);
-	glVertex2d(x, y + y_width);
+	glVertex2d(x, y + height);
 	glVertex2d(x, y);
-	glVertex2d(x + x_width, y);
-	glVertex2d(x + x_width, y + y_width);
+	glVertex2d(x + width, y);
+	glVertex2d(x + width, y + height);
 	glEnd();
 }
 

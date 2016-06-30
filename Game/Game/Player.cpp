@@ -14,7 +14,8 @@ Player::Player()
 {
 }
 
-Player::Player(int x, int y, int size, int x_w, int y_w) : Character(x,y,size), x_width(x_w), y_width(y_w)
+Player::Player(int x, int y, int width, int height, int size)
+	: Character(x, y, width, height, size)
 {
 }
 
@@ -27,10 +28,10 @@ Player::~Player()
 void Player::drawDisplay(void)
 {
 	glBegin(GL_QUADS);
-	glVertex2d(x, y + y_width);
+	glVertex2d(x, y + height);
 	glVertex2d(x, y);
-	glVertex2d(x + x_width, y);
-	glVertex2d(x + x_width, y + y_width);
+	glVertex2d(x + width, y);
+	glVertex2d(x + width, y + height);
 	glEnd();
 }
 

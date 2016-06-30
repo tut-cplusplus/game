@@ -3,9 +3,6 @@
 #include "Character.hpp"
 class Enemy : public Character {
 protected:
-	int x_width;	//描写する際のx軸方向の幅
-	int y_width;	//描写する際のy軸方向の幅
-
 	int player_x;	//プレイヤーの座標
 	int player_y;	//プレイヤーの座標
 
@@ -32,11 +29,11 @@ public:
 	 * コンストラクタ
 	 * @param x		Characterのx座標
 	 * @param y		Characterのy座標
+	 * @param width x軸方向の幅
+	 * @param height y軸方向の幅
 	 * @param size	テクスチャIDの配列のサイズ
-	 * @param x_w	x軸方向の幅
-	 * @param y_w	y軸方向の幅
 	 */
-	Enemy(int x, int y, int size, int x_w, int y_w);
+	Enemy(int x, int y, int width, int height, int size);
 	~Enemy();
 
 	/**

@@ -1,5 +1,11 @@
 #include "Character.hpp"
 
+Character::Character(int x, int y, int width, int height, int size)
+	: x(x), y(y), width(width), height(height)
+{
+	this->texture_id = new int[size];
+}
+
 Character::Character(int x, int y,int size) : x(x),y(y),direction(WEST) {
 	this->texture_id = new int[size];
 }

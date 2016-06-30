@@ -2,9 +2,6 @@
 #include "Character.hpp"
 class Player : public Character {
 protected:
-	int x_width;	//描写する際のx軸方向の幅
-	int y_width;	//描写する際のy軸方向の幅
-
 	/**
 	 * 向いている方へ移動する関数
 	 */
@@ -20,11 +17,11 @@ public:
 	* コンストラクタ
 	* @param x		Characterのx座標
 	* @param y		Characterのy座標
+	* @param width x軸方向の幅
+	* @param height y軸方向の幅
 	* @param size	テクスチャIDの配列のサイズ
-	* @param x_w	x軸方向の幅
-	* @param y_w	y軸方向の幅
 	*/
-	Player(int x, int y, int size, int x_w, int y_w);
+	Player(int x, int y, int width, int height, int size);
 	~Player();
 
 	/**
