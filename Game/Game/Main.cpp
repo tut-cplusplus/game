@@ -9,6 +9,7 @@
 #include "ComponentFPS.hpp"
 #include "ComponentGame.hpp"
 
+#include "Enemy.hpp"
 #include <GL/glut.h>
 
 using namespace std;
@@ -162,6 +163,9 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	LayoutManager::getLayout()->draw();
+	//Enemyクラス描写の確認
+	Enemy enemy(0, 0, 10, 30, 30);
+	enemy.drawDisplay();
 	glutSwapBuffers();
 }
 

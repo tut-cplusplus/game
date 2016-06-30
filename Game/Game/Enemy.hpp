@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __Class_Enemy
+#define __Class_Enemy
 #include "Character.hpp"
 class Enemy : public Character {
 protected:
@@ -24,7 +25,6 @@ protected:
 	virtual void message(void);
 
 public:
-	static int enemy_number; //“G‚Ì”
 	
 	Enemy();
 
@@ -128,4 +128,4 @@ public:
 	virtual void idle(void);
 };
 
-int Enemy::enemy_number = 0;
+#endif
