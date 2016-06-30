@@ -8,7 +8,7 @@
  */
 class BlockWall : public Block {
 public:
-	BlockWall(int width, int height);
+	BlockWall(double width, double height);
 	/**
 	 * 描画時に呼ばれる．
 	 */

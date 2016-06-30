@@ -2,7 +2,7 @@
 
 #include "GL/glut.h"
 
-BlockAir::BlockAir(int width, int height)
+BlockAir::BlockAir(double width, double height)
 	: Block(width, height)
 {
 	

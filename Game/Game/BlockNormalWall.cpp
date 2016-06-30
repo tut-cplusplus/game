@@ -1,6 +1,6 @@
 #include "BlockNormalWall.hpp"
 
-BlockNormalWall::BlockNormalWall(int width, int height)
+BlockNormalWall::BlockNormalWall(double width, double height)
 	: BlockWall(width, height)
 {
 

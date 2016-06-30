@@ -8,7 +8,7 @@
  */
 class BlockNormalWall : public BlockWall {
 public:
-	BlockNormalWall(int width, int height);
+	BlockNormalWall(double width, double height);
 };
 
 #endif

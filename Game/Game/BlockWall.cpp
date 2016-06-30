@@ -2,7 +2,7 @@
 
 #include "GL/glut.h"
 
-BlockWall::BlockWall(int width, int height)
+BlockWall::BlockWall(double width, double height)
 	: Block(width, height)
 {
 

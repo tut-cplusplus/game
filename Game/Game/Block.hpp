@@ -7,11 +7,11 @@
  */
 class Block {
 private:
-	int width;	/* 幅 */
-	int height;	/* 高さ */
+	double width;	/* 幅 */
+	double height;	/* 高さ */
 public:
 	Block();
-	Block(int width, int height);
+	Block(double width, double height);
 	virtual ~Block();
 	/**
 	 * 透明ブロックかどうか．
@@ -32,29 +32,29 @@ public:
 	/**
 	 * セッター及びゲッター
 	 */
-	int getWidth(void) const;
-	int getHeight(void) const;
-	void setWidth(int width);
-	void setHeight(int height);
+	double getWidth(void) const;
+	double getHeight(void) const;
+	void setWidth(double width);
+	void setHeight(double height);
 
 };
 
-inline int Block::getWidth(void) const
+inline double Block::getWidth(void) const
 {
 	return width;
 }
 
-inline int Block::getHeight(void) const
+inline double Block::getHeight(void) const
 {
 	return height;
 }
 
-inline void Block::setWidth(int width)
+inline void Block::setWidth(double width)
 {
 	this->width = width;
 }
 
-inline void Block::setHeight(int height)
+inline void Block::setHeight(double height)
 {
 	this->height = height;
 }
