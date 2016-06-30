@@ -147,8 +147,8 @@ int main(int argc, char** argv)
 void init(void)
 {
 	TextureManager::init();
-	RelativeLayout* layout = new RelativeLayout(Global::WINDOW_WIDTH, Global::WINDOW_HEIGHT);
-	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(Global::WINDOW_WIDTH, Global::WINDOW_HEIGHT, 0.05);
+	RelativeLayout* layout = new RelativeLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT);
+	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT, 0.05);
 	layout->add(verticalSplitLayout, Position<double>(0.0, 0.0));
 	verticalSplitLayout->setComponent2(new ComponentGame(0, 0));
 	layout->add(new ComponentFPS(10, 10), Position<double>(0.0, 0.0));
@@ -177,7 +177,7 @@ void resize(int w, int h)
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0.0, Global::WINDOW_WIDTH, 0.0, Global::WINDOW_HEIGHT, -1000.0, 1000.0);
+	glOrtho(0.0, Global::WORLD_WIDTH, 0.0, Global::WORLD_HEIGHT, -1000.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
