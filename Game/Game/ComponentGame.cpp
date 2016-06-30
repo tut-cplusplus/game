@@ -5,6 +5,7 @@
 #include "ComponentGame.hpp"
 #include "BlockAir.hpp"
 #include "BlockNormalWall.hpp"
+#include "BlockUnbreakableWall.hpp"
 #include "Position.hpp"
 
 #include "GL/glut.h"
@@ -38,12 +39,12 @@ void ComponentGame::generateMap(void)
 	for (int j = 1; j < MAP_WIDTH - 1; j++)
 		map[i][j] = nullptr;
 	for (int i = 0; i < MAP_HEIGHT; i++) {
-		map[i][0] = new BlockNormalWall(blockWidth, blockHeight);
-		map[i][MAP_WIDTH - 1] = new BlockNormalWall(blockWidth, blockHeight);
+		map[i][0] = new BlockUnbreakableWall(blockWidth, blockHeight);
+		map[i][MAP_WIDTH - 1] = new BlockUnbreakableWall(blockWidth, blockHeight);
 	}
 	for (int i = 0; i < MAP_WIDTH; i++) {
-		map[0][i] = new BlockNormalWall(blockWidth, blockHeight);
-		map[MAP_HEIGHT - 1][i] = new BlockNormalWall(blockWidth, blockHeight);
+		map[0][i] = new BlockUnbreakableWall(blockWidth, blockHeight);
+		map[MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockWidth, blockHeight);
 	}
 
 	vector<Position<int>> v;
