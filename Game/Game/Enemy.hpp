@@ -5,6 +5,9 @@ protected:
 	int x_width;	//描写する際のx軸方向の幅
 	int y_width;	//描写する際のy軸方向の幅
 
+	int player_x;	//プレイヤーの座標
+	int player_y;	//プレイヤーの座標
+
 	/**
 	 * 向いている方へ移動する関数
 	 */
