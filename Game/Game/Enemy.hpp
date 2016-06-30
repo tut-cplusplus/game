@@ -3,21 +3,21 @@
 #include "Character.hpp"
 class Enemy : public Character {
 protected:
-	int player_x;	//ƒvƒŒƒCƒ„[‚ÌÀ•W
-	int player_y;	//ƒvƒŒƒCƒ„[‚ÌÀ•W
+	int player_x;	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™
+	int player_y;	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™
 
 	/**
-	 * Œü‚¢‚Ä‚¢‚é•û‚ÖˆÚ“®‚·‚éŠÖ”
+	 * å‘ã„ã¦ã„ã‚‹æ–¹ã¸ç§»å‹•ã™ã‚‹é–¢æ•°
 	 */
 	void move(void);
 
 	/**
-	 * •Ç‚ğ‰ó‚·ŠÖ”
+	 * å£ã‚’å£Šã™é–¢æ•°
 	 */
 	void breakWall(void);
 
 	/**
-	 * î•ñ“`’B‚ğs‚¤ŠÖ”
+	 * æƒ…å ±ä¼é”ã‚’è¡Œã†é–¢æ•°
 	 */
 	virtual void message(void);
 
@@ -26,101 +26,101 @@ public:
 	Enemy();
 
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	 * @param x		Character‚ÌxÀ•W
-	 * @param y		Character‚ÌyÀ•W
-	 * @param width x²•ûŒü‚Ì•
-	 * @param height y²•ûŒü‚Ì•
-	 * @param size	ƒeƒNƒXƒ`ƒƒID‚Ì”z—ñ‚ÌƒTƒCƒY
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	 * @param x		Characterã®xåº§æ¨™
+	 * @param y		Characterã®yåº§æ¨™
+	 * @param width xè»¸æ–¹å‘ã®å¹…
+	 * @param height yè»¸æ–¹å‘ã®å¹…
+	 * @param size	ãƒ†ã‚¯ã‚¹ãƒãƒ£IDã®é…åˆ—ã®ã‚µã‚¤ã‚º
 	 */
 	Enemy(int x, int y, int width, int height, int size);
 	~Enemy();
 
 	/**
-	* display‚É‘Î‰‚·‚éŠÖ”
+	* displayã«å¯¾å¿œã™ã‚‹é–¢æ•°
 	*/
 	virtual void drawDisplay(void);
 
 	/**
-	* visibility‚É‘Î‰‚·‚éŠÖ”
+	* visibilityã«å¯¾å¿œã™ã‚‹é–¢æ•°
 	*
-	* @param state [‚æ‚­‚í‚©‚ç‚È‚¢]
+	* @param state [ã‚ˆãã‚ã‹ã‚‰ãªã„]
 	*/
 	virtual void visibility(int state);
 
 	/**
-	* resize‚É‘Î‰‚·‚éŠÖ”
+	* resizeã«å¯¾å¿œã™ã‚‹é–¢æ•°
 	*
-	* @param w ƒŠƒTƒCƒYŒã‚ÌƒEƒBƒ“ƒhƒE‚Ì•
-	* @param h ƒŠƒTƒCƒYŒã‚ÌƒEƒBƒ“ƒhƒE‚Ì‚‚³
+	* @param w ãƒªã‚µã‚¤ã‚ºå¾Œã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹…
+	* @param h ãƒªã‚µã‚¤ã‚ºå¾Œã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é«˜ã•
 	*/
 	virtual void resize(int w, int h);
 
 	/**
-	* mouse‚É‘Î‰‚·‚éŠÖ”,ƒ}ƒEƒX‚©‚ç‚Ì“ü—Í‚ğ—^‚¦‚é
+	* mouseã«å¯¾å¿œã™ã‚‹é–¢æ•°,ãƒã‚¦ã‚¹ã‹ã‚‰ã®å…¥åŠ›ã‚’ä¸ãˆã‚‹
 	*
-	* @param button ‰Ÿ‚³‚ê‚½ƒ{ƒ^ƒ“‚Ìí—Ş
-	* @param state  ƒ{ƒ^ƒ“‚Ì‰Ÿ‰ºó‘Ô
-	* @param x      ƒ{ƒ^ƒ“‚Ì‰Ÿ‰º‚µ‚½xÀ•W
-	* @param x      ƒ{ƒ^ƒ“‚Ì‰Ÿ‰º‚µ‚½yÀ•W
+	* @param button æŠ¼ã•ã‚ŒãŸãƒœã‚¿ãƒ³ã®ç¨®é¡
+	* @param state  ãƒœã‚¿ãƒ³ã®æŠ¼ä¸‹çŠ¶æ…‹
+	* @param x      ãƒœã‚¿ãƒ³ã®æŠ¼ä¸‹ã—ãŸxåº§æ¨™
+	* @param x      ãƒœã‚¿ãƒ³ã®æŠ¼ä¸‹ã—ãŸyåº§æ¨™
 	*/
 	virtual void inputMouse(int button, int state, int x, int y);
 
 	/**
-	* activeMotion‚É‘Î‰‚·‚éŠÖ”,ƒ}ƒEƒX‚Ìƒ{ƒ^ƒ“‚ğ‰Ÿ‰º’†‚ÌÀ•W‚ğ—^‚¦‚é
+	* activeMotionã«å¯¾å¿œã™ã‚‹é–¢æ•°,ãƒã‚¦ã‚¹ã®ãƒœã‚¿ãƒ³ã‚’æŠ¼ä¸‹ä¸­ã®åº§æ¨™ã‚’ä¸ãˆã‚‹
 	*
-	* @param x ƒ{ƒ^ƒ“‰Ÿ‰º’†‚Ìƒ}ƒEƒXxÀ•W
-	* @param x ƒ{ƒ^ƒ“‰Ÿ‰º’†‚Ìƒ}ƒEƒXyÀ•W
+	* @param x ãƒœã‚¿ãƒ³æŠ¼ä¸‹ä¸­ã®ãƒã‚¦ã‚¹xåº§æ¨™
+	* @param x ãƒœã‚¿ãƒ³æŠ¼ä¸‹ä¸­ã®ãƒã‚¦ã‚¹yåº§æ¨™
 	*/
 	virtual void inputActiveMotion(int x, int y);
 
 	/**
-	* passiveMotion‚É‘Î‰‚·‚éŠÖ”
-	* ƒ}ƒEƒX‚Ìƒ{ƒ^ƒ“‚ª‰Ÿ‰º‚³‚ê‚Ä‚¢‚È‚¢‚ÌÀ•W‚ğ—^‚¦‚é
+	* passiveMotionã«å¯¾å¿œã™ã‚‹é–¢æ•°
+	* ãƒã‚¦ã‚¹ã®ãƒœã‚¿ãƒ³ãŒæŠ¼ä¸‹ã•ã‚Œã¦ã„ãªã„æ™‚ã®åº§æ¨™ã‚’ä¸ãˆã‚‹
 	*
-	* @param x ŒÄ‚Ño‚µ‚Ìƒ}ƒEƒXxÀ•W
-	* @param x ŒÄ‚Ño‚µ‚Ìƒ}ƒEƒXyÀ•W
+	* @param x å‘¼ã³å‡ºã—æ™‚ã®ãƒã‚¦ã‚¹xåº§æ¨™
+	* @param x å‘¼ã³å‡ºã—æ™‚ã®ãƒã‚¦ã‚¹yåº§æ¨™
 	*/
 	virtual void inputPassiveMotion(int x, int y);
 
 	/**
-	* keyboard‚É‘Î‰‚·‚éŠÖ”CƒL[ƒ{[ƒh‰Ÿ‰º‚Ì“ü—Í‚ğ—^‚¦‚é
+	* keyboardã«å¯¾å¿œã™ã‚‹é–¢æ•°ï¼Œã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æŠ¼ä¸‹æ™‚ã®å…¥åŠ›ã‚’ä¸ãˆã‚‹
 	*
-	* @param key ‰Ÿ‰º‚³‚ê‚½ƒL[‚Ìí—Ş
-	* @param x   ƒL[ƒ{[ƒh‰Ÿ‰º‚Ìƒ}ƒEƒXxÀ•W
-	* @param x   ƒL[ƒ{[ƒh‰Ÿ‰º‚Ìƒ}ƒEƒXyÀ•W
+	* @param key æŠ¼ä¸‹ã•ã‚ŒãŸã‚­ãƒ¼ã®ç¨®é¡
+	* @param x   ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æŠ¼ä¸‹æ™‚ã®ãƒã‚¦ã‚¹xåº§æ¨™
+	* @param x   ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æŠ¼ä¸‹æ™‚ã®ãƒã‚¦ã‚¹yåº§æ¨™
 	*/
 	virtual void inputKeyboard(unsigned char key, int x, int y);
 
 	/**
-	* keyboardup‚É‘Î‰‚·‚éŠÖ”CƒL[‚ª—£‚³‚ê‚½‚Ì“ü—Í‚ğ—^‚¦‚é
+	* keyboardupã«å¯¾å¿œã™ã‚‹é–¢æ•°ï¼Œã‚­ãƒ¼ãŒé›¢ã•ã‚ŒãŸæ™‚ã®å…¥åŠ›ã‚’ä¸ãˆã‚‹
 	*
-	* @param key —£‚³‚ê‚½ƒL[‚Ìí—Ş
-	* @param x   ƒL[‚ª—£‚³‚ê‚½‚Ìƒ}ƒEƒXxÀ•W
-	* @param x   ƒL[‚ª—£‚³‚ê‚½‚Ìƒ}ƒEƒXyÀ•W
+	* @param key é›¢ã•ã‚ŒãŸã‚­ãƒ¼ã®ç¨®é¡
+	* @param x   ã‚­ãƒ¼ãŒé›¢ã•ã‚ŒãŸæ™‚ã®ãƒã‚¦ã‚¹xåº§æ¨™
+	* @param x   ã‚­ãƒ¼ãŒé›¢ã•ã‚ŒãŸæ™‚ã®ãƒã‚¦ã‚¹yåº§æ¨™
 	*/
 	virtual void inputKeyboardUp(unsigned char key, int x, int y);
 
 	/**
-	* special‚É‘Î‰‚·‚éŠÖ”C“ÁêƒL[‰Ÿ‰º‚Ì“ü—Í‚ğ—^‚¦‚é
+	* specialã«å¯¾å¿œã™ã‚‹é–¢æ•°ï¼Œç‰¹æ®Šã‚­ãƒ¼æŠ¼ä¸‹æ™‚ã®å…¥åŠ›ã‚’ä¸ãˆã‚‹
 	*
-	* @param key ‰Ÿ‰º‚³‚ê‚½“ÁêƒL[‚Ìí—Ş
-	* @param x   “ÁêƒL[‰Ÿ‰º‚Ìƒ}ƒEƒXxÀ•W
-	* @param x   “ÁêƒL[‰Ÿ‰º‚Ìƒ}ƒEƒXyÀ•W
+	* @param key æŠ¼ä¸‹ã•ã‚ŒãŸç‰¹æ®Šã‚­ãƒ¼ã®ç¨®é¡
+	* @param x   ç‰¹æ®Šã‚­ãƒ¼æŠ¼ä¸‹æ™‚ã®ãƒã‚¦ã‚¹xåº§æ¨™
+	* @param x   ç‰¹æ®Šã‚­ãƒ¼æŠ¼ä¸‹æ™‚ã®ãƒã‚¦ã‚¹yåº§æ¨™
 	*/
 	virtual void inputSpecialKey(unsigned char key, int x, int y);
 
 	/**
-	* specialup‚É‘Î‰‚·‚éŠÖ”C“ÁêƒL[‚ª—£‚³‚ê‚½‚Ì“ü—Í‚ğ—^‚¦‚é
+	* specialupã«å¯¾å¿œã™ã‚‹é–¢æ•°ï¼Œç‰¹æ®Šã‚­ãƒ¼ãŒé›¢ã•ã‚ŒãŸæ™‚ã®å…¥åŠ›ã‚’ä¸ãˆã‚‹
 	*
-	* @param key —£‚³‚ê‚½“ÁêƒL[‚Ìí—Ş
-	* @param x   “ÁêƒL[‚ª—£‚³‚ê‚½‚Ìƒ}ƒEƒXxÀ•W
-	* @param x   “ÁêƒL[‚ª—£‚³‚ê‚½‚Ìƒ}ƒEƒXyÀ•W
+	* @param key é›¢ã•ã‚ŒãŸç‰¹æ®Šã‚­ãƒ¼ã®ç¨®é¡
+	* @param x   ç‰¹æ®Šã‚­ãƒ¼ãŒé›¢ã•ã‚ŒãŸæ™‚ã®ãƒã‚¦ã‚¹xåº§æ¨™
+	* @param x   ç‰¹æ®Šã‚­ãƒ¼ãŒé›¢ã•ã‚ŒãŸæ™‚ã®ãƒã‚¦ã‚¹yåº§æ¨™
 	*/
 	virtual void inputSpecialKeyUp(unsigned char key, int x, int y);
 
 	/**
-	* idle‚É‘Î‰‚·‚éŠÖ”
+	* idleã«å¯¾å¿œã™ã‚‹é–¢æ•°
 	*/
 	virtual void idle(void);
 };
