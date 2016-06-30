@@ -93,6 +93,7 @@ void ComponentFPS::draw()
 
 void DrawString(std::string str, int w, int h)
 {
+  glColor3d(1.0, 1.0, 1.0);
   glRasterPos2f(w, h);
   int size = (int)str.size();
   for(int i = 0; i < size; ++i){
