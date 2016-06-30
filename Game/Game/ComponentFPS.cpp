@@ -54,7 +54,7 @@ void ComponentFPS::draw()
     double took_time = (tmp.wSecond - start.wSecond) + (tmp.wMilliseconds - start.wMilliseconds) / 1000.0;
     double wait_time = (double)count / set_fps - took_time;
 
-    if (wait_time > 0) {
+    if (wait_time > 0 && wait_time < 1) {
       Sleep(wait_time * 1000);
     }
   #else
