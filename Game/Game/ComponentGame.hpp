@@ -1,8 +1,11 @@
 #ifndef ___Class_ComponentGame
 #define ___Class_ComponentGame
 
+#include <vector>
+
 #include "Component.hpp"
 #include "Block.hpp"
+#include "Position.hpp"
 
 class ComponentGame : public Component {
 public:
@@ -21,6 +24,7 @@ private:
 	void allocMap(void);
 	void clearMap(void);
 	void generateMap(void);
+	std::vector<int> getValidDirections(const Position<int>& position);
 	void deleteMap(void);
 	void setBlockSize(void);
 

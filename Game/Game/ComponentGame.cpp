@@ -1,15 +1,18 @@
 #include <iostream>
+#include <queue>
+#include <random>
 
 #include "ComponentGame.hpp"
 #include "BlockAir.hpp"
 #include "BlockNormalWall.hpp"
+#include "Position.hpp"
 
 #include "GL/glut.h"
 
 using namespace std;
 
-const int ComponentGame::MAP_WIDTH = 30;
-const int ComponentGame::MAP_HEIGHT = 30;
+const int ComponentGame::MAP_WIDTH = 33;
+const int ComponentGame::MAP_HEIGHT = 33;
 
 void ComponentGame::allocMap(void)
 {
@@ -33,7 +36,7 @@ void ComponentGame::generateMap(void)
 {
 	for (int i = 1; i < MAP_HEIGHT - 1; i++)
 	for (int j = 1; j < MAP_WIDTH - 1; j++)
-		map[i][j] = new BlockAir(blockWidth, blockHeight);
+		map[i][j] = nullptr;
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		map[i][0] = new BlockNormalWall(blockWidth, blockHeight);
 		map[i][MAP_WIDTH - 1] = new BlockNormalWall(blockWidth, blockHeight);
@@ -42,6 +45,83 @@ void ComponentGame::generateMap(void)
 		map[0][i] = new BlockNormalWall(blockWidth, blockHeight);
 		map[MAP_HEIGHT - 1][i] = new BlockNormalWall(blockWidth, blockHeight);
 	}
+
+	vector<Position<int>> v;
+	for (int i = 4; i < MAP_HEIGHT - 1; i += 4) {
+		v.push_back(Position<int>(0, i));
+		v.push_back(Position<int>(MAP_WIDTH - 1, i));
+	}
+	for (int i = 4; i < MAP_WIDTH - 1; i += 4) {
+		v.push_back(Position<int>(i, 0));
+		v.push_back(Position<int>(i, MAP_HEIGHT - 1));
+	}
+
+	random_device rd;
+	mt19937 mt(rd());
+	uniform_real_distribution<double> rnd(0.0, 1.0);
+	static Position<int> directions[] = {
+		Position<int>(1, 0),
+		Position<int>(-1, 0),
+		Position<int>(0, 1),
+		Position<int>(0, -1),
+	};
+	while (v.size()) {
+		int idx = rnd(mt) * v.size();
+		Position<int> position = v[idx];
+		v.erase(v.begin() + idx);
+		vector<int> directionIDs = getValidDirections(position);
+		int size = directionIDs.size();
+		if (!size)
+			continue;
+		idx = rnd(mt) * size;
+		const Position<int>& direction = directions[directionIDs[idx]];
+		for (int i = 0; i < 4; i++) {
+			position += direction;
+			int x = position.getX();
+			int y = position.getY();
+			map[y][x] = new BlockNormalWall(blockWidth, blockHeight);
+			if (i == 3)
+				v.push_back(position);
+		}
+	}
+	for (int i = 1; i < MAP_HEIGHT - 1; i++)
+	for (int j = 1; j < MAP_WIDTH - 1; j++)
+		if (map[i][j] == nullptr)
+			map[i][j] = new BlockAir(blockWidth, blockHeight);
+}
+
+vector<int> ComponentGame::getValidDirections(const Position<int>& _position)
+{
+	static Position<int> directions[] = {
+		Position<int>(1, 0),
+		Position<int>(-1, 0),
+		Position<int>(0, 1),
+		Position<int>(0, -1),
+	};
+	int n = sizeof(directions) / sizeof(directions[0]);
+
+	vector<int> ret;
+	for (int i = 0; i < n; i++) {
+		Position<int> position(_position);
+		const Position<int>& direction = directions[i];
+		bool flag = false;
+		for (int j = 0; j < 4; j++) {
+			position += direction;
+			int x = position.getX();
+			int y = position.getY();
+			if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) {
+				flag = true;
+				break;
+			}
+			if (map[y][x] != nullptr) {
+				flag = true;
+				break;
+			}
+		}
+		if (!flag)
+			ret.push_back(i);
+	}
+	return ret;
 }
 
 void ComponentGame::deleteMap(void)

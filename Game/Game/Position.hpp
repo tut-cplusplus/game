@@ -20,17 +20,32 @@ public:
 	 */
 	Position(const T& x, const T& y);
 	/**
+	 * コピーコンストラクタ
+	 */
+	Position(const Position<T>& position);
+	/**
 	 * アクセッサ
 	 */
 	T getX(void) const;
 	T getY(void) const;
 	void setX(const T& x);
 	void setY(const T& y);
+
+	Position<T> operator-(void) const;
+	void operator+=(const Position<T>& position);
+	void operator-=(const Position<T>& position);
 };
 
 template <typename T>
 Position<T>::Position(const T& x, const T& y)
 	: x(x), y(y)
+{
+
+}
+
+template <typename T>
+Position<T>::Position(const Position<T>& position)
+	: x(position.x), y(position.y)
 {
 
 }
@@ -57,6 +72,25 @@ template <typename T>
 inline void Position<T>::setY(const T& y)
 {
 	this->y = y;
+}
+
+template <typename T>
+inline Position<T> Position<T>::operator-(void) const
+{
+	return Position<T>(-x, -y);
+}
+
+template <typename T>
+inline void Position<T>::operator+=(const Position<T>& position)
+{
+	x += position.x;
+	y += position.y;
+}
+
+template <typename T>
+inline void Position<T>::operator-=(const Position<T>& position)
+{
+	(*this)+=(-position);
 }
 
 #endif
