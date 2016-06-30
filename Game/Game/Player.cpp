@@ -14,7 +14,7 @@ Player::Player()
 {
 }
 
-Player::Player(int x, int y, int size, int x_w, int y_w) : x_width(x_w),y_width(y_w),Character(x,y,size)
+Player::Player(int x, int y, int size, int x_w, int y_w) : Character(x,y,size), x_width(x_w), y_width(y_w)
 {
 }
 

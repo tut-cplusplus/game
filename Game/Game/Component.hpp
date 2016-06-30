@@ -9,7 +9,7 @@ protected:
 public:
   Component();
   Component(int width, int height);
-  ~Component();
+  virtual ~Component();
 
   int getWidth(void) const;
   int getHeight(void) const;

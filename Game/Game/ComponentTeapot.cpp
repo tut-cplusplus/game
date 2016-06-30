@@ -14,7 +14,7 @@ ComponentTeapot::ComponentTeapot()
 }
 
 ComponentTeapot::ComponentTeapot(int width, int height)
-	: angle(0.0), Component(width, height)
+	: Component(width, height), angle(0.0)
 {
 	step = rnd(mt);
 }
