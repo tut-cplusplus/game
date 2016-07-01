@@ -4,8 +4,14 @@
 
 using namespace std;
 
-BlockNormalWall::BlockNormalWall(double width, double height)
-	: BlockWall(width, height)
+BlockNormalWall::BlockNormalWall()
+	: BlockWall()
+{
+
+}
+
+BlockNormalWall::BlockNormalWall(const Size<double>& size)
+	: BlockWall(size)
 {
 
 }

@@ -3,12 +3,13 @@
 #include "GL/glut.h"
 
 BlockUnbreakableWall::BlockUnbreakableWall()
+	: BlockWall()
 {
 
 }
 
-BlockUnbreakableWall::BlockUnbreakableWall(double width, double height)
-	: BlockWall(width, height)
+BlockUnbreakableWall::BlockUnbreakableWall(const Size<double>& size)
+	: BlockWall(size)
 {
 
 }

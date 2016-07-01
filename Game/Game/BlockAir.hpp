@@ -2,13 +2,15 @@
 #define ___Class_BlockAir
 
 #include "Block.hpp"
+#include "Size.hpp"
 
 /**
  * 空気ブロッククラス．
  */
 class BlockAir : public Block {
 public:
-	BlockAir(double width, double height);
+	BlockAir();
+	BlockAir(const Size<double>& size);
 
 	/**
 	 * 透明ブロックかどうか．

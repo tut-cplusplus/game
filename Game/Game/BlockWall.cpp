@@ -3,12 +3,13 @@
 #include "GL/glut.h"
 
 BlockWall::BlockWall()
+	: Block()
 {
 
 }
 
-BlockWall::BlockWall(double width, double height)
-	: Block(width, height)
+BlockWall::BlockWall(const Size<double>& size)
+	: Block(size)
 {
 
 }
@@ -16,6 +17,8 @@ BlockWall::BlockWall(double width, double height)
 void BlockWall::draw(void)
 {
 	Block::draw();
+	double width = size.getWidth();
+	double height = size.getHeight();
 	glBegin(GL_LINES);
 	glVertex2d(0.0, 0.0);
 	glVertex2d(width, height);

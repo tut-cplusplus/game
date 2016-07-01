@@ -2,11 +2,12 @@
 #define ___Class_BlockUnbreakableWall
 
 #include "BlockWall.hpp"
+#include "Size.hpp"
 
 class BlockUnbreakableWall : public BlockWall {
 public:
 	BlockUnbreakableWall();
-	BlockUnbreakableWall(double width, double height);
+	BlockUnbreakableWall(const Size<double>& size);
 
 	void changeColor(void) const;
 	bool isBreakable(void) const;

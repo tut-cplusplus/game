@@ -2,8 +2,14 @@
 
 #include "GL/glut.h"
 
-BlockAir::BlockAir(double width, double height)
-	: Block(width, height)
+BlockAir::BlockAir()
+	: Block()
+{
+
+}
+
+BlockAir::BlockAir(const Size<double>& size)
+	: Block(size)
 {
 	
 }

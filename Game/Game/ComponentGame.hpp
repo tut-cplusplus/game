@@ -9,6 +9,7 @@
 #include "Position.hpp"
 #include "Player.hpp"
 #include "NormalEnemy.hpp"
+#include "Size.hpp"
 
 class ComponentGame : public Component {
 public:
@@ -26,8 +27,7 @@ private:
 	Block*** map;
 	std::vector<Player*> players;
 	std::vector<Enemy*> enemies;
-	double blockWidth;
-	double blockHeight;
+	Size<double> blockSize;
 
 private:
 	void allocMap(void);

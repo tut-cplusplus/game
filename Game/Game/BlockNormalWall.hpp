@@ -2,13 +2,15 @@
 #define ___Class_BlockNormalWall
 
 #include "BlockWall.hpp"
+#include "Size.hpp"
 
 /**
  * 普通の壁クラス．
  */
 class BlockNormalWall : public BlockWall {
 public:
-	BlockNormalWall(double width, double height);
+	BlockNormalWall();
+	BlockNormalWall(const Size<double>& size);
 };
 
 #endif

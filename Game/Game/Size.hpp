@@ -22,6 +22,20 @@ public:
 };
 
 template <typename T>
+inline Size<T>::Size()
+	: width(0), height(0)
+{
+
+}
+
+template <typename T>
+inline Size<T>::Size(const T& width, const T& height)
+	: width(width), height(height)
+{
+
+}
+
+template <typename T>
 inline T Size<T>::getWidth(void) const
 {
 	return width;

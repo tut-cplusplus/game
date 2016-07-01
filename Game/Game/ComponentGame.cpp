@@ -39,12 +39,12 @@ void ComponentGame::generateMap(void)
 	for (int j = 1; j < MAP_WIDTH - 1; j++)
 		map[i][j] = nullptr;
 	for (int i = 0; i < MAP_HEIGHT; i++) {
-		map[i][0] = new BlockUnbreakableWall(blockWidth, blockHeight);
-		map[i][MAP_WIDTH - 1] = new BlockUnbreakableWall(blockWidth, blockHeight);
+		map[i][0] = new BlockUnbreakableWall(blockSize);
+		map[i][MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
 	}
 	for (int i = 0; i < MAP_WIDTH; i++) {
-		map[0][i] = new BlockUnbreakableWall(blockWidth, blockHeight);
-		map[MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockWidth, blockHeight);
+		map[0][i] = new BlockUnbreakableWall(blockSize);
+		map[MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
 	}
 
 	vector<Position<int>> v;
@@ -77,7 +77,7 @@ void ComponentGame::generateMap(void)
 			position += direction;
 			int x = position.getX();
 			int y = position.getY();
-			map[y][x] = new BlockNormalWall(blockWidth, blockHeight);
+			map[y][x] = new BlockNormalWall(blockSize);
 			if (i == 3)
 				v.push_back(position);
 		}
@@ -85,7 +85,7 @@ void ComponentGame::generateMap(void)
 	for (int i = 1; i < MAP_HEIGHT - 1; i++)
 	for (int j = 1; j < MAP_WIDTH - 1; j++)
 		if (map[i][j] == nullptr)
-			map[i][j] = new BlockAir(blockWidth, blockHeight);
+			map[i][j] = new BlockAir(blockSize);
 }
 
 vector<int> ComponentGame::getValidDirections(const Position<int>& _position)
@@ -183,20 +183,18 @@ vector<Position<int>> ComponentGame::getTransparentBlockPositions(void) const
 void ComponentGame::setBlockSize(void)
 {
 	for (int i = 0; i < MAP_HEIGHT; i++) {
-		for (int j = 0; j < MAP_WIDTH; j++) {
-			map[i][j]->setWidth(blockWidth);
-			map[i][j]->setHeight(blockHeight);
-		}
+		for (int j = 0; j < MAP_WIDTH; j++)
+			map[i][j]->setSize(blockSize);
 	}
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
 		Player& player = **itr;
-		player.setWidth(blockWidth);
-		player.setHeight(blockHeight);
+		player.setWidth(blockSize.getWidth());
+		player.setHeight(blockSize.getHeight());
 	}
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 		Enemy& enemy = **itr;
-		enemy.setWidth(blockWidth);
-		enemy.setHeight(blockHeight);
+		enemy.setWidth(blockSize.getWidth());
+		enemy.setHeight(blockSize.getHeight());
 	}
 }
 
@@ -206,7 +204,7 @@ ComponentGame::ComponentGame()
 }
 
 ComponentGame::ComponentGame(int width, int height)
-	: Component(width, height), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockWidth((double)width / MAP_WIDTH), blockHeight((double)height / MAP_HEIGHT)
+	: Component(width, height), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize((double)width / MAP_WIDTH, (double)height / MAP_HEIGHT)
 {
 	init();
 }
@@ -220,14 +218,14 @@ ComponentGame::~ComponentGame()
 void ComponentGame::setWidth(int width)
 {
 	this->width = width;
-	blockWidth = (double)width / MAP_WIDTH;
+	blockSize.setWidth((double)width / MAP_WIDTH);
 	setBlockSize();
 }
 
 void ComponentGame::setHeight(int height)
 {
 	this->height = height;
-	blockHeight = (double)height / MAP_HEIGHT;
+	blockSize.setHeight((double)height / MAP_HEIGHT);
 	setBlockSize();
 }
 
@@ -242,6 +240,8 @@ void ComponentGame::init(void)
 
 void ComponentGame::draw(void)
 {
+	double blockWidth = blockSize.getWidth();
+	double blockHeight = blockSize.getHeight();
 	glPushMatrix();
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		glPushMatrix();

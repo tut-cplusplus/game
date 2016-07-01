@@ -1,18 +1,19 @@
 #ifndef ___Class_Block
 #define ___Class_Block
 
+#include "Size.hpp"
+
 /**
  * ブロッククラス．
  * 壁やトラップの基となる．
  */
 class Block {
 protected:
-	double width;	/* 幅 */
-	double height;	/* 高さ */
+	Size<double> size;
 
 public:
 	Block();
-	Block(double width, double height);
+	Block(const Size<double>& size);
 	virtual ~Block();
 	/**
 	 * 色を変更する
@@ -45,31 +46,19 @@ public:
 	/**
 	 * セッター及びゲッター
 	 */
-	double getWidth(void) const;
-	double getHeight(void) const;
-	void setWidth(double width);
-	void setHeight(double height);
+	Size<double> getSize(void) const;
+	void setSize(const Size<double>& size);
 
 };
 
-inline double Block::getWidth(void) const
+inline Size<double> Block::getSize(void) const
 {
-	return width;
+	return size;
 }
 
-inline double Block::getHeight(void) const
+inline void Block::setSize(const Size<double>& size)
 {
-	return height;
-}
-
-inline void Block::setWidth(double width)
-{
-	this->width = width;
-}
-
-inline void Block::setHeight(double height)
-{
-	this->height = height;
+	this->size = size;
 }
 
 #endif

@@ -11,8 +11,8 @@ Block::Block()
 
 }
 
-Block::Block(double width, double height)
-	: width(width), height(height)
+Block::Block(const Size<double>& size)
+	: size(size)
 {
 
 }
@@ -45,6 +45,8 @@ void Block::destroy(void)
 void Block::draw(void)
 {
 	changeColor();
+	double width = size.getWidth();
+	double height = size.getHeight();
 	glBegin(GL_LINE_LOOP);
 	glVertex2d(0.0, 0.0);
 	glVertex2d(width, 0.0);
