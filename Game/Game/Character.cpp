@@ -1,5 +1,7 @@
 #include "Character.hpp"
 
+#include "GL/glut.h"
+
 Character::Character(double x, double y, double width, double height, int size)
 	: x(x), y(y), width(width), height(height), direction(WEST), texture_id(nullptr)
 {
@@ -54,6 +56,22 @@ void Character::move(void) {
 }
 
 void Character::breakWall(void) {
+}
+
+void Character::changeColor(void) const
+{
+	glColor3d(1.0, 1.0, 1.0);
+}
+
+void Character::draw(void)
+{
+	changeColor();
+	glBegin(GL_QUADS);
+	glVertex2d(0.0, 0.0);
+	glVertex2d(width, 0.0);
+	glVertex2d(width, height);
+	glVertex2d(0.0, height);
+	glEnd();
 }
 
 void Character::mouse(int button, int state, int x, int y)

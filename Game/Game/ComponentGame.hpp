@@ -8,6 +8,7 @@
 #include "Block.hpp"
 #include "Position.hpp"
 #include "Player.hpp"
+#include "NormalEnemy.hpp"
 
 class ComponentGame : public Component {
 public:
@@ -24,6 +25,7 @@ private:
 
 	Block*** map;
 	std::vector<Player*> players;
+	std::vector<Enemy*> enemies;
 	double blockWidth;
 	double blockHeight;
 
@@ -35,6 +37,8 @@ private:
 	void deleteMap(void);
 	void addPlayer(void);
 	void deletePlayers(void);
+	void addEnemy(void);
+	void deleteEnemies(void);
 	std::vector<Position<int>> getTransparentBlockPositions(void) const;
 	void setBlockSize(void);
 

@@ -4,7 +4,7 @@
 #include "Layout.hpp"
 #include "Position.hpp"
 
-#include <GL/glut.h>
+#include "GL/glut.h"
 
 class RelativeLayout : public Layout {
 protected:

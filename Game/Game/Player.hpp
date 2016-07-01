@@ -26,9 +26,6 @@ public:
 	Player(double x, double y);
 	~Player();
 
-	/**
-	 * displayに対応する関数
-	 */
-	void draw(void);
+	void changeColor(void) const;
 };
 

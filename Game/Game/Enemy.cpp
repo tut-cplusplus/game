@@ -40,13 +40,8 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::draw(void)
+void Enemy::changeColor(void) const
 {
-	glBegin(GL_QUADS);
-	glVertex2d(0.0, 0.0);
-	glVertex2d(width, 0.0);
-	glVertex2d(width, height);
-	glVertex2d(0.0, height);
-	glEnd();
+	glColor3d(0.0, 1.0, 0.0);
 }
 

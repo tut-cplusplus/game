@@ -152,6 +152,21 @@ void ComponentGame::deletePlayers(void)
 		delete *itr;
 }
 
+void ComponentGame::addEnemy(void)
+{
+	vector<Position<int>> positions = getTransparentBlockPositions();
+	int n = positions.size();
+	int idx = rnd(mt) * n;
+	const Position<int>& position = positions[idx];
+	enemies.push_back(new NormalEnemy(position.getX(), position.getY()));
+}
+
+void ComponentGame::deleteEnemies(void)
+{
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
+		delete *itr;
+}
+
 vector<Position<int>> ComponentGame::getTransparentBlockPositions(void) const
 {
 	vector<Position<int>> positions;
@@ -177,6 +192,11 @@ void ComponentGame::setBlockSize(void)
 		Player& player = **itr;
 		player.setWidth(blockWidth);
 		player.setHeight(blockHeight);
+	}
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		Enemy& enemy = **itr;
+		enemy.setWidth(blockWidth);
+		enemy.setHeight(blockHeight);
 	}
 }
 
@@ -216,6 +236,8 @@ void ComponentGame::init(void)
 	allocMap();
 	generateMap();
 	addPlayer();
+	for (int i = 0; i < 5; i++)
+		addEnemy();
 }
 
 void ComponentGame::draw(void)
@@ -238,6 +260,15 @@ void ComponentGame::draw(void)
 		double y = player.getY();
 		glTranslated(x * blockWidth, y * blockHeight, 0.0);
 		player.draw();
+		glPopMatrix();
+	}
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		glPushMatrix();
+		Enemy& enemy = **itr;
+		double x = enemy.getX();
+		double y = enemy.getY();
+		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		enemy.draw();
 		glPopMatrix();
 	}
 }

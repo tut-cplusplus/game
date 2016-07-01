@@ -1,3 +1,6 @@
+#ifndef ___Class_Character
+#define ___Class_Character
+
 enum Direction { NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3 };
 class Character {
 protected:
@@ -42,10 +45,11 @@ public:
 	 */
 	virtual void init();
 
+	virtual void changeColor(void) const;
 	/**
 	 * displayに対応する関数
 	 */
-	virtual void draw(void) = 0;
+	virtual void draw(void);
 	
 	/**
 	* mouseに対応する関数,マウスからの入力を与える
@@ -142,4 +146,6 @@ inline void Character::setHeight(double height)
 {
 	this->height = height;
 }
+
+#endif
 

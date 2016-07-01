@@ -38,10 +38,7 @@ public:
 	Enemy(double x, double y);
 	virtual ~Enemy();
 
-	/**
-	 * displayに対応する関数
-	 */
-	virtual void draw(void) = 0;
+	void changeColor(void) const;
 };
 
 #endif
