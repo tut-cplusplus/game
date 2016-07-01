@@ -274,26 +274,31 @@ void ComponentGame::draw(void)
 
 void ComponentGame::mouse(int button, int state, int x, int y)
 {
-
+	for (auto itr = players.begin(); itr != players.end(); ++itr)
+		(*itr)->mouse(button, state, x, y);
 }
 
 void ComponentGame::keyboard(unsigned char key, int x, int y)
 {
-	cout << "keyboard" << endl;
+	for (auto itr = players.begin(); itr != players.end(); ++itr)
+		(*itr)->keyboard(key, x, y);
 }
 
 void ComponentGame::keyboardup(unsigned char key, int x, int y)
 {
-	cout << "keyboardup" << endl;
+	for (auto itr = players.begin(); itr != players.end(); ++itr)
+		(*itr)->keyboardup(key, x, y);
 }
 
 void ComponentGame::special(int key, int x, int y)
 {
-	cout << "special" << endl;
+	for (auto itr = players.begin(); itr != players.end(); ++itr)
+		(*itr)->special(key, x, y);
 }
 
 void ComponentGame::specialup(int key, int x, int y)
 {
-	cout << "specialup" << endl;
+	for (auto itr = players.begin(); itr != players.end(); ++itr)
+		(*itr)->specialup(key, x, y);
 }
 

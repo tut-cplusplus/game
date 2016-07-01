@@ -1,6 +1,10 @@
+#include <iostream>
+
 #include "Character.hpp"
 
 #include "GL/glut.h"
+
+using namespace std;
 
 Character::Character()
 	: x(0.0), y(0.0), direction(WEST), texture_id(nullptr)
@@ -78,26 +82,26 @@ void Character::draw(void)
 
 void Character::mouse(int button, int state, int x, int y)
 {
-
+	cout << "mouse" << endl;
 }
 
 void Character::keyboard(unsigned char key, int x, int y)
 {
-
+	cout << "keyboard" << endl;
 }
 
 void Character::keyboardup(unsigned char key, int x, int y)
 {
-
+	cout << "keyboardup" << endl;
 }
 
 void Character::special(int key, int x, int y)
 {
-
+	cout << "special" << endl;
 }
 
 void Character::specialup(int key, int x, int y)
 {
-
+	cout << "specialup" << endl;
 }
 
