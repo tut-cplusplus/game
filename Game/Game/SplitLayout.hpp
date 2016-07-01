@@ -27,6 +27,14 @@ public:
 	 */
 	virtual void setComponent1(Component* component);
 	virtual void setComponent2(Component* component);
+	/**
+	 * GLUTのイベント
+	 */
+	void mouse(int button, int state, int x, int y);
+	void keyboard(unsigned char key, int x, int y);
+	void keyboardup(unsigned char key, int x, int y);
+	void special(int key, int x, int y);
+	void specialup(int key, int x, int y);
 };
 
 #endif

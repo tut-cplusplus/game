@@ -43,6 +43,6 @@ void LayoutManager::special(int key, int x, int y)
 
 void LayoutManager::specialup(int key, int x, int y)
 {
-	layout->special(key, x, y);
+	layout->specialup(key, x, y);
 }
 

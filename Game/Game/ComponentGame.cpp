@@ -279,21 +279,21 @@ void ComponentGame::mouse(int button, int state, int x, int y)
 
 void ComponentGame::keyboard(unsigned char key, int x, int y)
 {
-
+	cout << "keyboard" << endl;
 }
 
 void ComponentGame::keyboardup(unsigned char key, int x, int y)
 {
-
+	cout << "keyboardup" << endl;
 }
 
 void ComponentGame::special(int key, int x, int y)
 {
-
+	cout << "special" << endl;
 }
 
 void ComponentGame::specialup(int key, int x, int y)
 {
-
+	cout << "specialup" << endl;
 }
 
