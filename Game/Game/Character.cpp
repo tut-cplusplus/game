@@ -1,18 +1,18 @@
 #include "Character.hpp"
 
-Character::Character(int x, int y, int width, int height, int size)
+Character::Character(double x, double y, double width, double height, int size)
 	: x(x), y(y), width(width), height(height), direction(WEST), texture_id(nullptr)
 {
 
 }
 
-Character::Character(int x, int y,int size)
+Character::Character(double x, double y,int size)
 	: x(x) ,y(y), width(0), height(0), direction(WEST), texture_id(nullptr)
 {
 
 }
 
-Character::Character(int x, int y)
+Character::Character(double x, double y)
 	: x(x), y(y), width(0), height(0), direction(WEST), texture_id(nullptr)
 {
 

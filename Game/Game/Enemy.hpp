@@ -3,8 +3,8 @@
 #include "Character.hpp"
 class Enemy : public Character {
 protected:
-	int player_x;	//プレイヤーの座標
-	int player_y;	//プレイヤーの座標
+	double player_x;	//プレイヤーの座標
+	double player_y;	//プレイヤーの座標
 
 	/**
 	 * 向いている方へ移動する関数
@@ -33,9 +33,9 @@ public:
 	 * @param height y軸方向の幅
 	 * @param size	テクスチャIDの配列のサイズ
 	 */
-	Enemy(int x, int y, int width, int height, int size);
-	Enemy(int x, int y, int size);
-	Enemy(int x, int y);
+	Enemy(double x, double y, double width, double height, int size);
+	Enemy(double x, double y, int size);
+	Enemy(double x, double y);
 	~Enemy();
 
 	/**

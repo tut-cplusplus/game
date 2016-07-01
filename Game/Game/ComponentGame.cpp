@@ -57,9 +57,6 @@ void ComponentGame::generateMap(void)
 		v.push_back(Position<int>(i, MAP_HEIGHT - 1));
 	}
 
-	random_device rd;
-	mt19937 mt(rd());
-	uniform_real_distribution<double> rnd(0.0, 1.0);
 	static Position<int> directions[] = {
 		Position<int>(1, 0),
 		Position<int>(-1, 0),
@@ -140,6 +137,28 @@ void ComponentGame::deleteMap(void)
 	delete[] map;
 }
 
+void ComponentGame::addPlayer(void)
+{
+	vector<Position<int>> positions;
+	//Characterを配置可能な場所を取得する
+	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
+		for (int j = 1; j < MAP_WIDTH - 1; j++) {
+			if (map[i][j]->isTransparent())
+				positions.push_back(Position<int>(j, i));
+		}
+	}
+	int n = positions.size();
+	int idx = rnd(mt) * n;
+	const Position<int>& position = positions[idx];
+	players.push_back(new Player(position.getX(), position.getY()));
+}
+
+void ComponentGame::deletePlayers(void)
+{
+	for (auto itr = players.begin(); itr != players.end(); ++itr)
+		delete *itr;
+}
+
 void ComponentGame::setBlockSize(void)
 {
 	for (int i = 0; i < MAP_HEIGHT; i++) {
@@ -147,6 +166,11 @@ void ComponentGame::setBlockSize(void)
 			map[i][j]->setWidth(blockWidth);
 			map[i][j]->setHeight(blockHeight);
 		}
+	}
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		Player& player = **itr;
+		player.setWidth(blockWidth);
+		player.setHeight(blockHeight);
 	}
 }
 
@@ -156,7 +180,7 @@ ComponentGame::ComponentGame()
 }
 
 ComponentGame::ComponentGame(int width, int height)
-	: Component(width, height), map(nullptr), blockWidth((double)width / MAP_WIDTH), blockHeight((double)height / MAP_HEIGHT)
+	: Component(width, height), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockWidth((double)width / MAP_WIDTH), blockHeight((double)height / MAP_HEIGHT)
 {
 	init();
 }
@@ -164,6 +188,7 @@ ComponentGame::ComponentGame(int width, int height)
 ComponentGame::~ComponentGame()
 {
 	deleteMap();
+	deletePlayers();
 }
 
 void ComponentGame::setWidth(int width)
@@ -184,11 +209,11 @@ void ComponentGame::init(void)
 {
 	allocMap();
 	generateMap();
+	addPlayer();
 }
 
 void ComponentGame::draw(void)
 {
-	glColor3d(1.0, 1.0, 1.0);
 	glPushMatrix();
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		glPushMatrix();
@@ -200,6 +225,15 @@ void ComponentGame::draw(void)
 		glTranslated(0.0, blockHeight, 0.0);
 	}
 	glPopMatrix();
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		glPushMatrix();
+		Player& player = **itr;
+		double x = player.getX();
+		double y = player.getY();
+		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		player.draw();
+		glPopMatrix();
+	}
 }
 
 void ComponentGame::mouse(int button, int state, int x, int y)

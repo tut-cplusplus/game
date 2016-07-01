@@ -8,6 +8,11 @@ BlockAir::BlockAir(double width, double height)
 	
 }
 
+bool BlockAir::isTransparent(void) const
+{
+	return true;
+}
+
 void BlockAir::draw(void)
 {
 

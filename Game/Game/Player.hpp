@@ -21,9 +21,9 @@ public:
 	* @param height y軸方向の幅
 	* @param size	テクスチャIDの配列のサイズ
 	*/
-	Player(int x, int y, int width, int height, int size);
-	Player(int x, int y, int size);
-	Player(int x, int y);
+	Player(double x, double y, double width, double height, int size);
+	Player(double x, double y, int size);
+	Player(double x, double y);
 	~Player();
 
 	/**

@@ -1,10 +1,10 @@
 enum Direction { NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3 };
 class Character {
 protected:
-	int x;				//x座標
-	int y;				//y座標
-	int width;
-	int height;
+	double x;				//x座標
+	double y;				//y座標
+	double width;
+	double height;
 	Direction direction;//キャラクターの向き
 	int *texture_id;	//テクスチャIDの配列
 	
@@ -26,16 +26,16 @@ protected:
 
 public:
 	Character() {}
-	Character(int x, int y, int width, int height, int size);
+	Character(double x, double y, double width, double height, int size);
 	/**
 	 * コンストラクタ
 	 * @param x		Characterのx座標
 	 * @param y		Characterのy座標
 	 * @param size	テクスチャIDの配列のサイズ
 	 */
-	Character(int x, int y, int size);
-	Character(int x, int y);
-	~Character();
+	Character(double x, double y, int size);
+	Character(double x, double y);
+	virtual ~Character();
 	
 	/**
 	 * 初期化関数
@@ -92,4 +92,54 @@ public:
 	 * @param x   特殊キーが離された時のマウスy座標
 	 */
 	virtual void specialup(int key, int x, int y);
+
+	double getX(void) const;
+	double getY(void) const;
+	double getWidth(void) const;
+	double getHeight(void) const;
+	void setX(double x);
+	void setY(double y);
+	void setWidth(double width);
+	void setHeight(double height);
 };
+
+inline double Character::getX(void) const
+{
+	return x;
+}
+
+inline double Character::getY(void) const
+{
+	return y;
+}
+
+inline double Character::getWidth(void) const
+{
+	return width;
+}
+
+inline double Character::getHeight(void) const
+{
+	return height;
+}
+
+inline void Character::setX(double x)
+{
+	this->x = x;
+}
+
+inline void Character::setY(double y)
+{
+	this->y = y;
+}
+
+inline void Character::setWidth(double width)
+{
+	this->width = width;
+}
+
+inline void Character::setHeight(double height)
+{
+	this->height = height;
+}
+

@@ -2,10 +2,12 @@
 #define ___Class_ComponentGame
 
 #include <vector>
+#include <random>
 
 #include "Component.hpp"
 #include "Block.hpp"
 #include "Position.hpp"
+#include "Player.hpp"
 
 class ComponentGame : public Component {
 public:
@@ -16,7 +18,12 @@ private:
 	static const int MAP_HEIGHT;
 
 private:
+	std::random_device rd;
+	std::mt19937 mt;
+	std::uniform_real_distribution<double> rnd;
+
 	Block*** map;
+	std::vector<Player*> players;
 	double blockWidth;
 	double blockHeight;
 
@@ -26,6 +33,8 @@ private:
 	void generateMap(void);
 	std::vector<int> getValidDirections(const Position<int>& position);
 	void deleteMap(void);
+	void addPlayer(void);
+	void deletePlayers(void);
 	void setBlockSize(void);
 
 public:
