@@ -20,14 +20,14 @@ Player::Player()
 
 }
 
-Player::Player(double x, double y, const Size<double>& size)
-	: Character(x, y, size)
+Player::Player(double x, double y, const Size<double>& size, const Keypad& keypad)
+	: Character(x, y, size), keypad(keypad)
 {
 
 }
 
-Player::Player(double x, double y)
-	: Character(x, y)
+Player::Player(double x, double y, const Keypad& keypad)
+	: Character(x, y), keypad(keypad)
 {
 
 }

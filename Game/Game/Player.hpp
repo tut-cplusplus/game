@@ -2,8 +2,12 @@
 
 #include "Character.hpp"
 #include "Size.hpp"
+#include "Keypad.hpp"
 
 class Player : public Character {
+private:
+	Keypad keypad;
+
 protected:
 	/**
 	 * 向いている方へ移動する関数
@@ -16,13 +20,13 @@ protected:
 	void breakWall(void);
 public:
 	Player();
-	Player(double x, double y, const Size<double>& size);
+	Player(double x, double y, const Size<double>& size, const Keypad& keypad);
 	/**
 	* コンストラクタ
 	* @param x		Characterのx座標
 	* @param y		Characterのy座標
 	*/
-	Player(double x, double y);
+	Player(double x, double y, const Keypad& keypad);
 	~Player();
 
 	void changeColor(void) const;
