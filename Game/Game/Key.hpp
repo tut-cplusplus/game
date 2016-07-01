@@ -2,7 +2,7 @@
 #define ___Class_Key
 
 class Key {
-private:
+protected:
 	static bool KEY_NORMAL;
 	static bool KEY_SPECIAL;
 
