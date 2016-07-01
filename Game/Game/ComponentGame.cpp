@@ -6,7 +6,7 @@
 #include "BlockAir.hpp"
 #include "BlockNormalWall.hpp"
 #include "BlockUnbreakableWall.hpp"
-#include "Position.hpp"
+#include "Vector.hpp"
 
 #include "GL/glut.h"
 
@@ -47,32 +47,32 @@ void ComponentGame::generateMap(void)
 		map[MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
 	}
 
-	vector<Position<int>> v;
+	vector<Vector<int>> v;
 	for (int i = 4; i < MAP_HEIGHT - 1; i += 4) {
-		v.push_back(Position<int>(0, i));
-		v.push_back(Position<int>(MAP_WIDTH - 1, i));
+		v.push_back(Vector<int>(0, i));
+		v.push_back(Vector<int>(MAP_WIDTH - 1, i));
 	}
 	for (int i = 4; i < MAP_WIDTH - 1; i += 4) {
-		v.push_back(Position<int>(i, 0));
-		v.push_back(Position<int>(i, MAP_HEIGHT - 1));
+		v.push_back(Vector<int>(i, 0));
+		v.push_back(Vector<int>(i, MAP_HEIGHT - 1));
 	}
 
-	static Position<int> directions[] = {
-		Position<int>(1, 0),
-		Position<int>(-1, 0),
-		Position<int>(0, 1),
-		Position<int>(0, -1),
+	static Vector<int> directions[] = {
+		Vector<int>(1, 0),
+		Vector<int>(-1, 0),
+		Vector<int>(0, 1),
+		Vector<int>(0, -1),
 	};
 	while (v.size()) {
 		int idx = rnd(mt) * v.size();
-		Position<int> position = v[idx];
+		Vector<int> position = v[idx];
 		v.erase(v.begin() + idx);
 		vector<int> directionIDs = getValidDirections(position);
 		int size = directionIDs.size();
 		if (!size)
 			continue;
 		idx = rnd(mt) * size;
-		const Position<int>& direction = directions[directionIDs[idx]];
+		const Vector<int>& direction = directions[directionIDs[idx]];
 		for (int i = 0; i < 4; i++) {
 			position += direction;
 			int x = position.getX();
@@ -88,20 +88,20 @@ void ComponentGame::generateMap(void)
 			map[i][j] = new BlockAir(blockSize);
 }
 
-vector<int> ComponentGame::getValidDirections(const Position<int>& _position)
+vector<int> ComponentGame::getValidDirections(const Vector<int>& _position)
 {
-	static Position<int> directions[] = {
-		Position<int>(1, 0),
-		Position<int>(-1, 0),
-		Position<int>(0, 1),
-		Position<int>(0, -1),
+	static Vector<int> directions[] = {
+		Vector<int>(1, 0),
+		Vector<int>(-1, 0),
+		Vector<int>(0, 1),
+		Vector<int>(0, -1),
 	};
 	int n = sizeof(directions) / sizeof(directions[0]);
 
 	vector<int> ret;
 	for (int i = 0; i < n; i++) {
-		Position<int> position(_position);
-		const Position<int>& direction = directions[i];
+		Vector<int> position(_position);
+		const Vector<int>& direction = directions[i];
 		bool flag = false;
 		for (int j = 0; j < 4; j++) {
 			position += direction;
@@ -139,10 +139,10 @@ void ComponentGame::deleteMap(void)
 
 void ComponentGame::addPlayer(void)
 {
-	vector<Position<int>> positions = getTransparentBlockPositions();
+	vector<Vector<int>> positions = getTransparentBlockVectors();
 	int n = positions.size();
 	int idx = rnd(mt) * n;
-	const Position<int>& position = positions[idx];
+	const Vector<int>& position = positions[idx];
 	players.push_back(new Player(position.getX(), position.getY()));
 }
 
@@ -154,10 +154,10 @@ void ComponentGame::deletePlayers(void)
 
 void ComponentGame::addEnemy(void)
 {
-	vector<Position<int>> positions = getTransparentBlockPositions();
+	vector<Vector<int>> positions = getTransparentBlockVectors();
 	int n = positions.size();
 	int idx = rnd(mt) * n;
-	const Position<int>& position = positions[idx];
+	const Vector<int>& position = positions[idx];
 	enemies.push_back(new NormalEnemy(position.getX(), position.getY()));
 }
 
@@ -167,14 +167,14 @@ void ComponentGame::deleteEnemies(void)
 		delete *itr;
 }
 
-vector<Position<int>> ComponentGame::getTransparentBlockPositions(void) const
+vector<Vector<int>> ComponentGame::getTransparentBlockVectors(void) const
 {
-	vector<Position<int>> positions;
+	vector<Vector<int>> positions;
 	//Characterを配置可能な場所を取得する
 	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
 		for (int j = 1; j < MAP_WIDTH - 1; j++) {
 			if (map[i][j]->isTransparent())
-				positions.push_back(Position<int>(j, i));
+				positions.push_back(Vector<int>(j, i));
 		}
 	}
 	return positions;

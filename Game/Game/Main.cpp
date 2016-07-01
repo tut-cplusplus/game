@@ -149,9 +149,9 @@ void init(void)
 	TextureManager::init();
 	RelativeLayout* layout = new RelativeLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT);
 	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT, 0.05);
-	layout->add(verticalSplitLayout, Position<double>(0.0, 0.0));
+	layout->add(verticalSplitLayout, Vector<double>(0.0, 0.0));
 	verticalSplitLayout->setComponent2(new ComponentGame(0, 0));
-	layout->add(new ComponentFPS(10, 10), Position<double>(0.0, 0.0));
+	layout->add(new ComponentFPS(10, 10), Vector<double>(0.0, 0.0));
 	LayoutManager::registerLayout(layout);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 }

@@ -25,9 +25,9 @@ void RelativeLayout::draw(void)
 	unsigned n = components.size();
 	for (unsigned i = 0; i < n; i++) {
 		Component* component = components[i];
-		const Position<double>& position = positions[i];
+		const Vector<double>& v = vs[i];
 		glPushMatrix();
-		glTranslated(position.getX(), position.getY(), 0.0);
+		glTranslated(v.getX(), v.getY(), 0.0);
 		component->draw();
 		glPopMatrix();
 	}

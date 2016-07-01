@@ -6,7 +6,7 @@
 
 #include "Component.hpp"
 #include "Block.hpp"
-#include "Position.hpp"
+#include "Vector.hpp"
 #include "Player.hpp"
 #include "NormalEnemy.hpp"
 #include "Size.hpp"
@@ -33,13 +33,13 @@ private:
 	void allocMap(void);
 	void clearMap(void);
 	void generateMap(void);
-	std::vector<int> getValidDirections(const Position<int>& position);
+	std::vector<int> getValidDirections(const Vector<int>& v);
 	void deleteMap(void);
 	void addPlayer(void);
 	void deletePlayers(void);
 	void addEnemy(void);
 	void deleteEnemies(void);
-	std::vector<Position<int>> getTransparentBlockPositions(void) const;
+	std::vector<Vector<int>> getTransparentBlockVectors(void) const;
 	void setBlockSize(void);
 
 public:
