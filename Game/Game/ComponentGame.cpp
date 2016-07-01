@@ -139,14 +139,7 @@ void ComponentGame::deleteMap(void)
 
 void ComponentGame::addPlayer(void)
 {
-	vector<Position<int>> positions;
-	//Characterを配置可能な場所を取得する
-	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
-		for (int j = 1; j < MAP_WIDTH - 1; j++) {
-			if (map[i][j]->isTransparent())
-				positions.push_back(Position<int>(j, i));
-		}
-	}
+	vector<Position<int>> positions = getTransparentBlockPositions();
 	int n = positions.size();
 	int idx = rnd(mt) * n;
 	const Position<int>& position = positions[idx];
@@ -157,6 +150,19 @@ void ComponentGame::deletePlayers(void)
 {
 	for (auto itr = players.begin(); itr != players.end(); ++itr)
 		delete *itr;
+}
+
+vector<Position<int>> ComponentGame::getTransparentBlockPositions(void) const
+{
+	vector<Position<int>> positions;
+	//Characterを配置可能な場所を取得する
+	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
+		for (int j = 1; j < MAP_WIDTH - 1; j++) {
+			if (map[i][j]->isTransparent())
+				positions.push_back(Position<int>(j, i));
+		}
+	}
+	return positions;
 }
 
 void ComponentGame::setBlockSize(void)

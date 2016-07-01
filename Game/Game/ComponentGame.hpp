@@ -35,6 +35,7 @@ private:
 	void deleteMap(void);
 	void addPlayer(void);
 	void deletePlayers(void);
+	std::vector<Position<int>> getTransparentBlockPositions(void) const;
 	void setBlockSize(void);
 
 public:
