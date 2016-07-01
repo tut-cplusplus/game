@@ -15,16 +15,12 @@ void Player::breakWall(void)
 }
 
 Player::Player()
-{
-}
-
-Player::Player(double x, double y, double width, double height, int size)
-	: Character(x, y, width, height, size)
+	: Character()
 {
 
 }
 
-Player::Player(double x, double y, int size)
+Player::Player(double x, double y, const Size<double>& size)
 	: Character(x, y, size)
 {
 

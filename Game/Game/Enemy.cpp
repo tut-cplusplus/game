@@ -14,16 +14,12 @@ void Enemy::message(void)
 }
 
 Enemy::Enemy()
-{
-}
-
-Enemy::Enemy(double x, double y, double width, double height, int size)
-	: Character(x, y, width, height, size)
+	: Character()
 {
 
 }
 
-Enemy::Enemy(double x, double y, int size)
+Enemy::Enemy(double x, double y, const Size<double>& size)
 	: Character(x, y, size)
 {
 

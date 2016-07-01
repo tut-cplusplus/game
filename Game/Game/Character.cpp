@@ -2,20 +2,20 @@
 
 #include "GL/glut.h"
 
-Character::Character(double x, double y, double width, double height, int size)
-	: x(x), y(y), width(width), height(height), direction(WEST), texture_id(nullptr)
+Character::Character()
+	: x(0.0), y(0.0), direction(WEST), texture_id(nullptr)
 {
 
 }
 
-Character::Character(double x, double y,int size)
-	: x(x) ,y(y), width(0), height(0), direction(WEST), texture_id(nullptr)
+Character::Character(double x, double y, const Size<double>& size)
+	: x(x), y(y), size(size), direction(WEST), texture_id(nullptr)
 {
 
 }
 
 Character::Character(double x, double y)
-	: x(x), y(y), width(0), height(0), direction(WEST), texture_id(nullptr)
+	: x(x), y(y), direction(WEST), texture_id(nullptr)
 {
 
 }
@@ -66,6 +66,8 @@ void Character::changeColor(void) const
 void Character::draw(void)
 {
 	changeColor();
+	double width = size.getWidth();
+	double height = size.getHeight();
 	glBegin(GL_QUADS);
 	glVertex2d(0.0, 0.0);
 	glVertex2d(width, 0.0);

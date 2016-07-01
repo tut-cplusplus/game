@@ -1,6 +1,9 @@
 #ifndef __Class_Enemy
 #define __Class_Enemy
+
 #include "Character.hpp"
+#include "Size.hpp"
+
 class Enemy : public Character {
 protected:
 	double player_x;	//プレイヤーの座標
@@ -25,16 +28,12 @@ public:
 	
 	Enemy();
 
+	Enemy(double x, double y, const Size<double>& size);
 	/**
 	 * コンストラクタ
 	 * @param x		Characterのx座標
 	 * @param y		Characterのy座標
-	 * @param width x軸方向の幅
-	 * @param height y軸方向の幅
-	 * @param size	テクスチャIDの配列のサイズ
 	 */
-	Enemy(double x, double y, double width, double height, int size);
-	Enemy(double x, double y, int size);
 	Enemy(double x, double y);
 	virtual ~Enemy();
 

@@ -1,13 +1,14 @@
 #ifndef ___Class_Character
 #define ___Class_Character
 
+#include "Size.hpp"
+
 enum Direction { NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3 };
 class Character {
 protected:
 	double x;				//x座標
 	double y;				//y座標
-	double width;
-	double height;
+	Size<double> size;
 	Direction direction;//キャラクターの向き
 	int *texture_id;	//テクスチャIDの配列
 	
@@ -28,15 +29,13 @@ protected:
 	virtual void breakWall(void);
 
 public:
-	Character() {}
-	Character(double x, double y, double width, double height, int size);
+	Character();
+	Character(double x, double y, const Size<double>& size);
 	/**
 	 * コンストラクタ
 	 * @param x		Characterのx座標
 	 * @param y		Characterのy座標
-	 * @param size	テクスチャIDの配列のサイズ
 	 */
-	Character(double x, double y, int size);
 	Character(double x, double y);
 	virtual ~Character();
 	
@@ -99,12 +98,10 @@ public:
 
 	double getX(void) const;
 	double getY(void) const;
-	double getWidth(void) const;
-	double getHeight(void) const;
+	Size<double> getSize(void) const;
 	void setX(double x);
 	void setY(double y);
-	void setWidth(double width);
-	void setHeight(double height);
+	void setSize(const Size<double>& size);
 };
 
 inline double Character::getX(void) const
@@ -117,14 +114,9 @@ inline double Character::getY(void) const
 	return y;
 }
 
-inline double Character::getWidth(void) const
+inline Size<double> Character::getSize(void) const
 {
-	return width;
-}
-
-inline double Character::getHeight(void) const
-{
-	return height;
+	return size;
 }
 
 inline void Character::setX(double x)
@@ -137,14 +129,9 @@ inline void Character::setY(double y)
 	this->y = y;
 }
 
-inline void Character::setWidth(double width)
+inline void Character::setSize(const Size<double>& size)
 {
-	this->width = width;
-}
-
-inline void Character::setHeight(double height)
-{
-	this->height = height;
+	this->size = size;
 }
 
 #endif

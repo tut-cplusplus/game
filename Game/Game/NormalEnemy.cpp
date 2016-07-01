@@ -1,17 +1,12 @@
 #include "NormalEnemy.hpp"
 
 NormalEnemy::NormalEnemy()
+	: Enemy()
 {
 
 }
 
-NormalEnemy::NormalEnemy(double x, double y, double width, double height, int size)
-	: Enemy(x, y, width, height, size)
-{
-
-}
-
-NormalEnemy::NormalEnemy(double x, double y, int size)
+NormalEnemy::NormalEnemy(double x, double y, const Size<double>& size)
 	: Enemy(x, y, size)
 {
 

@@ -188,13 +188,11 @@ void ComponentGame::setBlockSize(void)
 	}
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
 		Player& player = **itr;
-		player.setWidth(blockSize.getWidth());
-		player.setHeight(blockSize.getHeight());
+		player.setSize(blockSize);
 	}
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 		Enemy& enemy = **itr;
-		enemy.setWidth(blockSize.getWidth());
-		enemy.setHeight(blockSize.getHeight());
+		enemy.setSize(blockSize);
 	}
 }
 
