@@ -1,7 +1,6 @@
 #include "Enemy.hpp"
 #include <GL/glut.h>
 
-
 void Enemy::move(void)
 {
 }
@@ -44,10 +43,10 @@ Enemy::~Enemy()
 void Enemy::draw(void)
 {
 	glBegin(GL_QUADS);
-	glVertex2d(x, y + height);
-	glVertex2d(x, y);
-	glVertex2d(x + width, y);
-	glVertex2d(x + width, y + height);
+	glVertex2d(0.0, 0.0);
+	glVertex2d(width, 0.0);
+	glVertex2d(width, height);
+	glVertex2d(0.0, height);
 	glEnd();
 }
 

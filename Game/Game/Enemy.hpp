@@ -36,7 +36,7 @@ public:
 	Enemy(double x, double y, double width, double height, int size);
 	Enemy(double x, double y, int size);
 	Enemy(double x, double y);
-	~Enemy();
+	virtual ~Enemy();
 
 	/**
 	 * displayに対応する関数
