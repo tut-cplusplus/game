@@ -41,7 +41,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::drawDisplay(void)
+void Enemy::draw(void)
 {
 	glBegin(GL_QUADS);
 	glVertex2d(x, y + height);
@@ -51,42 +51,3 @@ void Enemy::drawDisplay(void)
 	glEnd();
 }
 
-void Enemy::visibility(int state)
-{
-}
-
-void Enemy::resize(int w, int h)
-{
-}
-
-void Enemy::inputMouse(int button, int state, int x, int y)
-{
-}
-
-void Enemy::inputActiveMotion(int x, int y)
-{
-}
-
-void Enemy::inputPassiveMotion(int x, int y)
-{
-}
-
-void Enemy::inputKeyboard(unsigned char key, int x, int y)
-{
-}
-
-void Enemy::inputKeyboardUp(unsigned char key, int x, int y)
-{
-}
-
-void Enemy::inputSpecialKey(unsigned char key, int x, int y)
-{
-}
-
-void Enemy::inputSpecialKeyUp(unsigned char key, int x, int y)
-{
-}
-
-void Enemy::idle(void)
-{
-}

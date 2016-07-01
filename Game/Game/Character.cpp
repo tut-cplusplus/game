@@ -24,13 +24,8 @@ Character::~Character() {
 		delete texture_id;
 }
 
-void Character::init(int x, int y, int size) {
-	this->x = x;
-	this->y = y;
-	if (this->texture_id != nullptr) {
-		delete this->texture_id;
-	}
-	this->texture_id = new int[size];
+void Character::init(void) {
+
 }
 
 
@@ -60,3 +55,29 @@ void Character::move(void) {
 
 void Character::breakWall(void) {
 }
+
+void Character::mouse(int button, int state, int x, int y)
+{
+
+}
+
+void Character::keyboard(unsigned char key, int x, int y)
+{
+
+}
+
+void Character::keyboardup(unsigned char key, int x, int y)
+{
+
+}
+
+void Character::special(int key, int x, int y)
+{
+
+}
+
+void Character::specialup(int key, int x, int y)
+{
+
+}
+
