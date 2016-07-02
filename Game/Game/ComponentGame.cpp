@@ -287,24 +287,8 @@ void ComponentGame::draw(void)
 		glTranslated(0.0, blockHeight, 0.0);
 	}
 	glPopMatrix();
-	for (auto itr = players.begin(); itr != players.end(); ++itr) {
-		glPushMatrix();
-		Player& player = **itr;
-		double x = player.getX();
-		double y = player.getY();
-		glTranslated(x * blockWidth, y * blockHeight, 0.0);
-		player.draw();
-		glPopMatrix();
-	}
-	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
-		glPushMatrix();
-		Enemy& enemy = **itr;
-		double x = enemy.getX();
-		double y = enemy.getY();
-		glTranslated(x * blockWidth, y * blockHeight, 0.0);
-		enemy.draw();
-		glPopMatrix();
-	}
+	drawCharacters(players);
+	drawCharacters(enemies);
 }
 
 void ComponentGame::mouse(int button, int state, int x, int y)

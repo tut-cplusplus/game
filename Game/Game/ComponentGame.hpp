@@ -12,6 +12,8 @@
 #include "NormalEnemy.hpp"
 #include "Size.hpp"
 
+#include "GL/glut.h"
+
 class ComponentGame : public Component {
 public:
 	class CannotAllocateException{};
@@ -41,6 +43,8 @@ private:
 	void deletePlayers(void);
 	void addEnemy(void);
 	void deleteEnemies(void);
+	template <typename T>
+	void drawCharacters(const std::vector<T*> characters) const;
 	std::vector<Vector<int>> getTransparentBlockVectors(void) const;
 	void setBlockSize(void);
 	std::list<Key>::iterator searchKey(const Key& key);
@@ -64,6 +68,22 @@ public:
 	virtual void special(int key, int x, int y);
 	virtual void specialup(int key, int x, int y);
 };
+
+template <typename T>
+inline void ComponentGame::drawCharacters(const std::vector<T*> characters) const
+{
+	double blockWidth = blockSize.getWidth();
+	double blockHeight = blockSize.getHeight();
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		glPushMatrix();
+		T& character = **itr;
+		double x = character.getX();
+		double y = character.getY();
+		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		character.draw();
+		glPopMatrix();
+	}
+}
 
 #endif
 
