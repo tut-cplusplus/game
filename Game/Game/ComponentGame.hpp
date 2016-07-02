@@ -77,8 +77,9 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters) cons
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		glPushMatrix();
 		T& character = **itr;
-		double x = character.getX();
-		double y = character.getY();
+		Vector<double> position = character.getPosition();
+		double x = position.getX();
+		double y = position.getY();
 		glTranslated(x * blockWidth, y * blockHeight, 0.0);
 		character.draw();
 		glPopMatrix();

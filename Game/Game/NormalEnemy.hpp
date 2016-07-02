@@ -7,8 +7,8 @@
 class NormalEnemy : public Enemy {
 public:
 	NormalEnemy();
-	NormalEnemy(double x, double y, const Size<double>& size);
-	NormalEnemy(double x, double y);
+	NormalEnemy(const Vector<double>& position, const Size<double>& size);
+	NormalEnemy(const Vector<double>& position);
 };
 
 #endif

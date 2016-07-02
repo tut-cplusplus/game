@@ -1,6 +1,7 @@
 #ifndef ___Class_Character
 #define ___Class_Character
 
+#include "Vector.hpp"
 #include "Size.hpp"
 #include "Key.hpp"
 
@@ -9,23 +10,11 @@ public:
 	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };
 
 protected:
-	double x;				//x座標
-	double y;				//y座標
+	Vector<double> position;
 	Size<double> size;
 	Direction direction;//キャラクターの向き
 	int *texture_id;	//テクスチャIDの配列
 	
-	/**
-	 * キャラクターの向きを指定する関数
-	 * @param d 向く方向
-	 */
-	void face(Direction d);
-
-	/**
-	 * 向いている方へ1歩移動する関数
-	 */
-	virtual void move(void);
-
 	/**
 	 * 壁を壊す関数
 	 */
@@ -33,13 +22,8 @@ protected:
 
 public:
 	Character();
-	Character(double x, double y, const Size<double>& size);
-	/**
-	 * コンストラクタ
-	 * @param x		Characterのx座標
-	 * @param y		Characterのy座標
-	 */
-	Character(double x, double y);
+	Character(const Vector<double>& position, const Size<double>& size);
+	Character(const Vector<double>& position);
 	virtual ~Character();
 	
 	/**
@@ -100,23 +84,16 @@ public:
 	 */
 	virtual void specialup(int key, int x, int y);
 
-	double getX(void) const;
-	double getY(void) const;
+	Vector<double> getPosition(void) const;
 	Size<double> getSize(void) const;
 	Direction getDirection(void) const;
-	void setX(double x);
-	void setY(double y);
+	void setPosition(const Vector<double>& position);
 	void setSize(const Size<double>& size);
 };
 
-inline double Character::getX(void) const
+inline Vector<double> Character::getPosition(void) const
 {
-	return x;
-}
-
-inline double Character::getY(void) const
-{
-	return y;
+	return position;
 }
 
 inline Size<double> Character::getSize(void) const
@@ -129,14 +106,9 @@ inline Character::Direction Character::getDirection(void) const
 	return direction;
 }
 
-inline void Character::setX(double x)
+inline void Character::setPosition(const Vector<double>& position)
 {
-	this->x = x;
-}
-
-inline void Character::setY(double y)
-{
-	this->y = y;
+	this->position = position;
 }
 
 inline void Character::setSize(const Size<double>& size)

@@ -145,7 +145,7 @@ void ComponentGame::addPlayer(void)
 	int idx = rnd(mt) * n;
 	const Vector<int>& position = positions[idx];
 	Keypad keypad(Key('w'), Key('s'), Key('a'), Key('d'), Key(' '));
-	players.push_back(new Player(position.getX(), position.getY(), keypad));
+	players.push_back(new Player(Vector<double>(position.getX(), position.getY()), keypad));
 }
 
 void ComponentGame::deletePlayers(void)
@@ -160,7 +160,7 @@ void ComponentGame::addEnemy(void)
 	int n = positions.size();
 	int idx = rnd(mt) * n;
 	const Vector<int>& position = positions[idx];
-	enemies.push_back(new NormalEnemy(position.getX(), position.getY()));
+	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY())));
 }
 
 void ComponentGame::deleteEnemies(void)

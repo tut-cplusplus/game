@@ -1,10 +1,6 @@
 #include "Enemy.hpp"
 #include <GL/glut.h>
 
-void Enemy::move(void)
-{
-}
-
 void Enemy::breakWall(void)
 {
 }
@@ -19,14 +15,14 @@ Enemy::Enemy()
 
 }
 
-Enemy::Enemy(double x, double y, const Size<double>& size)
-	: Character(x, y, size)
+Enemy::Enemy(const Vector<double>& position, const Size<double>& size)
+	: Character(position, size)
 {
 
 }
 
-Enemy::Enemy(double x, double y)
-	: Character(x, y)
+Enemy::Enemy(const Vector<double>& position)
+	: Character(position)
 {
 
 }

@@ -6,14 +6,14 @@ NormalEnemy::NormalEnemy()
 
 }
 
-NormalEnemy::NormalEnemy(double x, double y, const Size<double>& size)
-	: Enemy(x, y, size)
+NormalEnemy::NormalEnemy(const Vector<double>& position, const Size<double>& size)
+	: Enemy(position, size)
 {
 
 }
 
-NormalEnemy::NormalEnemy(double x, double y)
-	: Enemy(x, y)
+NormalEnemy::NormalEnemy(const Vector<double>& position)
+	: Enemy(position)
 {
 
 }

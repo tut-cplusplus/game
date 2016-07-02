@@ -6,10 +6,6 @@
 
 using namespace std;
 
-void Player::move(void)
-{
-}
-
 void Player::breakWall(void)
 {
 }
@@ -20,14 +16,14 @@ Player::Player()
 
 }
 
-Player::Player(double x, double y, const Size<double>& size, const Keypad& keypad)
-	: Character(x, y, size), keypad(keypad)
+Player::Player(const Vector<double>& position, const Size<double>& size, const Keypad& keypad)
+	: Character(position, size), keypad(keypad)
 {
 
 }
 
-Player::Player(double x, double y, const Keypad& keypad)
-	: Character(x, y), keypad(keypad)
+Player::Player(const Vector<double>& position, const Keypad& keypad)
+	: Character(position), keypad(keypad)
 {
 
 }

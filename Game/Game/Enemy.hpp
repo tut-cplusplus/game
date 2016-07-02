@@ -10,11 +10,6 @@ protected:
 	double player_y;	//プレイヤーの座標
 
 	/**
-	 * 向いている方へ移動する関数
-	 */
-	void move(void);
-
-	/**
 	 * 壁を壊す関数
 	 */
 	void breakWall(void);
@@ -28,13 +23,8 @@ public:
 	
 	Enemy();
 
-	Enemy(double x, double y, const Size<double>& size);
-	/**
-	 * コンストラクタ
-	 * @param x		Characterのx座標
-	 * @param y		Characterのy座標
-	 */
-	Enemy(double x, double y);
+	Enemy(const Vector<double>& position, const Size<double>& size);
+	Enemy(const Vector<double>& position);
 	virtual ~Enemy();
 
 	void changeColor(void) const;

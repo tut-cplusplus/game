@@ -7,19 +7,19 @@
 using namespace std;
 
 Character::Character()
-	: x(0.0), y(0.0), direction(WEST), texture_id(nullptr)
+	: position(0.0, 0.0), direction(WEST), texture_id(nullptr)
 {
 
 }
 
-Character::Character(double x, double y, const Size<double>& size)
-	: x(x), y(y), size(size), direction(WEST), texture_id(nullptr)
+Character::Character(const Vector<double>& position, const Size<double>& size)
+	: position(position), size(size), direction(WEST), texture_id(nullptr)
 {
 
 }
 
-Character::Character(double x, double y)
-	: x(x), y(y), direction(WEST), texture_id(nullptr)
+Character::Character(const Vector<double>& position)
+	: position(position), direction(WEST), texture_id(nullptr)
 {
 
 }
@@ -31,31 +31,6 @@ Character::~Character() {
 
 void Character::init(void) {
 
-}
-
-
-void Character::face(Direction d) {
-	this->direction = d;
-}
-
-void Character::move(void) {
-	switch (direction)
-	{
-	case NORTH:
-		y++;
-		break;
-	case SOUTH:
-		y--;
-		break;
-	case EAST:
-		x++;
-		break;
-	case WEST:
-		x--;
-		break;
-	default:
-		break;
-	}
 }
 
 void Character::breakWall(void) {
