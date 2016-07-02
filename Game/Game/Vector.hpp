@@ -23,6 +23,7 @@ public:
 	 * コピーコンストラクタ
 	 */
 	Vector(const Vector<T>& v);
+	double norm2(void) const;
 	/**
 	 * アクセッサ
 	 */
@@ -57,6 +58,12 @@ Vector<T>::Vector(const Vector<T>& v)
 	: x(v.x), y(v.y)
 {
 
+}
+
+template <typename T>
+inline double Vector<T>::norm2(void) const
+{
+	return x * x + y * y;
 }
 
 template <typename T>
