@@ -81,7 +81,7 @@ void Character::draw(void)
 
 void Character::keyboard(const Key& key)
 {
-	cout << "key" << endl;
+
 }
 
 void Character::mouse(int button, int state, int x, int y)

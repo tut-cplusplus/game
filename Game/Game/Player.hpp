@@ -29,6 +29,13 @@ public:
 	Player(double x, double y, const Keypad& keypad);
 	~Player();
 
+	void onUp(void);
+	void onDown(void);
+	void onLeft(void);
+	void onRight(void);
+	void onBreakBlock(void);
+
 	void changeColor(void) const;
+	Keypad getKeypad(void) const;
 };
 

@@ -37,8 +37,38 @@ Player::~Player()
 {
 }
 
+void Player::onUp(void)
+{
+	cout << "onUp" << endl;
+}
+
+void Player::onDown(void)
+{
+	cout << "onDown" << endl;
+}
+
+void Player::onLeft(void)
+{
+	cout << "onLeft" << endl;
+}
+
+void Player::onRight(void)
+{
+	cout << "onRight" << endl;
+}
+
+void Player::onBreakBlock(void)
+{
+	cout << "onBreakBlock" << endl;
+}
+
 void Player::changeColor(void) const
 {
 	glColor3d(1.0, 0.0, 0.0);
+}
+
+Keypad Player::getKeypad(void) const
+{
+	return keypad;
 }
 

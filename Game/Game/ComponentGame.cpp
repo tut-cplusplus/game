@@ -228,6 +228,17 @@ void ComponentGame::keyEvent(void)
 		for (auto itr = players.begin(); itr != players.end(); ++itr) {
 			Player& player = **itr;
 			player.keyboard(key);
+			Keypad keypad = player.getKeypad();
+			if (keypad.getUp() == key)
+				player.onUp();
+			if (keypad.getDown() == key)
+				player.onDown();
+			if (keypad.getLeft() == key)
+				player.onLeft();
+			if (keypad.getRight() == key)
+				player.onRight();
+			if (keypad.getBreakBlock() == key)
+				player.onBreakBlock();
 		}
 	}
 }
