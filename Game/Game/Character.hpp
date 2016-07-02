@@ -4,8 +4,10 @@
 #include "Size.hpp"
 #include "Key.hpp"
 
-enum Direction { NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3 };
 class Character {
+public:
+	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };
+
 protected:
 	double x;				//x座標
 	double y;				//y座標
@@ -101,6 +103,7 @@ public:
 	double getX(void) const;
 	double getY(void) const;
 	Size<double> getSize(void) const;
+	Direction getDirection(void) const;
 	void setX(double x);
 	void setY(double y);
 	void setSize(const Size<double>& size);
@@ -119,6 +122,11 @@ inline double Character::getY(void) const
 inline Size<double> Character::getSize(void) const
 {
 	return size;
+}
+
+inline Character::Direction Character::getDirection(void) const
+{
+	return direction;
 }
 
 inline void Character::setX(double x)
