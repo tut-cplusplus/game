@@ -5,6 +5,10 @@
 #include "Size.hpp"
 
 class Enemy : public Character {
+private:
+	double viewAngle;
+	double radius;
+
 public:
 	
 	Enemy();
@@ -15,6 +19,8 @@ public:
 
 	void onMoveAI(void);
 	void changeColor(void) const;
+
+	void draw(void);
 };
 
 #endif
