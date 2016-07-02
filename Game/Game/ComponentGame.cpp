@@ -66,11 +66,12 @@ void ComponentGame::generateMap(void)
 	while (v.size()) {
 		int idx = rnd(mt) * v.size();
 		Vector<int> position = v[idx];
-		v.erase(v.begin() + idx);
 		vector<int> directionIDs = getValidDirections(position);
 		int size = directionIDs.size();
-		if (!size)
+		if (!size) {
+			v.erase(v.begin() + idx);
 			continue;
+		}
 		idx = rnd(mt) * size;
 		const Vector<int>& direction = directions[directionIDs[idx]];
 		for (int i = 0; i < 4; i++) {
