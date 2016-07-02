@@ -5,14 +5,6 @@
 
 using namespace std;
 
-void Enemy::breakWall(void)
-{
-}
-
-void Enemy::message(void)
-{
-}
-
 Enemy::Enemy()
 	: Character()
 {
