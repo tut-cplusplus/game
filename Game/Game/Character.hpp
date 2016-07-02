@@ -10,13 +10,13 @@ public:
 	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };
 
 private:
-	bool isMoving;
 	Vector<double> destination;
 	Vector<double> source;
 	int moveCount;
 	double speed;
 
 protected:
+	bool isMoving;
 	Vector<double> position;
 	Size<double> size;
 	Direction direction;//キャラクターの向き
@@ -40,7 +40,7 @@ public:
 	void startMoving(void);
 	void move(void);
 
-	void onHit(void);
+	virtual void onHit(void);
 
 	virtual void changeColor(void) const;
 	/**

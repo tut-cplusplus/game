@@ -27,6 +27,7 @@ public:
 	Enemy(const Vector<double>& position);
 	virtual ~Enemy();
 
+	void onMoveAI(void);
 	void changeColor(void) const;
 };
 

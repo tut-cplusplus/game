@@ -1,5 +1,9 @@
+#include <random>
+
 #include "Enemy.hpp"
 #include <GL/glut.h>
+
+using namespace std;
 
 void Enemy::breakWall(void)
 {
@@ -30,6 +34,18 @@ Enemy::Enemy(const Vector<double>& position)
 
 Enemy::~Enemy()
 {
+
+}
+
+void Enemy::onMoveAI(void)
+{
+	if (isMoving)
+		return;
+	static random_device rd;
+	static mt19937 mt(rd());
+	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
+	direction = (Direction)randomDirection(mt);
+	startMoving();
 }
 
 void Enemy::changeColor(void) const

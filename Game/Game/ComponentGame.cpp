@@ -169,6 +169,12 @@ void ComponentGame::deleteEnemies(void)
 		delete *itr;
 }
 
+void ComponentGame::moveEnemiesAI(void)
+{
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
+		(**itr).onMoveAI();
+}
+
 bool ComponentGame::isHit(const Vector<double>& position1, const Vector<double>& position2) const
 {
 	double bottom = position1.getY();
@@ -288,6 +294,7 @@ void ComponentGame::keyEvent(void)
 void ComponentGame::moveEvent(void)
 {
 	moveCharacters(players);
+	moveEnemiesAI();
 	moveCharacters(enemies);
 }
 

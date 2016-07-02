@@ -47,6 +47,7 @@ private:
 	void drawCharacters(const std::vector<T*> characters) const;
 	template <typename T>
 	void moveCharacters(const std::vector<T*> characters);
+	void moveEnemiesAI(void);
 	bool isHit(const Vector<double>& position1, const Vector<double>& position2) const;
 	bool isHit(const Vector<double>& position) const;
 	bool isHit(const Character& character) const;

@@ -7,19 +7,19 @@
 using namespace std;
 
 Character::Character()
-	: isMoving(false), speed(1.0), position(0.0, 0.0), direction(WEST), texture_id(nullptr)
+	: speed(1.0), isMoving(false), position(0.0, 0.0), direction(WEST), texture_id(nullptr)
 {
 
 }
 
 Character::Character(const Vector<double>& position, const Size<double>& size)
-	: isMoving(false), speed(1.0), position(position), size(size), direction(WEST), texture_id(nullptr)
+	: speed(1.0), isMoving(false), position(position), size(size), direction(WEST), texture_id(nullptr)
 {
 
 }
 
 Character::Character(const Vector<double>& position)
-	: isMoving(false), speed(1.0), position(position), direction(WEST), texture_id(nullptr)
+	: speed(1.0), isMoving(false), position(position), direction(WEST), texture_id(nullptr)
 {
 
 }
