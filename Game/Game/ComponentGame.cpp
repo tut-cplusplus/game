@@ -197,6 +197,40 @@ void ComponentGame::setBlockSize(void)
 	}
 }
 
+std::list<Key>::iterator ComponentGame::searchKey(const Key& key)
+{
+	for (auto itr = keys.begin(); itr != keys.end(); ++itr) {
+		const Key& key1 = *itr;
+		if (key1 == key)
+			return itr;
+	}
+	return keys.end();
+}
+
+void ComponentGame::addKey(const Key& key)
+{
+	if (searchKey(key) == keys.end())
+		keys.push_back(key);
+}
+
+void ComponentGame::deleteKey(const Key& key)
+{
+	auto itr = searchKey(key);
+	if (itr != keys.end())
+		keys.erase(itr);
+}
+
+void ComponentGame::keyEvent(void)
+{
+	for (auto itr = keys.begin(); itr != keys.end(); ++itr) {
+		const Key& key = *itr;
+		for (auto itr = players.begin(); itr != players.end(); ++itr) {
+			Player& player = **itr;
+			player.keyboard(key);
+		}
+	}
+}
+
 ComponentGame::ComponentGame()
 {
 
@@ -239,6 +273,7 @@ void ComponentGame::init(void)
 
 void ComponentGame::draw(void)
 {
+	keyEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glPushMatrix();
@@ -282,23 +317,27 @@ void ComponentGame::keyboard(unsigned char key, int x, int y)
 {
 	for (auto itr = players.begin(); itr != players.end(); ++itr)
 		(*itr)->keyboard(key, x, y);
+	addKey(Key(key));
 }
 
 void ComponentGame::keyboardup(unsigned char key, int x, int y)
 {
 	for (auto itr = players.begin(); itr != players.end(); ++itr)
 		(*itr)->keyboardup(key, x, y);
+	deleteKey(Key(key));
 }
 
 void ComponentGame::special(int key, int x, int y)
 {
 	for (auto itr = players.begin(); itr != players.end(); ++itr)
 		(*itr)->special(key, x, y);
+	addKey(Key(key));
 }
 
 void ComponentGame::specialup(int key, int x, int y)
 {
 	for (auto itr = players.begin(); itr != players.end(); ++itr)
 		(*itr)->specialup(key, x, y);
+	deleteKey(Key(key));
 }
 

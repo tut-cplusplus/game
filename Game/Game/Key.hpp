@@ -1,6 +1,10 @@
 #ifndef ___Class_Key
 #define ___Class_Key
 
+#include <iostream>
+
+using namespace std;
+
 class Key {
 protected:
 	static bool KEY_NORMAL;
@@ -21,7 +25,7 @@ public:
 
 inline bool Key::operator==(const Key& key) const
 {
-	return keyType == key.keyType && key == key;
+	return keyType == key.keyType && this->key == key.key;
 }
 
 inline bool Key::operator!=(const Key& key) const

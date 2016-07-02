@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <random>
+#include <list>
 
 #include "Component.hpp"
 #include "Block.hpp"
@@ -28,6 +29,7 @@ private:
 	std::vector<Player*> players;
 	std::vector<Enemy*> enemies;
 	Size<double> blockSize;
+	std::list<Key> keys;
 
 private:
 	void allocMap(void);
@@ -41,6 +43,10 @@ private:
 	void deleteEnemies(void);
 	std::vector<Vector<int>> getTransparentBlockVectors(void) const;
 	void setBlockSize(void);
+	std::list<Key>::iterator searchKey(const Key& key);
+	void addKey(const Key& key);
+	void deleteKey(const Key& key);
+	void keyEvent(void);
 
 public:
 	ComponentGame();

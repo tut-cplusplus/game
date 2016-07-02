@@ -24,7 +24,6 @@ Character::Character(double x, double y)
 
 }
 
-
 Character::~Character() {
 	if (texture_id != nullptr)
 		delete texture_id;
@@ -80,28 +79,33 @@ void Character::draw(void)
 	glEnd();
 }
 
+void Character::keyboard(const Key& key)
+{
+	cout << "key" << endl;
+}
+
 void Character::mouse(int button, int state, int x, int y)
 {
-	cout << "mouse" << endl;
+
 }
 
 void Character::keyboard(unsigned char key, int x, int y)
 {
-	cout << "keyboard" << endl;
+
 }
 
 void Character::keyboardup(unsigned char key, int x, int y)
 {
-	cout << "keyboardup" << endl;
+
 }
 
 void Character::special(int key, int x, int y)
 {
-	cout << "special" << endl;
+
 }
 
 void Character::specialup(int key, int x, int y)
 {
-	cout << "specialup" << endl;
+
 }
 

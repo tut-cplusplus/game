@@ -2,6 +2,7 @@
 #define ___Class_Character
 
 #include "Size.hpp"
+#include "Key.hpp"
 
 enum Direction { NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3 };
 class Character {
@@ -50,6 +51,7 @@ public:
 	 */
 	virtual void draw(void);
 	
+	void keyboard(const Key& key);
 	/**
 	* mouseに対応する関数,マウスからの入力を与える
 	* 
