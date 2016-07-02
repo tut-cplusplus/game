@@ -11,6 +11,7 @@ private:
 	T y;	/* y座標 */
 
 public:
+	Vector();
 	/**
 	 * コンストラクタ
 	 *
@@ -33,7 +34,15 @@ public:
 	Vector<T> operator-(void) const;
 	void operator+=(const Vector<T>& v);
 	void operator-=(const Vector<T>& v);
+	void operator*=(const T& value);
 };
+
+template <typename T>
+Vector<T>::Vector()
+	: x(0.0), y(0.0)
+{
+
+}
 
 template <typename T>
 Vector<T>::Vector(const T& x, const T& y)
@@ -90,6 +99,13 @@ template <typename T>
 inline void Vector<T>::operator-=(const Vector<T>& v)
 {
 	(*this)+=(-v);
+}
+
+template <typename T>
+inline void Vector<T>::operator*=(const T& value)
+{
+	x *= value;
+	y *= value;
 }
 
 #endif

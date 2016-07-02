@@ -45,6 +45,8 @@ private:
 	void deleteEnemies(void);
 	template <typename T>
 	void drawCharacters(const std::vector<T*> characters) const;
+	template <typename T>
+	void moveCharacters(const std::vector<T*> characters);
 	std::vector<Vector<int>> getTransparentBlockVectors(void) const;
 	void setBlockSize(void);
 	std::list<Key>::iterator searchKey(const Key& key);
@@ -83,6 +85,15 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters) cons
 		glTranslated(x * blockWidth, y * blockHeight, 0.0);
 		character.draw();
 		glPopMatrix();
+	}
+}
+
+template <typename T>
+inline void ComponentGame::moveCharacters(const std::vector<T*> characters)
+{
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		T& character = **itr;
+		character.move();
 	}
 }
 

@@ -286,6 +286,8 @@ void ComponentGame::init(void)
 void ComponentGame::draw(void)
 {
 	keyEvent();
+	moveCharacters(players);
+	moveCharacters(enemies);
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glPushMatrix();

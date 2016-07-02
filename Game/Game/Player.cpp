@@ -35,27 +35,28 @@ Player::~Player()
 
 void Player::onUp(void)
 {
-	cout << "onUp" << endl;
+	direction = NORTH;
+	startMoving();
 }
 
 void Player::onDown(void)
 {
-	cout << "onDown" << endl;
+
 }
 
 void Player::onLeft(void)
 {
-	cout << "onLeft" << endl;
+
 }
 
 void Player::onRight(void)
 {
-	cout << "onRight" << endl;
+
 }
 
 void Player::onBreakBlock(void)
 {
-	cout << "onBreakBlock" << endl;
+
 }
 
 void Player::changeColor(void) const

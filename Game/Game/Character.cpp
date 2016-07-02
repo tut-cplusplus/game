@@ -7,19 +7,19 @@
 using namespace std;
 
 Character::Character()
-	: position(0.0, 0.0), direction(WEST), texture_id(nullptr)
+	: isMoving(false), speed(1.0), position(0.0, 0.0), direction(WEST), texture_id(nullptr)
 {
 
 }
 
 Character::Character(const Vector<double>& position, const Size<double>& size)
-	: position(position), size(size), direction(WEST), texture_id(nullptr)
+	: isMoving(false), speed(1.0), position(position), size(size), direction(WEST), texture_id(nullptr)
 {
 
 }
 
 Character::Character(const Vector<double>& position)
-	: position(position), direction(WEST), texture_id(nullptr)
+	: isMoving(false), speed(1.0), position(position), direction(WEST), texture_id(nullptr)
 {
 
 }
@@ -31,6 +31,48 @@ Character::~Character() {
 
 void Character::init(void) {
 
+}
+
+void Character::startMoving(void)
+{
+	static Vector<double> directionVectorTable[] = {
+		Vector<double>(0.0, 0.0),
+		Vector<double>(0.0, 1.0),
+		Vector<double>(0.0, -1.0),
+		Vector<double>(1.0, 0.0),
+		Vector<double>(-1.0, 0.0),
+	};
+	if (isMoving)
+		return;
+	if (direction == INVALID)
+		return;
+	isMoving = true;
+	Vector<double> directionVector = directionVectorTable[direction];
+	destination = position;
+	destination += directionVector;
+	source = position;
+	moveCount = 0;
+}
+
+void Character::move(void)
+{
+	if (!isMoving)
+		return;
+	static Vector<double> directionVectorTable[] = {
+		Vector<double>(0.0, 0.0),
+		Vector<double>(0.0, 1.0),
+		Vector<double>(0.0, -1.0),
+		Vector<double>(1.0, 0.0),
+		Vector<double>(-1.0, 0.0),
+	};
+	Vector<double> directionVector = directionVectorTable[direction];
+	directionVector *= 1.0 / 20;
+	position += directionVector;
+	moveCount++;
+	if (moveCount == 20) {
+		isMoving = false;
+		position = destination;
+	}
 }
 
 void Character::breakWall(void) {

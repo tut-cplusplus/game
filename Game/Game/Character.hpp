@@ -9,6 +9,13 @@ class Character {
 public:
 	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };
 
+private:
+	bool isMoving;
+	Vector<double> destination;
+	Vector<double> source;
+	int moveCount;
+	double speed;
+
 protected:
 	Vector<double> position;
 	Size<double> size;
@@ -30,6 +37,8 @@ public:
 	 * 初期化関数
 	 */
 	virtual void init();
+	void startMoving(void);
+	void move(void);
 
 	virtual void changeColor(void) const;
 	/**
