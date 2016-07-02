@@ -35,6 +35,7 @@ public:
 	void operator+=(const Vector<T>& v);
 	void operator-=(const Vector<T>& v);
 	void operator*=(const T& value);
+	Vector<T> operator+(const Vector<T>& v) const;
 };
 
 template <typename T>
@@ -106,6 +107,14 @@ inline void Vector<T>::operator*=(const T& value)
 {
 	x *= value;
 	y *= value;
+}
+
+template <typename T>
+inline Vector<T> Vector<T>::operator+(const Vector<T>& v) const
+{
+	Vector tmp(*this);
+	tmp += v;
+	return tmp;
 }
 
 #endif

@@ -47,12 +47,20 @@ private:
 	void drawCharacters(const std::vector<T*> characters) const;
 	template <typename T>
 	void moveCharacters(const std::vector<T*> characters);
+	bool isHit(const Vector<double>& position1, const Vector<double>& position2) const;
+	bool isHit(const Vector<double>& position) const;
+	bool isHit(const Character& character) const;
+	template <typename T>
+	void hitDetectCharacters(const std::vector<T*> characters);
+
 	std::vector<Vector<int>> getTransparentBlockVectors(void) const;
 	void setBlockSize(void);
 	std::list<Key>::iterator searchKey(const Key& key);
 	void addKey(const Key& key);
 	void deleteKey(const Key& key);
 	void keyEvent(void);
+	void moveEvent(void);
+	void hitEvent(void);
 
 public:
 	ComponentGame();
@@ -94,6 +102,16 @@ inline void ComponentGame::moveCharacters(const std::vector<T*> characters)
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		T& character = **itr;
 		character.move();
+	}
+}
+
+template <typename T>
+inline void ComponentGame::hitDetectCharacters(const std::vector<T*> characters)
+{
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		T& character = **itr;
+		if (isHit(character))
+			character.onHit();
 	}
 }
 

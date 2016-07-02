@@ -169,6 +169,48 @@ void ComponentGame::deleteEnemies(void)
 		delete *itr;
 }
 
+bool ComponentGame::isHit(const Vector<double>& position1, const Vector<double>& position2) const
+{
+	double bottom = position1.getY();
+	double left = position1.getX();
+	double top = bottom + 1.0;
+	double right = left + 1.0;
+	double x = position2.getX();
+	double y = position2.getY();
+
+	return (x > left && x < right) && (y > bottom && y < top);
+}
+
+bool ComponentGame::isHit(const Vector<double>& position) const
+{
+	for (int i = 0; i < MAP_HEIGHT; i++) {
+		for (int j = 0; j < MAP_WIDTH; j++) {
+			const Block& block = *map[i][j];
+			if (block.isTransparent())
+				continue;
+			if (isHit(Vector<double>(j, i), position))
+				return true;
+		}
+	}
+	return false;
+}
+
+bool ComponentGame::isHit(const Character& character) const
+{
+	static Vector<double> dv[] = {
+		Vector<double>(0.5, 0.0),
+		Vector<double>(0.5, 1.0),
+		Vector<double>(0.0, 0.5),
+		Vector<double>(1.0, 0.5),
+	};
+	int n = sizeof(dv) / sizeof(dv[0]);
+	Vector<double> position = character.getPosition();
+	for (int i = 0; i < n; i++)
+		if (isHit(position + dv[i]))
+			return true;
+	return false;
+}
+
 vector<Vector<int>> ComponentGame::getTransparentBlockVectors(void) const
 {
 	vector<Vector<int>> positions;
@@ -243,6 +285,18 @@ void ComponentGame::keyEvent(void)
 	}
 }
 
+void ComponentGame::moveEvent(void)
+{
+	moveCharacters(players);
+	moveCharacters(enemies);
+}
+
+void ComponentGame::hitEvent(void)
+{
+	hitDetectCharacters(players);
+	hitDetectCharacters(enemies);
+}
+
 ComponentGame::ComponentGame()
 {
 
@@ -286,8 +340,8 @@ void ComponentGame::init(void)
 void ComponentGame::draw(void)
 {
 	keyEvent();
-	moveCharacters(players);
-	moveCharacters(enemies);
+	moveEvent();
+	hitEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glPushMatrix();

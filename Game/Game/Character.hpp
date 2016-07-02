@@ -40,6 +40,8 @@ public:
 	void startMoving(void);
 	void move(void);
 
+	void onHit(void);
+
 	virtual void changeColor(void) const;
 	/**
 	 * displayに対応する関数

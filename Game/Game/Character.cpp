@@ -78,6 +78,12 @@ void Character::move(void)
 void Character::breakWall(void) {
 }
 
+void Character::onHit(void)
+{
+	isMoving = false;
+	position = source;
+}
+
 void Character::changeColor(void) const
 {
 	glColor3d(1.0, 1.0, 1.0);
