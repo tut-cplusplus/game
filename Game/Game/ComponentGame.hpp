@@ -65,7 +65,7 @@ private:
 	void keyEvent(void);
 	void moveEvent(void);
 	void hitEvent(void);
-	void foundEvent(void);
+	void findPlayerEvent(void);
 
 public:
 	ComponentGame();

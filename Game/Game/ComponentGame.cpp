@@ -353,7 +353,7 @@ void ComponentGame::hitEvent(void)
 	hitDetectCharacters(enemies);
 }
 
-void ComponentGame::foundEvent(void)
+void ComponentGame::findPlayerEvent(void)
 {
 	for (auto itr1 = players.begin(); itr1 != players.end(); ++itr1) {
 		Player& player = **itr1;
@@ -410,7 +410,7 @@ void ComponentGame::draw(void)
 	keyEvent();
 	moveEvent();
 	hitEvent();
-	foundEvent();
+	findPlayerEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glPushMatrix();
