@@ -7,19 +7,19 @@
 using namespace std;
 
 Enemy::Enemy()
-	: Character(), viewAngle(45.0), radius(100.0)
+	: Character(), viewAngle(45.0), radius(100.0), first(true)
 {
 
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size)
-	: Character(position, size), viewAngle(45.0), radius(100.0)
+	: Character(position, size), viewAngle(45.0), radius(100.0), first(true)
 {
 
 }
 
 Enemy::Enemy(const Vector<double>& position)
-	: Character(position), viewAngle(45.0), radius(100.0)
+	: Character(position), viewAngle(45.0), radius(100.0), first(true)
 {
 
 }
@@ -34,6 +34,19 @@ void Enemy::onMoveAI(void)
 {
 	if (isMoving)
 		return;
+	static random_device rd;
+	static mt19937 mt(rd());
+	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
+	if (first) {
+		direction = (Direction)randomDirection(mt);
+		first = false;
+	}
+	startMoving();
+}
+
+void Enemy::onHit(void)
+{
+	Character::onHit();
 	static random_device rd;
 	static mt19937 mt(rd());
 	static uniform_int_distribution<int> randomDirection(NORTH, WEST);

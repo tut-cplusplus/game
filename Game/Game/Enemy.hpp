@@ -8,6 +8,7 @@ class Enemy : public Character {
 private:
 	double viewAngle;
 	double radius;
+	bool first;
 
 public:
 	
@@ -18,6 +19,7 @@ public:
 	virtual ~Enemy();
 
 	void onMoveAI(void);
+	void onHit(void);
 	void changeColor(void) const;
 
 	void draw(void);
