@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "Enemy.hpp"
+
 #include <GL/glut.h>
 
 using namespace std;
@@ -68,6 +69,11 @@ void Enemy::onFind(const Player& player)
 {
 	static int cnt = 0;
 	cout << "find : "  << cnt++ << endl;
+}
+
+void Enemy::onFind(const Vector<int>& position, const Block& block)
+{
+
 }
 
 void Enemy::changeColor(void) const

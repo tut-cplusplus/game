@@ -4,6 +4,7 @@
 #include "Character.hpp"
 #include "Size.hpp"
 #include "Player.hpp"
+#include "Block.hpp"
 
 class Enemy : public Character {
 private:
@@ -25,6 +26,7 @@ public:
 	void onMoveAI(void);
 	void onHit(void);
 	void onFind(const Player& player);
+	void onFind(const Vector<int>& position, const Block& block);
 	void changeColor(void) const;
 
 	void draw(void);

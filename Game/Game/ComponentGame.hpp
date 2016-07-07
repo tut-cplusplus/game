@@ -49,6 +49,7 @@ private:
 	template <typename T>
 	void moveCharacters(const std::vector<T*> characters);
 	void moveEnemiesAI(void);
+	bool isFound(const Vector<double>& blockPosition, const Block& block, const Enemy& enemy) const;
 	bool isFound(const Player& player, const Enemy& enemy) const;
 	bool isBlocked(const Vector<double>& position1, const Vector<double>& position2) const;
 	bool isHit(const Vector<double>& position1, const Vector<double>& position2) const;
@@ -66,6 +67,7 @@ private:
 	void moveEvent(void);
 	void hitEvent(void);
 	void findPlayerEvent(void);
+	void findBlockEvent(void);
 
 public:
 	ComponentGame();
