@@ -3,6 +3,7 @@
 
 #include "Character.hpp"
 #include "Size.hpp"
+#include "Player.hpp"
 
 class Enemy : public Character {
 private:
@@ -18,8 +19,12 @@ public:
 	Enemy(const Vector<double>& position);
 	virtual ~Enemy();
 
+	double getViewAngle(void) const;
+	double getRadius(void) const;
+
 	void onMoveAI(void);
 	void onHit(void);
+	void onFind(const Player& player);
 	void changeColor(void) const;
 
 	void draw(void);

@@ -35,23 +35,34 @@ Player::~Player()
 
 void Player::onUp(void)
 {
+	if (isMoving)
+		return;
 	direction = NORTH;
 	startMoving();
 }
 
 void Player::onDown(void)
 {
-
+	if (isMoving)
+		return;
+	direction = SOUTH;
+	startMoving();
 }
 
 void Player::onLeft(void)
 {
-
+	if (isMoving)
+		return;
+	direction = WEST;
+	startMoving();
 }
 
 void Player::onRight(void)
 {
-
+	if (isMoving)
+		return;
+	direction = EAST;
+	startMoving();
 }
 
 void Player::onBreakBlock(void)

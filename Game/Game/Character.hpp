@@ -98,6 +98,7 @@ public:
 	Vector<double> getPosition(void) const;
 	Size<double> getSize(void) const;
 	Direction getDirection(void) const;
+	double getAngle(void) const;
 	void setPosition(const Vector<double>& position);
 	void setSize(const Size<double>& size);
 };
@@ -115,6 +116,18 @@ inline Size<double> Character::getSize(void) const
 inline Character::Direction Character::getDirection(void) const
 {
 	return direction;
+}
+
+inline double Character::getAngle(void) const
+{
+	static double angles[] = {
+		0.0,
+		90.0,
+		-90.0,
+		0.0,
+		180.0,
+	};
+	return angles[direction];
 }
 
 inline void Character::setPosition(const Vector<double>& position)

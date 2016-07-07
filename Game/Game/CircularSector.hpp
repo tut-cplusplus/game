@@ -13,7 +13,7 @@ private:
 public:
 	CircularSector();
 	CircularSector(const Vector<double>& position, double angle, double viewAngle, double radius);
-
+	void adjustAngle(void);
 	bool isHit(const Vector<double>& position) const;
 };
 

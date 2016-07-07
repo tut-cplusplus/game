@@ -30,6 +30,16 @@ Enemy::~Enemy()
 
 }
 
+double Enemy::getViewAngle(void) const
+{
+	return viewAngle;
+}
+
+double Enemy::getRadius(void) const
+{
+	return radius;
+}
+
 void Enemy::onMoveAI(void)
 {
 	if (isMoving)
@@ -52,6 +62,12 @@ void Enemy::onHit(void)
 	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
 	direction = (Direction)randomDirection(mt);
 	startMoving();
+}
+
+void Enemy::onFind(const Player& player)
+{
+	static int cnt = 0;
+	cout << "find : "  << cnt++ << endl;
 }
 
 void Enemy::changeColor(void) const

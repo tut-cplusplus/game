@@ -7,6 +7,8 @@
 #include "BlockNormalWall.hpp"
 #include "BlockUnbreakableWall.hpp"
 #include "Vector.hpp"
+#include "CircularSector.hpp"
+#include "Size.hpp"
 
 #include "GL/glut.h"
 
@@ -14,6 +16,7 @@ using namespace std;
 
 const int ComponentGame::MAP_WIDTH = 45;
 const int ComponentGame::MAP_HEIGHT = 45;
+const int ComponentGame::DIVISION_NUMBER = 100;
 
 void ComponentGame::allocMap(void)
 {
@@ -175,6 +178,52 @@ void ComponentGame::moveEnemiesAI(void)
 		(**itr).onMoveAI();
 }
 
+bool ComponentGame::isFound(const Player& player, const Enemy& enemy) const
+{
+	static Vector<double> dtable[] = {
+		Vector<double>(0.0, 0.0),
+		Vector<double>(1.0, 0.0),
+		Vector<double>(0.0, 1.0),
+		Vector<double>(1.0, 1.0),
+	};
+	int n = sizeof(dtable) / sizeof(dtable[0]);
+	Vector<double> enemyPosition = enemy.getPosition();
+	enemyPosition += Vector<double>(0.5, 0.5);
+	Vector<double> enemyWorldPosition(enemyPosition);
+	Size<double> enemySize = enemy.getSize();
+	enemyWorldPosition.setX(enemyWorldPosition.getX() * enemySize.getWidth());
+	enemyWorldPosition.setY(enemyWorldPosition.getY() * enemySize.getHeight());
+	CircularSector circularSector(enemyWorldPosition, enemy.getAngle(), enemy.getViewAngle(), enemy.getRadius());
+	Vector<double> playerPosition(player.getPosition());
+	Size<double> playerSize = player.getSize();
+	for (int i = 0; i < n; i++) {
+		const Vector<double>& v = dtable[i];
+		Vector<double> position = playerPosition + v;
+		Vector<double> worldPosition(position);
+		worldPosition.setX(worldPosition.getX() * playerSize.getWidth());
+		worldPosition.setY(worldPosition.getY() * playerSize.getHeight());
+		if (!circularSector.isHit(worldPosition))
+			continue;
+		if (isBlocked(position, enemyPosition))
+			continue;
+		return true;
+	}
+	return false;
+}
+
+bool ComponentGame::isBlocked(const Vector<double>& position1, const Vector<double>& position2) const
+{
+	Vector<double> v = position2 - position1;
+	v /= DIVISION_NUMBER;
+	Vector<double> position(position1);
+	for (int i = 0; i < DIVISION_NUMBER; i++) {
+		position += v;
+		if (isHit(position))
+			return true;
+	}
+	return false;
+}
+
 bool ComponentGame::isHit(const Vector<double>& position1, const Vector<double>& position2) const
 {
 	double bottom = position1.getY();
@@ -304,6 +353,18 @@ void ComponentGame::hitEvent(void)
 	hitDetectCharacters(enemies);
 }
 
+void ComponentGame::foundEvent(void)
+{
+	for (auto itr1 = players.begin(); itr1 != players.end(); ++itr1) {
+		Player& player = **itr1;
+		for (auto itr2 = enemies.begin(); itr2 != enemies.end(); ++itr2) {
+			Enemy& enemy = **itr2;
+			if (isFound(player, enemy))
+				enemy.onFind(player);
+		}
+	}
+}
+
 ComponentGame::ComponentGame()
 {
 
@@ -349,6 +410,7 @@ void ComponentGame::draw(void)
 	keyEvent();
 	moveEvent();
 	hitEvent();
+	foundEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glPushMatrix();

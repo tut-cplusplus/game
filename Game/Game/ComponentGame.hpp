@@ -21,6 +21,7 @@ public:
 private:
 	static const int MAP_WIDTH;
 	static const int MAP_HEIGHT;
+	static const int DIVISION_NUMBER;
 
 private:
 	std::random_device rd;
@@ -48,6 +49,8 @@ private:
 	template <typename T>
 	void moveCharacters(const std::vector<T*> characters);
 	void moveEnemiesAI(void);
+	bool isFound(const Player& player, const Enemy& enemy) const;
+	bool isBlocked(const Vector<double>& position1, const Vector<double>& position2) const;
 	bool isHit(const Vector<double>& position1, const Vector<double>& position2) const;
 	bool isHit(const Vector<double>& position) const;
 	bool isHit(const Character& character) const;
@@ -62,6 +65,7 @@ private:
 	void keyEvent(void);
 	void moveEvent(void);
 	void hitEvent(void);
+	void foundEvent(void);
 
 public:
 	ComponentGame();
