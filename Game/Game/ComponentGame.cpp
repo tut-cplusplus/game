@@ -176,7 +176,7 @@ void ComponentGame::moveEnemiesAI(void)
 		(**itr).onMoveAI();
 }
 
-bool ComponentGame::isFound(const Vector<double>& blockPosition, const Block& block, const Enemy& enemy) const
+bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Rectangle& rectangle, const Enemy& enemy) const
 {
 	static Vector<double> dtable[] = {
 		Vector<double>(0.0, 0.0),
@@ -192,13 +192,13 @@ bool ComponentGame::isFound(const Vector<double>& blockPosition, const Block& bl
 	enemyWorldPosition.setX(enemyWorldPosition.getX() * enemySize.getWidth());
 	enemyWorldPosition.setY(enemyWorldPosition.getY() * enemySize.getHeight());
 	CircularSector circularSector(enemyWorldPosition, enemy.getAngle(), enemy.getViewAngle(), enemy.getRadius());
-	Size<double> blockSize = block.getSize();
+	Size<double> rectangleSize= rectangle.getSize();
 	for (int i = 0; i < n; i++) {
 		const Vector<double>& v = dtable[i];
-		Vector<double> position = blockPosition + v;
+		Vector<double> position = rectanglePosition + v;
 		Vector<double> worldPosition(position);
-		worldPosition.setX(worldPosition.getX() * blockSize.getWidth());
-		worldPosition.setY(worldPosition.getY() * blockSize.getHeight());
+		worldPosition.setX(worldPosition.getX() * rectangleSize.getWidth());
+		worldPosition.setY(worldPosition.getY() * rectangleSize.getHeight());
 		if (!circularSector.isHit(worldPosition))
 			continue;
 		if (isBlocked(position, enemyPosition))
@@ -210,35 +210,7 @@ bool ComponentGame::isFound(const Vector<double>& blockPosition, const Block& bl
 
 bool ComponentGame::isFound(const Player& player, const Enemy& enemy) const
 {
-	static Vector<double> dtable[] = {
-		Vector<double>(0.0, 0.0),
-		Vector<double>(1.0, 0.0),
-		Vector<double>(0.0, 1.0),
-		Vector<double>(1.0, 1.0),
-	};
-	int n = sizeof(dtable) / sizeof(dtable[0]);
-	Vector<double> enemyPosition = enemy.getPosition();
-	enemyPosition += Vector<double>(0.5, 0.5);
-	Vector<double> enemyWorldPosition(enemyPosition);
-	Size<double> enemySize = enemy.getSize();
-	enemyWorldPosition.setX(enemyWorldPosition.getX() * enemySize.getWidth());
-	enemyWorldPosition.setY(enemyWorldPosition.getY() * enemySize.getHeight());
-	CircularSector circularSector(enemyWorldPosition, enemy.getAngle(), enemy.getViewAngle(), enemy.getRadius());
-	Vector<double> playerPosition(player.getPosition());
-	Size<double> playerSize = player.getSize();
-	for (int i = 0; i < n; i++) {
-		const Vector<double>& v = dtable[i];
-		Vector<double> position = playerPosition + v;
-		Vector<double> worldPosition(position);
-		worldPosition.setX(worldPosition.getX() * playerSize.getWidth());
-		worldPosition.setY(worldPosition.getY() * playerSize.getHeight());
-		if (!circularSector.isHit(worldPosition))
-			continue;
-		if (isBlocked(position, enemyPosition))
-			continue;
-		return true;
-	}
-	return false;
+	return isFound(player.getPosition(), player, enemy);
 }
 
 bool ComponentGame::isBlocked(const Vector<double>& position1, const Vector<double>& position2) const

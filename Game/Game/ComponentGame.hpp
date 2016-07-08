@@ -100,14 +100,14 @@ private:
 	 */
 	void moveEnemiesAI(void);
 	/**
-	 * ブロックが敵の視界に入っているか判定する
+	 * Rectangleが敵の視界に入っているか判定する
 	 *
-	 * @param blockPosition ブロックの位置
-	 * @param block ブロック
+	 * @param rectanglePosition Rectangleの位置
+	 * @param rectangle Rectangle
 	 * @param enemy 敵
 	 * @return true : 視界に入っている / false : そうでない
 	 */
-	bool isFound(const Vector<double>& blockPosition, const Block& block, const Enemy& enemy) const;
+	bool isFound(const Vector<double>& rectanglePosition, const Rectangle& rectangle, const Enemy& enemy) const;
 	/**
 	 * プレイヤーが敵の視界に入っているか判定する
 	 *
