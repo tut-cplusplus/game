@@ -8,6 +8,7 @@
 #include "TextureManager.hpp"
 #include "ComponentFPS.hpp"
 #include "ComponentGame.hpp"
+#include "FPSManager.hpp"
 
 #include <GL/glut.h>
 
@@ -159,10 +160,14 @@ void init(void)
 
 void display(void)
 {
+	FPSManager::startMeasure();
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	LayoutManager::getLayout()->draw();
 	glutSwapBuffers();
+	FPSManager::stopMeasure();
+	FPSManager::update();
+	FPSManager::sleep();
 }
 
 

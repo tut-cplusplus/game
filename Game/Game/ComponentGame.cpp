@@ -12,8 +12,6 @@
 
 #include "GL/glut.h"
 
-using namespace std;
-
 const int ComponentGame::MAP_WIDTH = 45;
 const int ComponentGame::MAP_HEIGHT = 45;
 const int ComponentGame::DIVISION_NUMBER = 100;
