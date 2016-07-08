@@ -15,8 +15,8 @@ private:
 	static std::mt19937 mt;
 	static std::uniform_int_distribution<int> rnd;
 private:
-	double angle;
-	int step;
+	double angle;	//Y軸まわりの回転角
+	int step;		//ステップ角
 
 public:
 	ComponentTeapot();

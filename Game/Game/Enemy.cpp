@@ -43,15 +43,18 @@ double Enemy::getRadius(void) const
 
 void Enemy::onMoveAI(void)
 {
+	//移動中であれば何もしない
 	if (isMoving)
 		return;
 	static random_device rd;
 	static mt19937 mt(rd());
 	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
 	if (first) {
+		//最初だけ方向を決める
 		direction = (Direction)randomDirection(mt);
 		first = false;
 	}
+	//移動の開始
 	startMoving();
 }
 
@@ -61,12 +64,15 @@ void Enemy::onHit(void)
 	static random_device rd;
 	static mt19937 mt(rd());
 	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
+	//方向を決める（変更する）
 	direction = (Direction)randomDirection(mt);
+	//移動の開始
 	startMoving();
 }
 
 void Enemy::onFind(const Player& player)
 {
+	//テストコード
 	static int cnt = 0;
 	cout << "find : "  << cnt++ << endl;
 }
@@ -93,7 +99,9 @@ void Enemy::draw(void)
 	double width = size.getWidth();
 	double height = size.getHeight();
 	double angle = angles[direction];
+	//本体の表示
 	Character::draw();
+	//視界の表示
 	glPushMatrix();
 	glTranslated(width / 2, height / 2, 0.0);
 	glRotated(angle, 0.0, 0.0, 1.0);

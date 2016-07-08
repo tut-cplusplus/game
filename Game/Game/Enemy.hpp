@@ -8,9 +8,9 @@
 
 class Enemy : public Character {
 private:
-	double viewAngle;
-	double radius;
-	bool first;
+	double viewAngle;	//見ている方向
+	double radius;		//視界の半径
+	bool first;			//AIのサンプルに使用．不要であれば消す
 
 public:
 	
@@ -20,13 +20,42 @@ public:
 	Enemy(const Vector<double>& position);
 	virtual ~Enemy();
 
+	/**
+	 * アクセッサ
+	 */
 	double getViewAngle(void) const;
 	double getRadius(void) const;
 
+	/**
+	 * 毎フレーム呼び出される
+	 * AI関係の処理を記述する
+	 */
 	void onMoveAI(void);
+	/**
+	 * 壁に衝突したときに呼び出される
+	 * AI関係の処理を記述する
+	 */
 	void onHit(void);
+	/**
+	 * プレイヤーを発見したときに呼び出される
+	 * 情報伝達オブジェクトのインスタンス化などを行う
+	 *
+	 * @param player プレイヤー
+	 */
 	void onFind(const Player& player);
+	/**
+	 * ブロックを発見したときに呼び出される
+	 * 透過ブロックに対しては呼び出されない
+	 * マッピングの処理を記述する
+	 *
+	 * @param position ブロックの左下の位置（マップ配列におけるインデックス）
+	 * @param block ブロック
+	 */
 	void onFind(const Vector<int>& position, const Block& block);
+	/**
+	 * 描画色を設定する
+	 * テクスチャ実装後に削除される
+	 */
 	void changeColor(void) const;
 
 	void draw(void);

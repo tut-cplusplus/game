@@ -52,6 +52,7 @@ void ComponentFPS::draw()
 
     SYSTEMTIME tmp;
     GetSystemTime(&tmp);
+	//分の切り替わりで60秒のSleepが発生するのを抑制する
 	tmp.wSecond += (tmp.wSecond < start.wSecond) ? 60 : 0;
     double took_time = (tmp.wSecond - start.wSecond) + (tmp.wMilliseconds - start.wMilliseconds) / 1000.0;
     double wait_time = (double)count / set_fps - took_time;

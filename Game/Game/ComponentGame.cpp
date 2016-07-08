@@ -280,19 +280,6 @@ bool ComponentGame::isHit(const Vector<double>& position) const
 	if (block.isTransparent())
 		return false;
 	return true;
-	/*
-	for (int i = 0; i < MAP_HEIGHT; i++) {
-		for (int j = 0; j < MAP_WIDTH; j++) {
-			const Block& block = *map[i][j];
-			if (block.isTransparent())
-				continue;
-			Vector<double> blockPosition(j, i);
-			if (isHit(blockPosition, position))
-				return true;
-		}
-	}
-	return false;
-	*/
 }
 
 bool ComponentGame::isHit(const Character& character) const

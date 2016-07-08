@@ -4,6 +4,9 @@
 #include "Enemy.hpp"
 #include "Size.hpp"
 
+/**
+ * 普通の敵クラス
+ */
 class NormalEnemy : public Enemy {
 public:
 	NormalEnemy();
