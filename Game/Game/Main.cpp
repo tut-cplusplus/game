@@ -9,13 +9,10 @@
 #include "ComponentFPS.hpp"
 #include "ComponentGame.hpp"
 #include "FPSManager.hpp"
-#include "Animation.hpp"
 
 #include <GL/glut.h>
 
 using namespace std;
-
-Animation* animation;
 
 /**
  * ゲーム独自の初期化処理を行う関数
@@ -140,11 +137,6 @@ int main(int argc, char** argv)
 	glutIdleFunc(idle);
 	//独自の初期化処理
 	init();
-	cout << "z : 再生" << endl;
-	cout << "x : 一時停止" << endl;
-	cout << "c : ループON" << endl;
-	cout << "v : ループOFF" << endl;
-	animation = new Animation("data/animations/test.ani", Size<double>(100, 100));
 
 	//glutメインループ開始
 	glutMainLoop();
@@ -172,7 +164,6 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	LayoutManager::getLayout()->draw();
-	animation->draw();
 	glutSwapBuffers();
 	FPSManager::stopMeasure();
 	FPSManager::update();
@@ -222,18 +213,6 @@ void keyboard(unsigned char key, int x, int y)
 	case 'Q':
 	case '\033':
 		exit(0);
-	case 'z':
-		animation->start();
-		break;
-	case 'x':
-		animation->stop();
-		break;
-	case 'c':
-		animation->setLoop(true);
-		break;
-	case 'v':
-		animation->setLoop(false);
-		break;
 	}
 	LayoutManager::keyboard(key, x, y);
 }
