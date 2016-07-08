@@ -5,7 +5,39 @@
 
 #include <GL/glut.h>
 
+#ifndef __GNUG__
+  #include <windows.h>
+#else
+  #include <time.h>
+  #include <sys/time.h>
+  #include <unistd.h>
+#endif
+
 void DrawString(std::string str, int w, int h);
+
+double ComponentFPS::getTime(void) const
+{
+	double time;
+#ifndef __GNUG__
+	SYSTEMTIME stime;
+	GetSystemTime(&stime);
+	time = (stime.wHour * 60.0 + stime.wMinute) * 60.0 + stime.wSecond + stime.wMilliseconds / 1000.0;
+#else
+	timeval tval;
+	gettimeofday(&tval, NULL);
+	time = tval.tv_sec + tval.tv_usec / 1000000.0;
+#endif
+	return time;
+}
+
+void ComponentFPS::sleep(double seconds) const
+{
+#ifndef __GNUG__
+	Sleep((int)(seconds * 1000));
+#else
+	usleep((unsigned)(seconds * 1000000));
+#endif
+}
 
 ComponentFPS::ComponentFPS()
 {
@@ -29,65 +61,32 @@ ComponentFPS::~ComponentFPS()
 
 void ComponentFPS::draw()
 {
-  #ifndef __GNUG__
     if (count == 0) {
-      GetSystemTime(&start);
+		start = getTime();
     }
 
     if (count == number_of_sample) {
-      GetSystemTime(&end);
-	  end.wSecond += (end.wSecond < start.wSecond) ? 60 : 0;
+		end = getTime();
 
-      now_fps = 1.0 / ((end.wSecond - start.wSecond) + (end.wMilliseconds - start.wMilliseconds) / 1000.0) * (double)number_of_sample;
+      now_fps = 1.0 / (end - start) * (double)number_of_sample;
       count = 0;
-      GetSystemTime(&start);
+	  start = getTime();
     }
 
     count ++;
 
     std::ostringstream oss;
-    oss << "fps : " << (int)now_fps << " (working on Windows)";
+    oss << "fps : " << (int)now_fps;
 
     DrawString(oss.str(), width, height);
 
-    SYSTEMTIME tmp;
-    GetSystemTime(&tmp);
-	//分の切り替わりで60秒のSleepが発生するのを抑制する
-	tmp.wSecond += (tmp.wSecond < start.wSecond) ? 60 : 0;
-    double took_time = (tmp.wSecond - start.wSecond) + (tmp.wMilliseconds - start.wMilliseconds) / 1000.0;
+	double tmp = getTime();
+	double took_time = tmp - start;
     double wait_time = (double)count / set_fps - took_time;
 
     if (wait_time > 0) {
-      Sleep(wait_time * 1000);
+		sleep(wait_time);
     }
-  #else
-    if (count == 0) {
-      gettimeofday(&start, NULL);
-    }
-
-    if (count == number_of_sample) {
-      gettimeofday(&end, NULL);
-
-      now_fps = 1.0 / ((end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0) * (double)number_of_sample;
-      count = 0;
-      gettimeofday(&start, NULL);
-    }
-
-    count ++;
-
-    std::ostringstream oss;
-    oss << "fps : " << (int)now_fps << " (working on Linux)";
-
-    DrawString(oss.str(), width, height);
-
-    timeval tmp;
-    gettimeofday(&tmp, NULL);
-    double took_time = (tmp.tv_sec - start.tv_sec) + (tmp.tv_usec - start.tv_usec) / 1000000.0;
-    double wait_time = (double)count / set_fps - took_time;
-    if (wait_time > 0) {
-      usleep(wait_time * 1000000);
-    }
-  #endif
 
   return ;
 }
