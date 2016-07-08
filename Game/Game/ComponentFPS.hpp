@@ -27,6 +27,8 @@ private:
   double now_fps;
   int number_of_sample;
   double set_fps;
+  double waitTimeSum;
+  double utilization;
 
 };
 

@@ -63,12 +63,14 @@ void ComponentFPS::draw()
 {
     if (count == 0) {
 		start = getTime();
+		waitTimeSum = 0.0;
     }
 
     if (count == number_of_sample) {
 		end = getTime();
 
       now_fps = 1.0 / (end - start) * (double)number_of_sample;
+	  utilization = (1 - waitTimeSum) * 100;
       count = 0;
 	  start = getTime();
     }
@@ -76,13 +78,14 @@ void ComponentFPS::draw()
     count ++;
 
     std::ostringstream oss;
-    oss << "fps : " << (int)now_fps;
+    oss << "fps : " << (int)now_fps << " (utilization : " << (int)utilization << "%)";
 
     DrawString(oss.str(), width, height);
 
 	double tmp = getTime();
 	double took_time = tmp - start;
     double wait_time = (double)count / set_fps - took_time;
+	waitTimeSum += wait_time;
 
     if (wait_time > 0) {
 		sleep(wait_time);
