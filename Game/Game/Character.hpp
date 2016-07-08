@@ -48,6 +48,10 @@ public:
 	 */
 	void move(void);
 	/**
+	 * 一マス分の移動が終了したときに呼び出される
+	 */
+	virtual void onStop(void);
+	/**
 	 * 壁に当たったときに呼び出される
 	 */
 	virtual void onHit(void);

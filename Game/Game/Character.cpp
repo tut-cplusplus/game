@@ -76,10 +76,16 @@ void Character::move(void)
 	if (moveCount == 20) {
 		isMoving = false;
 		position = destination;
+		onStop();
 	}
 }
 
 void Character::breakWall(void) {
+}
+
+void Character::onStop(void)
+{
+
 }
 
 void Character::onHit(void)
