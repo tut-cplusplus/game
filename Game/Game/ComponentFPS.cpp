@@ -71,6 +71,7 @@ void ComponentFPS::draw()
 
       now_fps = 1.0 / (end - start) * (double)number_of_sample;
 	  utilization = (1 - waitTimeSum) * 100;
+	  waitTimeSum = 0.0;
       count = 0;
 	  start = getTime();
     }
@@ -85,9 +86,9 @@ void ComponentFPS::draw()
 	double tmp = getTime();
 	double took_time = tmp - start;
     double wait_time = (double)count / set_fps - took_time;
-	waitTimeSum += wait_time;
 
     if (wait_time > 0) {
+		waitTimeSum += wait_time;
 		sleep(wait_time);
     }
 
