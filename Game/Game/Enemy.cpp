@@ -72,9 +72,7 @@ void Enemy::onHit(void)
 
 void Enemy::onFind(const Player& player)
 {
-	//テストコード
-	static int cnt = 0;
-	cout << "find : "  << cnt++ << endl;
+
 }
 
 void Enemy::onFind(const Vector<int>& position, const Block& block)

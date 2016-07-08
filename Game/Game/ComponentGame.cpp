@@ -407,11 +407,8 @@ void ComponentGame::findBlockEvent(void)
 				continue;
 			for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 				Enemy& enemy = **itr;
-				if (isFound(position, block, enemy)) {
-					//テストコード
-					map[i][j] = new BlockUnbreakableWall(blockSize);
+				if (isFound(position, block, enemy))
 					enemy.onFind(Vector<int>(j, i), block);
-				}
 			}
 		}
 	}
