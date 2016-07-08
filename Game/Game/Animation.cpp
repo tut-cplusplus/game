@@ -6,6 +6,11 @@
 
 using namespace std;
 
+Animation::Animation()
+{
+
+}
+
 Animation::Animation(const string& fpath, const Size<double>& size)
 	: Rectangle(size), isPlaying(false), isLoop(false), cnt(0)
 {

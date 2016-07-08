@@ -21,6 +21,7 @@ private:
 	GLuint ID;
 
 public:
+	Animation();
 	Animation(const std::string& fpath, const Size<double>& size = Size<double>(0.0, 0.0));
 
 	void draw(void);

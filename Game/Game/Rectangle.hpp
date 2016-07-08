@@ -18,17 +18,12 @@ public:
 	 * アクセッサ
 	 */
 	Size<double> getSize(void) const;
-	void setSize(const Size<double>& size);
+	virtual void setSize(const Size<double>& size);
 };
 
 inline Size<double> Rectangle::getSize(void) const
 {
 	return size;
-}
-
-inline void Rectangle::setSize(const Size<double>& size)
-{
-	this->size = size;
 }
 
 #endif

@@ -12,3 +12,8 @@ Rectangle::Rectangle(const Size<double>& size)
 
 }
 
+void Rectangle::setSize(const Size<double>& size)
+{
+	this->size = size;
+}
+

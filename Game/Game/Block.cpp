@@ -8,18 +8,29 @@ using namespace std;
 
 Block::Block()
 {
-
+	loadAnimation();
 }
 
 Block::Block(const Size<double>& size)
 	: Rectangle(size)
 {
-
+	loadAnimation();
+	animation.setSize(size);
 }
 
 Block::~Block()
 {
 
+}
+
+void Block::loadAnimation(void)
+{
+	animation = Animation(getAnimationPath());
+}
+
+string Block::getAnimationPath(void) const
+{
+	return "data/animations/Wall.ani";
 }
 
 void Block::changeColor(void) const
@@ -46,13 +57,12 @@ void Block::onDestroy(void)
 void Block::draw(void)
 {
 	changeColor();
-	double width = size.getWidth();
-	double height = size.getHeight();
-	glBegin(GL_LINE_LOOP);
-	glVertex2d(0.0, 0.0);
-	glVertex2d(width, 0.0);
-	glVertex2d(width, height);
-	glVertex2d(0.0, height);
-	glEnd();
+	animation.draw();
+}
+
+void Block::setSize(const Size<double>& size)
+{
+	Rectangle::setSize(size);
+	animation.setSize(size);
 }
 
