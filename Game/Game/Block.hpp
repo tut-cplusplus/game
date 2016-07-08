@@ -2,15 +2,13 @@
 #define ___Class_Block
 
 #include "Size.hpp"
+#include "Rectangle.hpp"
 
 /**
  * ブロッククラス．
  * 壁やトラップの基となる．
  */
-class Block {
-protected:
-	Size<double> size;	//ブロックの大きさ
-
+class Block : public Rectangle {
 public:
 	Block();
 	Block(const Size<double>& size);
@@ -44,24 +42,7 @@ public:
 	 * 描画時に呼ばれる．
 	 */
 	virtual void draw(void);
-
-	/**
-	 * セッター及びゲッター
-	 */
-	Size<double> getSize(void) const;
-	void setSize(const Size<double>& size);
-
 };
-
-inline Size<double> Block::getSize(void) const
-{
-	return size;
-}
-
-inline void Block::setSize(const Size<double>& size)
-{
-	this->size = size;
-}
 
 #endif
 

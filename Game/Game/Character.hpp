@@ -4,8 +4,9 @@
 #include "Vector.hpp"
 #include "Size.hpp"
 #include "Key.hpp"
+#include "Rectangle.hpp"
 
-class Character {
+class Character : public Rectangle {
 public:
 	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };	//向き
 
@@ -18,7 +19,6 @@ private:
 protected:
 	bool isMoving;				//移動中かどうか
 	Vector<double> position;	//現在位置
-	Size<double> size;			//キャラクターの大きさ
 	Direction direction;		//キャラクターの向き
 	int *texture_id;			//テクスチャIDの配列
 	
@@ -116,7 +116,6 @@ public:
 	 * ゲッタ及びセッタ
 	 */
 	Vector<double> getPosition(void) const;
-	Size<double> getSize(void) const;
 	Direction getDirection(void) const;
 	/**
 	 * directionを角度として返す
@@ -125,17 +124,11 @@ public:
 	 */
 	double getAngle(void) const;
 	void setPosition(const Vector<double>& position);
-	void setSize(const Size<double>& size);
 };
 
 inline Vector<double> Character::getPosition(void) const
 {
 	return position;
-}
-
-inline Size<double> Character::getSize(void) const
-{
-	return size;
 }
 
 inline Character::Direction Character::getDirection(void) const
@@ -158,11 +151,6 @@ inline double Character::getAngle(void) const
 inline void Character::setPosition(const Vector<double>& position)
 {
 	this->position = position;
-}
-
-inline void Character::setSize(const Size<double>& size)
-{
-	this->size = size;
 }
 
 #endif

@@ -13,7 +13,7 @@ Character::Character()
 }
 
 Character::Character(const Vector<double>& position, const Size<double>& size)
-	: speed(1.0), isMoving(false), position(position), size(size), direction(WEST), texture_id(nullptr)
+	: Rectangle(size), speed(1.0), isMoving(false), position(position), direction(WEST), texture_id(nullptr)
 {
 
 }

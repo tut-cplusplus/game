@@ -12,7 +12,7 @@ Block::Block()
 }
 
 Block::Block(const Size<double>& size)
-	: size(size)
+	: Rectangle(size)
 {
 
 }

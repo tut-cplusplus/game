@@ -7,7 +7,7 @@
  * 長方形クラス
  */
 class Rectangle {
-private:
+protected:
 	Size<double> size;
 
 public:
