@@ -7,23 +7,24 @@
 
 class Character {
 public:
-	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };
+	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };	//向き
 
 private:
-	Vector<double> destination;
-	Vector<double> source;
-	int moveCount;
-	double speed;
+	Vector<double> destination;	//移動後の座標
+	Vector<double> source;		//移動前の座標
+	int moveCount;				//移動における何フレーム目か
+	double speed;				//移動速度
 
 protected:
-	bool isMoving;
-	Vector<double> position;
-	Size<double> size;
-	Direction direction;//キャラクターの向き
-	int *texture_id;	//テクスチャIDの配列
+	bool isMoving;				//移動中かどうか
+	Vector<double> position;	//現在位置
+	Size<double> size;			//キャラクターの大きさ
+	Direction direction;		//キャラクターの向き
+	int *texture_id;			//テクスチャIDの配列
 	
 	/**
 	 * 壁を壊す関数
+	 * この関数は壁を壊す要求をするだけであり，実際の破壊処理はComponentGameで行う
 	 */
 	virtual void breakWall(void);
 
@@ -37,11 +38,23 @@ public:
 	 * 初期化関数
 	 */
 	virtual void init();
+	/**
+	 * 移動を開始する
+	 */
 	void startMoving(void);
+	/**
+	 * 移動する
+	 * 毎フレーム呼び出される
+	 */
 	void move(void);
-
+	/**
+	 * 壁に当たったときに呼び出される
+	 */
 	virtual void onHit(void);
-
+	/**
+	 * 色を変更する
+	 * テクスチャの実装後に削除する
+	 */
 	virtual void changeColor(void) const;
 	/**
 	 * displayに対応する関数
@@ -95,9 +108,17 @@ public:
 	 */
 	virtual void specialup(int key, int x, int y);
 
+	/**
+	 * ゲッタ及びセッタ
+	 */
 	Vector<double> getPosition(void) const;
 	Size<double> getSize(void) const;
 	Direction getDirection(void) const;
+	/**
+	 * directionを角度として返す
+	 *
+	 * @return x軸の正の向きを0度とした反時計回りの角度(-90~180)
+	 */
 	double getAngle(void) const;
 	void setPosition(const Vector<double>& position);
 	void setSize(const Size<double>& size);

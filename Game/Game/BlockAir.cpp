@@ -21,6 +21,6 @@ bool BlockAir::isTransparent(void) const
 
 void BlockAir::draw(void)
 {
-
+	//何も描画しない
 }
 

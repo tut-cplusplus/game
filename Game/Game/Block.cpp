@@ -24,6 +24,7 @@ Block::~Block()
 
 void Block::changeColor(void) const
 {
+	//白に設定する
 	glColor3d(1.0, 1.0, 1.0);
 }
 
@@ -37,7 +38,7 @@ bool Block::isBreakable(void) const
 	return true;
 }
 
-void Block::destroy(void)
+void Block::onDestroy(void)
 {
 
 }

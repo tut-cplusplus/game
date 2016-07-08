@@ -47,7 +47,9 @@ void Character::startMoving(void)
 	if (direction == INVALID)
 		return;
 	isMoving = true;
+	//進行方向のベクトル
 	Vector<double> directionVector = directionVectorTable[direction];
+	//出発地点と目的地を設定する
 	destination = position;
 	destination += directionVector;
 	source = position;
@@ -65,7 +67,9 @@ void Character::move(void)
 		Vector<double>(1.0, 0.0),
 		Vector<double>(-1.0, 0.0),
 	};
+	//進行方向のベクトル
 	Vector<double> directionVector = directionVectorTable[direction];
+	//20フレームで1マス進む
 	directionVector *= 1.0 / 20;
 	position += directionVector;
 	moveCount++;
