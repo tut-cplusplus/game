@@ -9,6 +9,8 @@ private:
 	Keypad keypad;	//キーパッド
 
 protected:
+	void loadAnimations(void);
+
 	/**
 	 * 壁を壊す関数
 	 */
@@ -41,6 +43,7 @@ public:
 	void onBreakBlock(void);
 
 	void changeColor(void) const;
+	void draw(void);
 	/**
 	 * キーパッドを取得する
 	 *

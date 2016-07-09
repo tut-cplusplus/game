@@ -12,6 +12,9 @@ private:
 	double radius;		//視界の半径
 	bool first;			//AIのサンプルに使用．不要であれば消す
 
+protected:
+	void loadAnimations(void);
+
 public:
 	
 	Enemy();

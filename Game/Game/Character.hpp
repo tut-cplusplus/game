@@ -1,10 +1,13 @@
 #ifndef ___Class_Character
 #define ___Class_Character
 
+#include <vector>
+
 #include "Vector.hpp"
 #include "Size.hpp"
 #include "Key.hpp"
 #include "Rectangle.hpp"
+#include "Animation.hpp"
 
 class Character : public Rectangle {
 public:
@@ -20,8 +23,17 @@ protected:
 	bool isMoving;				//移動中かどうか
 	Vector<double> position;	//現在位置
 	Direction direction;		//キャラクターの向き
-	int *texture_id;			//テクスチャIDの配列
-	
+	std::vector<Animation> animations;	//アニメーションのベクタ
+	Animation animation;		//現在再生中のアニメーション
+
+	/**
+	 * 初期化関数
+	 */
+	virtual void init();
+	/**
+	 * アニメーションのロード
+	 */
+	virtual void loadAnimations(void);
 	/**
 	 * 壁を壊す関数
 	 * この関数は壁を壊す要求をするだけであり，実際の破壊処理はComponentGameで行う
@@ -34,10 +46,6 @@ public:
 	Character(const Vector<double>& position);
 	virtual ~Character();
 	
-	/**
-	 * 初期化関数
-	 */
-	virtual void init();
 	/**
 	 * 移動を開始する
 	 */
@@ -124,6 +132,7 @@ public:
 	 */
 	double getAngle(void) const;
 	void setPosition(const Vector<double>& position);
+	void setSize(const Size<double>& size);
 };
 
 inline Vector<double> Character::getPosition(void) const

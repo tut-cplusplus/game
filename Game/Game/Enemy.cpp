@@ -7,22 +7,29 @@
 
 using namespace std;
 
+void Enemy::loadAnimations(void)
+{
+	animation = Animation("data/animations/Enemy.ani");
+	animations.push_back(animation);
+	Character::loadAnimations();
+}
+
 Enemy::Enemy()
 	: Character(), viewAngle(45.0), radius(100.0), first(true)
 {
-
+	init();
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size)
 	: Character(position, size), viewAngle(45.0), radius(100.0), first(true)
 {
-
+	init();
 }
 
 Enemy::Enemy(const Vector<double>& position)
 	: Character(position), viewAngle(45.0), radius(100.0), first(true)
 {
-
+	init();
 }
 
 
@@ -82,7 +89,7 @@ void Enemy::onFind(const Vector<int>& position, const Block& block)
 
 void Enemy::changeColor(void) const
 {
-	glColor3d(0.0, 1.0, 0.0);
+	glColor3d(1.0, 1.0, 1.0);
 }
 
 void Enemy::draw(void)

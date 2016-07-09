@@ -6,30 +6,34 @@
 
 using namespace std;
 
-Character::Character()
-	: speed(1.0), isMoving(false), position(0.0, 0.0), direction(WEST), texture_id(nullptr)
-{
+void Character::init(void) {
+	loadAnimations();
+}
 
+void Character::loadAnimations(void)
+{
+	setSize(size);
+}
+
+Character::Character()
+	: speed(1.0), isMoving(false), position(0.0, 0.0), direction(WEST)
+{
+	init();
 }
 
 Character::Character(const Vector<double>& position, const Size<double>& size)
-	: Rectangle(size), speed(1.0), isMoving(false), position(position), direction(WEST), texture_id(nullptr)
+	: Rectangle(size), speed(1.0), isMoving(false), position(position), direction(WEST)
 {
-
+	init();
 }
 
 Character::Character(const Vector<double>& position)
-	: speed(1.0), isMoving(false), position(position), direction(WEST), texture_id(nullptr)
+	: speed(1.0), isMoving(false), position(position), direction(WEST)
 {
-
+	init();
 }
 
 Character::~Character() {
-	if (texture_id != nullptr)
-		delete texture_id;
-}
-
-void Character::init(void) {
 
 }
 
@@ -102,14 +106,7 @@ void Character::changeColor(void) const
 void Character::draw(void)
 {
 	changeColor();
-	double width = size.getWidth();
-	double height = size.getHeight();
-	glBegin(GL_QUADS);
-	glVertex2d(0.0, 0.0);
-	glVertex2d(width, 0.0);
-	glVertex2d(width, height);
-	glVertex2d(0.0, height);
-	glEnd();
+	animation.draw();
 }
 
 void Character::keyboard(const Key& key)
@@ -140,5 +137,13 @@ void Character::special(int key, int x, int y)
 void Character::specialup(int key, int x, int y)
 {
 
+}
+
+void Character::setSize(const Size<double>& size)
+{
+	Rectangle::setSize(size);
+	for (auto itr = animations.begin(); itr != animations.end(); ++itr)
+		(*itr).setSize(size);
+	animation.setSize(size);
 }
 
