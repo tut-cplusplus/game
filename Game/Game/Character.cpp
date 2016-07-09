@@ -16,19 +16,19 @@ void Character::loadAnimations(void)
 }
 
 Character::Character()
-	: speed(1.0), isMoving(false), position(0.0, 0.0), direction(WEST)
+	: speed(1.0), isMoving(false), isBreaking(false), position(0.0, 0.0), direction(WEST)
 {
 	init();
 }
 
 Character::Character(const Vector<double>& position, const Size<double>& size)
-	: Rectangle(size), speed(1.0), isMoving(false), position(position), direction(WEST)
+	: Rectangle(size), speed(1.0), isMoving(false), isBreaking(false), position(position), direction(WEST)
 {
 	init();
 }
 
 Character::Character(const Vector<double>& position)
-	: speed(1.0), isMoving(false), position(position), direction(WEST)
+	: speed(1.0), isMoving(false), isBreaking(false), position(position), direction(WEST)
 {
 	init();
 }
@@ -39,20 +39,13 @@ Character::~Character() {
 
 void Character::startMoving(void)
 {
-	static Vector<double> directionVectorTable[] = {
-		Vector<double>(0.0, 0.0),
-		Vector<double>(0.0, 1.0),
-		Vector<double>(0.0, -1.0),
-		Vector<double>(1.0, 0.0),
-		Vector<double>(-1.0, 0.0),
-	};
 	if (isMoving)
 		return;
 	if (direction == INVALID)
 		return;
 	isMoving = true;
 	//進行方向のベクトル
-	Vector<double> directionVector = directionVectorTable[direction];
+	Vector<double> directionVector = getDirectionVector();
 	//出発地点と目的地を設定する
 	destination = position;
 	destination += directionVector;
@@ -64,15 +57,8 @@ void Character::move(void)
 {
 	if (!isMoving)
 		return;
-	static Vector<double> directionVectorTable[] = {
-		Vector<double>(0.0, 0.0),
-		Vector<double>(0.0, 1.0),
-		Vector<double>(0.0, -1.0),
-		Vector<double>(1.0, 0.0),
-		Vector<double>(-1.0, 0.0),
-	};
 	//進行方向のベクトル
-	Vector<double> directionVector = directionVectorTable[direction];
+	Vector<double> directionVector = getDirectionVector();
 	//20フレームで1マス進む
 	directionVector *= 1.0 / 20;
 	position += directionVector;
@@ -84,7 +70,8 @@ void Character::move(void)
 	}
 }
 
-void Character::breakWall(void) {
+void Character::startBreaking(void) {
+	isBreaking = true;
 }
 
 void Character::onStop(void)
@@ -137,6 +124,18 @@ void Character::special(int key, int x, int y)
 void Character::specialup(int key, int x, int y)
 {
 
+}
+
+Vector<double> Character::getDirectionVector(void) const
+{
+	static Vector<double> directionVectorTable[] = {
+		Vector<double>(0.0, 0.0),
+		Vector<double>(0.0, 1.0),
+		Vector<double>(0.0, -1.0),
+		Vector<double>(1.0, 0.0),
+		Vector<double>(-1.0, 0.0),
+	};
+	return directionVectorTable[direction];
 }
 
 void Character::setSize(const Size<double>& size)

@@ -3,7 +3,6 @@
 #include <random>
 
 #include "ComponentGame.hpp"
-#include "BlockAir.hpp"
 #include "BlockNormalWall.hpp"
 #include "BlockUnbreakableWall.hpp"
 #include "Vector.hpp"
@@ -384,6 +383,12 @@ void ComponentGame::findBlockEvent(void)
 	}
 }
 
+void ComponentGame::breakBlockEvent(void)
+{
+	breakBlock(players);
+	breakBlock(enemies);
+}
+
 ComponentGame::ComponentGame()
 {
 
@@ -431,6 +436,7 @@ void ComponentGame::draw(void)
 	hitEvent();
 	findPlayerEvent();
 	findBlockEvent();
+	breakBlockEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glPushMatrix();

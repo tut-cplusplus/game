@@ -7,6 +7,7 @@
 
 #include "Component.hpp"
 #include "Block.hpp"
+#include "BlockAir.hpp"
 #include "Vector.hpp"
 #include "Player.hpp"
 #include "NormalEnemy.hpp"
@@ -153,6 +154,11 @@ private:
 	 */
 	template <typename T>
 	void hitDetectCharacters(const std::vector<T*> characters);
+	/**
+	 * ブロックの破壊を行う
+	 */
+	template <typename T>
+	void breakBlock(const std::vector<T*> characters);
 
 	/**
 	 * キャラクターを配置可能な座標のリストを取得する
@@ -205,6 +211,10 @@ private:
 	 * ブロックが敵の視界に入ったときのイベントを発生させる
 	 */
 	void findBlockEvent(void);
+	/**
+	 * ブロックを破壊したときのイベントを発生させる
+	 */
+	void breakBlockEvent(void);
 
 public:
 	ComponentGame();
@@ -258,6 +268,36 @@ inline void ComponentGame::hitDetectCharacters(const std::vector<T*> characters)
 			character.onHit();
 	}
 }
+
+template <typename T>
+inline void ComponentGame::breakBlock(const std::vector<T*> characters)
+{
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		T& character = **itr;
+		if (character.getIsMoving()) {
+			character.setIsBreaking(false);
+			continue;
+		}
+		if (!character.getIsBreaking())
+			continue;
+		character.setIsBreaking(false);
+		Vector<double> directionVector = character.getDirectionVector();
+		Vector<double> position = character.getPosition();
+		Vector<double> destination = position + directionVector;
+		int row = destination.getY();
+		int col = destination.getX();
+		if (row < 0 || row >= MAP_HEIGHT || col < 0 || col >= MAP_WIDTH)
+			continue;
+		const Block& block = *map[row][col];
+		if (block.isTransparent())
+			continue;
+		if (!block.isBreakable())
+			continue;
+		delete map[row][col];
+		map[row][col] = new BlockAir(blockSize);
+	}
+}
+
 
 #endif
 

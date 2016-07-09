@@ -21,6 +21,7 @@ private:
 
 protected:
 	bool isMoving;				//移動中かどうか
+	bool isBreaking;			//ブロックを破壊中かどうか
 	Vector<double> position;	//現在位置
 	Direction direction;		//キャラクターの向き
 	std::vector<Animation> animations;	//アニメーションのベクタ
@@ -38,7 +39,7 @@ protected:
 	 * 壁を壊す関数
 	 * この関数は壁を壊す要求をするだけであり，実際の破壊処理はComponentGameで行う
 	 */
-	virtual void breakWall(void);
+	virtual void startBreaking(void);
 
 public:
 	Character();
@@ -125,6 +126,7 @@ public:
 	 */
 	Vector<double> getPosition(void) const;
 	Direction getDirection(void) const;
+	Vector<double> getDirectionVector(void) const;
 	/**
 	 * directionを角度として返す
 	 *
@@ -133,6 +135,9 @@ public:
 	double getAngle(void) const;
 	void setPosition(const Vector<double>& position);
 	void setSize(const Size<double>& size);
+	bool getIsMoving(void) const;
+	bool getIsBreaking(void) const;
+	void setIsBreaking(bool isBreaking);
 };
 
 inline Vector<double> Character::getPosition(void) const
@@ -160,6 +165,21 @@ inline double Character::getAngle(void) const
 inline void Character::setPosition(const Vector<double>& position)
 {
 	this->position = position;
+}
+
+inline bool Character::getIsMoving(void) const
+{
+	return isMoving;
+}
+
+inline bool Character::getIsBreaking(void) const
+{
+	return isBreaking;
+}
+
+inline void Character::setIsBreaking(bool isBreaking)
+{
+	this->isBreaking = isBreaking;
 }
 
 #endif

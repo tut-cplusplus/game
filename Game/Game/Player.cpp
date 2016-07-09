@@ -74,7 +74,7 @@ void Player::onRight(void)
 
 void Player::onBreakBlock(void)
 {
-
+	startBreaking();
 }
 
 void Player::changeColor(void) const
