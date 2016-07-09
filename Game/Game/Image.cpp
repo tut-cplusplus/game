@@ -65,10 +65,11 @@ void Image::readPPM(const string& fpath)
 			fin.read((char*)color, n);
 			for (int k = 0; k < n; k++)
 				*ptr++ = color[k];
-			if ((int)color[0] + color[1] + color[2] == 3 * 255)
-				*ptr++ = 0x00;
-			else
-				*ptr++ = 0xFF;
+			*ptr = 0xFF;
+			int sum = (int)color[0] + color[1] + color[2];
+			if (sum == 3 * 255 || sum == 0)
+				*ptr = 0x00;
+			ptr++;
 		}
 	}
 }
