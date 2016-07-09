@@ -10,12 +10,11 @@ GLuint FontManager::ID;
 void FontManager::init(void)
 {
 	ID = TextureManager::registerTexture("data/fonts/opensans.ppm");
-	cout << ID << endl;
 }
 
 void FontManager::draw(char c, double width, double height)
 {
-	double colsDouble = 16.5;	//フォントテクスチャの右側にある余白への対処
+	double colsDouble = 16.3;	//フォントテクスチャの右側にある余白への対処
 	int cols = colsDouble;
 	int rows = 8;
 	int row = c / cols;
