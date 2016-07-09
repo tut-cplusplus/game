@@ -13,24 +13,25 @@ void Player::loadAnimations(void)
 	Character::loadAnimations();
 }
 
-void Player::breakWall(void)
+void Player::startPlacing(void)
 {
+	isPlacing = true;
 }
 
 Player::Player()
-	: Character()
+	: Character(), isPlacing(false)
 {
 	init();
 }
 
 Player::Player(const Vector<double>& position, const Size<double>& size, const Keypad& keypad)
-	: Character(position, size), keypad(keypad)
+	: Character(position, size), keypad(keypad), isPlacing(false)
 {
 	init();
 }
 
 Player::Player(const Vector<double>& position, const Keypad& keypad)
-	: Character(position), keypad(keypad)
+	: Character(position), keypad(keypad), isPlacing(false)
 {
 	init();
 }
@@ -75,6 +76,11 @@ void Player::onRight(void)
 void Player::onBreakBlock(void)
 {
 	startBreaking();
+}
+
+void Player::onPlaceBlock(void)
+{
+	startPlacing();
 }
 
 void Player::changeColor(void) const

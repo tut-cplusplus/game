@@ -7,14 +7,12 @@
 class Player : public Character {
 private:
 	Keypad keypad;	//キーパッド
+	bool isPlacing;	//ブロックを設置中かどうか
 
 protected:
 	void loadAnimations(void);
 
-	/**
-	 * 壁を壊す関数
-	 */
-	void breakWall(void);
+	void startPlacing(void);
 public:
 	Player();
 	Player(const Vector<double>& position, const Size<double>& size, const Keypad& keypad);
@@ -41,6 +39,10 @@ public:
 	 * breakBlockキーが押されたときに呼び出される
 	 */
 	void onBreakBlock(void);
+	/**
+	 * placeBlockキーが押されたときに呼び出される
+	 */
+	void onPlaceBlock(void);
 
 	void changeColor(void) const;
 	void draw(void);
@@ -50,5 +52,17 @@ public:
 	 * @return キーパッド
 	 */
 	Keypad getKeypad(void) const;
+	bool getIsPlacing(void) const;
+	void setIsPlacing(bool isPlacing);
 };
+
+inline bool Player::getIsPlacing(void) const
+{
+	return isPlacing;
+}
+
+inline void Player::setIsPlacing(bool isPlacing)
+{
+	this->isPlacing = isPlacing;
+}
 

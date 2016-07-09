@@ -144,7 +144,7 @@ void ComponentGame::addPlayer(void)
 	int n = positions.size();
 	int idx = rnd(mt) * n;
 	const Vector<int>& position = positions[idx];
-	Keypad keypad(Key('w'), Key('s'), Key('a'), Key('d'), Key(' '));
+	Keypad keypad(Key('w'), Key('s'), Key('a'), Key('d'), Key(' '), Key('z'));
 	players.push_back(new Player(Vector<double>(position.getX(), position.getY()), keypad));
 }
 
@@ -267,6 +267,45 @@ bool ComponentGame::isHit(const Character& character) const
 	return false;
 }
 
+bool ComponentGame::isPlaceable(const Vector<double>& position) const
+{
+	int row = position.getY();
+	int col = position.getX();
+	if (row < 0 || row >= MAP_HEIGHT || col < 0 || col >= MAP_WIDTH)
+		return false;
+	const Block& block = *map[row][col];
+	if (!block.isTransparent())
+		return false;
+	if (!isPlaceable(position, players))
+		return false;
+	if (!isPlaceable(position, enemies))
+		return false;
+	return true;
+}
+
+void ComponentGame::placeBlock(const vector<Player*> players)
+{
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		Player& player = **itr;
+		if (player.getIsMoving()) {
+			player.setIsPlacing(false);
+			continue;
+		}
+		if (!player.getIsPlacing())
+			continue;
+		player.setIsPlacing(false);
+		Vector<double> directionVector = player.getDirectionVector();
+		Vector<double> position = player.getPosition();
+		Vector<double> destination = position + directionVector;
+		int row = destination.getY();
+		int col = destination.getX();
+		if (!isPlaceable(destination))
+			continue;
+		delete map[row][col];
+		map[row][col] = new BlockNormalWall(blockSize);
+	}
+}
+
 vector<Vector<int>> ComponentGame::getTransparentBlockVectors(void) const
 {
 	vector<Vector<int>> positions;
@@ -337,6 +376,8 @@ void ComponentGame::keyEvent(void)
 				player.onRight();
 			if (keypad.getBreakBlock() == key)
 				player.onBreakBlock();
+			if (keypad.getPlaceBlock() == key)
+				player.onPlaceBlock();
 		}
 	}
 }
@@ -389,6 +430,11 @@ void ComponentGame::breakBlockEvent(void)
 	breakBlock(enemies);
 }
 
+void ComponentGame::placeBlockEvent(void)
+{
+	placeBlock(players);
+}
+
 ComponentGame::ComponentGame()
 {
 
@@ -437,6 +483,7 @@ void ComponentGame::draw(void)
 	findPlayerEvent();
 	findBlockEvent();
 	breakBlockEvent();
+	placeBlockEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glPushMatrix();

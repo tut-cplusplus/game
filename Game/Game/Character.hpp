@@ -125,6 +125,7 @@ public:
 	 * ゲッタ及びセッタ
 	 */
 	Vector<double> getPosition(void) const;
+	Vector<double> getSource(void) const;
 	Direction getDirection(void) const;
 	Vector<double> getDirectionVector(void) const;
 	/**
@@ -143,6 +144,11 @@ public:
 inline Vector<double> Character::getPosition(void) const
 {
 	return position;
+}
+
+inline Vector<double> Character::getSource(void) const
+{
+	return source;
 }
 
 inline Character::Direction Character::getDirection(void) const

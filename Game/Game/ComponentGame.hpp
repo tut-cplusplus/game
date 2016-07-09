@@ -148,6 +148,22 @@ private:
 	 */
 	bool isHit(const Character& character) const;
 	/**
+	 * ブロックを置けるか判定する
+	 * プレイヤーや敵がいるかどうかも判定する
+	 *
+	 * @param position 座標
+	 * @return true : 置ける / false : そうでない
+	 */
+	bool isPlaceable(const Vector<double>& position) const;
+	/**
+	 * ブロックを置いた場合にキャラクターと当たるか判定する
+	 *
+	 * @param position 座標
+	 * @return true : 置ける / false : そうでない
+	 */
+	template <typename T>
+	bool isPlaceable(const Vector<double>& position, const std::vector<T*>& characters) const;
+	/**
 	 * キャラクターがマップ上のブロックに当たっているか判定し，当たって入ればCharacter::onHit()イベントを発生させる
 	 *
 	 * @param characters キャラクター配列
@@ -159,6 +175,10 @@ private:
 	 */
 	template <typename T>
 	void breakBlock(const std::vector<T*> characters);
+	/**
+	 * ブロックの設置を行う
+	 */
+	void placeBlock(const std::vector<Player*> players);
 
 	/**
 	 * キャラクターを配置可能な座標のリストを取得する
@@ -215,6 +235,10 @@ private:
 	 * ブロックを破壊したときのイベントを発生させる
 	 */
 	void breakBlockEvent(void);
+	/**
+	 * ブロックを設置したときのイベントを発生させる
+	 */
+	void placeBlockEvent(void);
 
 public:
 	ComponentGame();
@@ -260,6 +284,24 @@ inline void ComponentGame::moveCharacters(const std::vector<T*> characters)
 }
 
 template <typename T>
+inline bool ComponentGame::isPlaceable(const Vector<double>& position, const std::vector<T*>& characters) const
+{
+	int row = position.getY();
+	int col = position.getX();
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		T& character = **itr;
+		Vector<double> position2 = character.getPosition();
+		if (character.getIsMoving())
+			position2 = character.getSource();
+		int row2 = position2.getY();
+		int col2 = position2.getX();
+		if (row == row2 && col == col2)
+			return false;
+	}
+	return true;
+}
+
+template <typename T>
 inline void ComponentGame::hitDetectCharacters(const std::vector<T*> characters)
 {
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
@@ -297,7 +339,6 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		map[row][col] = new BlockAir(blockSize);
 	}
 }
-
 
 #endif
 
