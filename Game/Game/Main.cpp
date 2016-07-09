@@ -166,18 +166,6 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	LayoutManager::getLayout()->draw();
-	glTranslated(320.0 - 250.0, 240.0 - 25.0, 0.0);
-	glColor3d(0.0, 1.0, 0.0);
-	FontManager::draw("Hello, world!", 500, 50);
-	glColor3d(1.0, 1.0, 1.0);
-	glTranslated(0.0, -50.0, 0.0);
-	FontManager::draw(" !\"#$%&'()*+,-./", 300, 10);
-	glTranslated(0.0, -10.0, 0.0);
-	FontManager::draw("0123456789:;<=>?@", 300, 10);
-	glTranslated(0.0, -10.0, 0.0);
-	FontManager::draw("ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`", 300, 10);
-	glTranslated(0.0, -10.0, 0.0);
-	FontManager::draw("abcdefghijklmnopqrstuvwxyz{|}~ ", 300, 10);
 	glutSwapBuffers();
 	FPSManager::stopMeasure();
 	FPSManager::update();
