@@ -11,6 +11,7 @@ class BlockNormalWall : public BlockWall {
 public:
 	BlockNormalWall();
 	BlockNormalWall(const Size<double>& size);
+	Block* clone(void) const;
 };
 
 #endif

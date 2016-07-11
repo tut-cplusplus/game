@@ -14,6 +14,7 @@
 class Block : public Rectangle {
 private:
 	Animation animation;
+	Animation itemAnimation;
 
 public:
 	Block();
@@ -22,11 +23,15 @@ public:
 	/**
 	 * アニメーションを読み込む
 	 */
-	void loadAnimation(void);
+	void loadAnimations(void);
 	/**
 	 * アニメーションファイルのパスを返す
 	 */
 	virtual std::string getAnimationPath(void) const;
+	/**
+	 * アイテムのアニメーションファイルのパスを返す
+	 */
+	virtual std::string getItemAnimationPath(void) const;
 	/**
 	 * 色を変更する
 	 * テクスチャの実装に伴って削除する
@@ -57,9 +62,14 @@ public:
 	 */
 	virtual void draw(void);
 	/**
-	 * セッタ
+	 * アクセッサ
 	 */
 	void setSize(const Size<double>& size);
+	Animation getItemAnimation(void) const;
+	/**
+	 * cloneを生成する
+	 */
+	virtual Block* clone(void) const;
 };
 
 #endif

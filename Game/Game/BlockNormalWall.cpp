@@ -16,3 +16,8 @@ BlockNormalWall::BlockNormalWall(const Size<double>& size)
 
 }
 
+Block* BlockNormalWall::clone(void) const
+{
+	return new BlockNormalWall(*this);
+}
+

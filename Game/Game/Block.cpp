@@ -8,13 +8,13 @@ using namespace std;
 
 Block::Block()
 {
-	loadAnimation();
+	loadAnimations();
 }
 
 Block::Block(const Size<double>& size)
 	: Rectangle(size)
 {
-	loadAnimation();
+	loadAnimations();
 	animation.setSize(size);
 }
 
@@ -23,14 +23,20 @@ Block::~Block()
 
 }
 
-void Block::loadAnimation(void)
+void Block::loadAnimations(void)
 {
 	animation = Animation(getAnimationPath());
+	itemAnimation = Animation(getItemAnimationPath());
 }
 
 string Block::getAnimationPath(void) const
 {
 	return "data/animations/Wall.ani";
+}
+
+string Block::getItemAnimationPath(void) const
+{
+	return "data/animations/test.ani";
 }
 
 void Block::changeColor(void) const
@@ -65,4 +71,15 @@ void Block::setSize(const Size<double>& size)
 	Rectangle::setSize(size);
 	animation.setSize(size);
 }
+
+Animation Block::getItemAnimation(void) const
+{
+	return itemAnimation;
+}
+
+Block* Block::clone(void) const
+{
+	return new Block(*this);
+}
+
 

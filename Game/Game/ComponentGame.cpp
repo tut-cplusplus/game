@@ -169,6 +169,14 @@ void ComponentGame::deleteEnemies(void)
 		delete *itr;
 }
 
+void ComponentGame::drawItemBlocks(void)
+{
+	for (auto itr = itemBlocks.begin(); itr != itemBlocks.end(); ++itr) {
+		ItemBlock& itemBlock = **itr;
+		itemBlock.draw();
+	}
+}
+
 void ComponentGame::moveEnemiesAI(void)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
@@ -499,6 +507,7 @@ void ComponentGame::draw(void)
 	glPopMatrix();
 	drawCharacters(players);
 	drawCharacters(enemies);
+	drawItemBlocks();
 }
 
 void ComponentGame::mouse(int button, int state, int x, int y)

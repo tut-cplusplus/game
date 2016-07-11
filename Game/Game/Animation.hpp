@@ -32,6 +32,7 @@ public:
 
 	bool getIsPlaying(void) const;
 	bool getIsLoop(void) const;
+	GLuint getID(void) const;
 };
 
 inline void Animation::start(void)
@@ -57,6 +58,11 @@ inline bool Animation::getIsPlaying(void) const
 inline bool Animation::getIsLoop(void) const
 {
 	return isLoop;
+}
+
+inline GLuint Animation::getID(void) const
+{
+	return ID;
 }
 
 #endif

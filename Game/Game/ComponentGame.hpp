@@ -12,6 +12,7 @@
 #include "Player.hpp"
 #include "NormalEnemy.hpp"
 #include "Size.hpp"
+#include "ItemBlock.hpp"
 
 #include "GL/glut.h"
 
@@ -33,6 +34,7 @@ private:
 	Block*** map;					//マップ
 	std::vector<Player*> players;	//プレイヤー
 	std::vector<Enemy*> enemies;	//敵
+	std::vector<ItemBlock*> itemBlocks;	//アイテム
 	Size<double> blockSize;			//ブロックの大きさ
 	std::list<Key> keys;			//押されているキー
 
@@ -89,6 +91,10 @@ private:
 	 */
 	template <typename T>
 	void drawCharacters(const std::vector<T*> characters) const;
+	/**
+	 * アイテムを描画する
+	 */
+	void drawItemBlocks(void);
 	/**
 	 * キャラクターを移動させる
 	 *
@@ -335,7 +341,8 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 			continue;
 		if (!block.isBreakable())
 			continue;
-		delete map[row][col];
+		//delete map[row][col];
+		itemBlocks.push_back(new ItemBlock(Vector<double>(col, row), map[row][col]));
 		map[row][col] = new BlockAir(blockSize);
 	}
 }
