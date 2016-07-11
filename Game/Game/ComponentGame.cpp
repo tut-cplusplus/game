@@ -368,24 +368,90 @@ void ComponentGame::deleteKey(const Key& key)
 
 void ComponentGame::keyEvent(void)
 {
-	for (auto itr = keys.begin(); itr != keys.end(); ++itr) {
-		const Key& key = *itr;
-		for (auto itr = players.begin(); itr != players.end(); ++itr) {
-			Player& player = **itr;
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		Player& player = **itr;
+		Keypad keypad = player.getKeypad();
+		bool up = false;
+		bool down = false;
+		bool left = false;
+		bool right = false;
+		bool breakBlock = false;
+		bool placeBlock = false;
+		for (auto itr = keys.begin(); itr != keys.end(); ++itr) {
+			const Key& key = *itr;
 			player.keyboard(key);
-			Keypad keypad = player.getKeypad();
-			if (keypad.getUp() == key)
+			if (keypad.getUp() == key) {
 				player.onUp();
-			if (keypad.getDown() == key)
+				up = true;
+				if (!player.getLastUp()) {
+					player.onUpDown();
+					player.setLastUp(true);
+				}
+			}
+			if (keypad.getDown() == key) {
 				player.onDown();
-			if (keypad.getLeft() == key)
+				down = true;
+				if (!player.getLastDown()) {
+					player.onDownDown();
+					player.setLastDown(true);
+				}
+			}
+			if (keypad.getLeft() == key) {
 				player.onLeft();
-			if (keypad.getRight() == key)
+				left = true;
+				if (!player.getLastLeft()) {
+					player.onLeftDown();
+					player.setLastLeft(true);
+				}
+			}
+			if (keypad.getRight() == key) {
 				player.onRight();
-			if (keypad.getBreakBlock() == key)
+				right = true;
+				if (!player.getLastRight()) {
+					player.onRightDown();
+					player.setLastRight(true);
+				}
+			}
+			if (keypad.getBreakBlock() == key) {
 				player.onBreakBlock();
-			if (keypad.getPlaceBlock() == key)
+				breakBlock = true;
+				if (!player.getLastBreakBlock()) {
+					player.onBreakBlockDown();
+					player.setLastBreakBlock(true);
+				}
+			}
+			if (keypad.getPlaceBlock() == key) {
 				player.onPlaceBlock();
+				placeBlock = true;
+				if (!player.getLastPlaceBlock()) {
+					player.onPlaceBlockDown();
+					player.setLastPlaceBlock(true);
+				}
+			}
+		}
+		if (!up && player.getLastUp()) {
+			player.onUpUp();
+			player.setLastUp(false);
+		}
+		if (!down && player.getLastDown()) {
+			player.onDownUp();
+			player.setLastDown(false);
+		}
+		if (!left && player.getLastLeft()) {
+			player.onLeftUp();
+			player.setLastLeft(false);
+		}
+		if (!right && player.getLastRight()) {
+			player.onRightUp();
+			player.setLastRight(false);
+		}
+		if (!breakBlock && player.getLastBreakBlock()) {
+			player.onBreakBlockUp();
+			player.setLastBreakBlock(false);
+		}
+		if (!placeBlock && player.getLastPlaceBlock()) {
+			player.onPlaceBlockUp();
+			player.setLastPlaceBlock(false);
 		}
 	}
 }
