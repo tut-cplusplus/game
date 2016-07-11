@@ -96,62 +96,62 @@ void Player::onPlaceBlock(void)
 
 void Player::onUpDown(void)
 {
-	cout << "updown" << endl;
+
 }
 
 void Player::onDownDown(void)
 {
-	cout << "downdown" << endl;
+
 }
 
 void Player::onLeftDown(void)
 {
-	cout << "leftdown" << endl;
+
 }
 
 void Player::onRightDown(void)
 {
-	cout << "rightdown" << endl;
+
 }
 
 void Player::onBreakBlockDown(void)
 {
-	cout << "breakblockdown" << endl;
+
 }
 
 void Player::onPlaceBlockDown(void)
 {
-	cout << "placeblockdown" << endl;
+
 }
 
 void Player::onUpUp(void)
 {
-	cout << "upup" << endl;
+
 }
 
 void Player::onDownUp(void)
 {
-	cout << "downup" << endl;
+
 }
 
 void Player::onLeftUp(void)
 {
-	cout << "leftup" << endl;
+
 }
 
 void Player::onRightUp(void)
 {
-	cout << "rightup" << endl;
+
 }
 
 void Player::onBreakBlockUp(void)
 {
-	cout << "breakblockup" << endl;
+
 }
 
 void Player::onPlaceBlockUp(void)
 {
-	cout << "placeblockup" << endl;
+
 }
 
 void Player::changeColor(void) const
