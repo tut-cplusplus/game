@@ -183,7 +183,7 @@ void ComponentGame::moveEnemiesAI(void)
 		(**itr).onMoveAI();
 }
 
-bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Rectangle& rectangle, const Enemy& enemy) const
+bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Utility::Rectangle& rectangle, const Enemy& enemy) const
 {
 	static Vector<double> dtable[] = {
 		Vector<double>(0.0, 0.0),

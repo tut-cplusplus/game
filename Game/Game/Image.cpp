@@ -46,7 +46,7 @@ void Image::readPPM(const string& fpath)
 
 	char* buf = new char[BUF_SIZE];
 	fin.getline(buf, BUF_SIZE);
-	if (string(buf) != "P6")
+	if (string(buf, 2) != "P6")
 		throw InvalidFileException();
 	fin.getline(buf, BUF_SIZE);
 	fin >> width >> height;
@@ -54,7 +54,11 @@ void Image::readPPM(const string& fpath)
 	fin >> colorNum;
 	if (colorNum != 255)
 		throw InvalidFileException();
-	fin.read(buf, 1);
+	fin.seekg(0, fin.beg);
+	fin.seekg(0, fin.end);
+	streampos length = fin.tellg();
+	fin.seekg((int)length - width * height * 3, fin.beg);
+	//fin.read(buf, 1);
 	delete[] buf;
 	allocate();
 	unsigned char* ptr = data;

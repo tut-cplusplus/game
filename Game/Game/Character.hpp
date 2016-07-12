@@ -9,7 +9,7 @@
 #include "Rectangle.hpp"
 #include "Animation.hpp"
 
-class Character : public Rectangle {
+class Character : public Utility::Rectangle {
 public:
 	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };	//向き
 

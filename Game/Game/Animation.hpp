@@ -7,7 +7,7 @@
 
 #include "GL/glut.h"
 
-class Animation : public Rectangle {
+class Animation : public Utility::Rectangle {
 public:
 	class FileCannotOpenException {};
 

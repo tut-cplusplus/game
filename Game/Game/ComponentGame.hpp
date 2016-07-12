@@ -114,7 +114,7 @@ private:
 	 * @param enemy 敵
 	 * @return true : 視界に入っている / false : そうでない
 	 */
-	bool isFound(const Vector<double>& rectanglePosition, const Rectangle& rectangle, const Enemy& enemy) const;
+	bool isFound(const Vector<double>& rectanglePosition, const Utility::Rectangle& rectangle, const Enemy& enemy) const;
 	/**
 	 * プレイヤーが敵の視界に入っているか判定する
 	 *

@@ -7,7 +7,7 @@
 #include "Block.hpp"
 #include "Size.hpp"
 
-class ItemBlock : public Rectangle {
+class ItemBlock : public Utility::Rectangle {
 protected:
 	Vector<double> position;
 	Block* block;

@@ -11,7 +11,7 @@
  * ブロッククラス．
  * 壁やトラップの基となる．
  */
-class Block : public Rectangle {
+class Block : public Utility::Rectangle {
 private:
 	Animation animation;
 	Animation itemAnimation;
