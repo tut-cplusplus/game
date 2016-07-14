@@ -237,10 +237,12 @@ private:
 	 * @param fundDown downキーイベントプロシージャ
 	 * @param fundLeft leftキーイベントプロシージャ
 	 * @param funcRight rightキーイベントプロシージャ
-	 * @param fundBreakBlock breakBlockイベントプロシージャ
-	 * @param fundPlaceBlock placeBlockイベントプロシージャ
+	 * @param funcBreakBlock breakBlockイベントプロシージャ
+	 * @param funcPlaceBlock placeBlockイベントプロシージャ
+	 * @param funcPlaceTrap placeTrapイベントプロシージャ
+	 * @param funcPlaceDecoy placeDecoyイベントプロシージャ
 	 */
-	void keyEvent(const Key& key, Player& player, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)());
+	void keyEvent(const Key& key, Player& player, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)(), void (Player::*funcPlaceTrap)(), void (Player::*funcPlaceDecoy)());
 	/**
 	 * キーに対応したプレイヤーのキーイベントを発生させる
 	 *
@@ -249,10 +251,12 @@ private:
 	 * @param fundDown downキーイベントプロシージャ
 	 * @param fundLeft leftキーイベントプロシージャ
 	 * @param funcRight rightキーイベントプロシージャ
-	 * @param fundBreakBlock breakBlockイベントプロシージャ
-	 * @param fundPlaceBlock placeBlockイベントプロシージャ
+	 * @param funcBreakBlock breakBlockイベントプロシージャ
+	 * @param funcPlaceBlock placeBlockイベントプロシージャ
+	 * @param funcPlaceTrap placeTrapイベントプロシージャ
+	 * @param funcPlaceDecoy placeDecoyイベントプロシージャ
 	 */
-	void keyEvent(const Key& key, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)());
+	void keyEvent(const Key& key, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)(), void (Player::*funcPlaceTrap)(), void (Player::*funcPlaceDecoy)());
 
 public:
 	ComponentGame();

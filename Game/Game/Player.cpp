@@ -93,6 +93,16 @@ void Player::onPlaceWall(void)
 
 }
 
+void Player::onPlaceTrap(void)
+{
+
+}
+
+void Player::onPlaceDecoy(void)
+{
+
+}
+
 void Player::onUpDown(void)
 {
 	if (isMoving)
@@ -147,6 +157,16 @@ void Player::onPlaceWallDown(void)
 	startPlacing();
 }
 
+void Player::onPlaceTrapDown(void)
+{
+
+}
+
+void Player::onPlaceDecoyDown(void)
+{
+
+}
+
 void Player::onUpUp(void)
 {
 	isChangingDirection = false;
@@ -173,6 +193,16 @@ void Player::onBreakBlockUp(void)
 }
 
 void Player::onPlaceWallUp(void)
+{
+
+}
+
+void Player::onPlaceTrapUp(void)
+{
+
+}
+
+void Player::onPlaceDecoyUp(void)
 {
 
 }

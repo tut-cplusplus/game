@@ -46,6 +46,14 @@ public:
 	 */
 	void onPlaceWall(void);
 	/**
+	 * placeTrapキーが押されたときに呼び出される
+	 */
+	void onPlaceTrap(void);
+	/**
+	 * placeDecoyキーが押されたときに呼び出される
+	 */
+	void onPlaceDecoy(void);
+	/**
 	 * キーが押されたときに呼び出される．ただし，1度キーを離すまでは再度呼び出されない
 	 */
 	void onUpDown(void);
@@ -54,6 +62,8 @@ public:
 	void onRightDown(void);
 	void onBreakBlockDown(void);
 	void onPlaceWallDown(void);
+	void onPlaceTrapDown(void);
+	void onPlaceDecoyDown(void);
 	/**
 	 * キーが離されたときに呼び出される．ただし，1度キーを押すまでは再度呼び出されない
 	 */
@@ -63,6 +73,8 @@ public:
 	void onRightUp(void);
 	void onBreakBlockUp(void);
 	void onPlaceWallUp(void);
+	void onPlaceTrapUp(void);
+	void onPlaceDecoyUp(void);
 
 	void changeColor(void) const;
 	void draw(void);
