@@ -42,9 +42,9 @@ public:
 	 */
 	void onBreakBlock(void);
 	/**
-	 * placeBlockキーが押されたときに呼び出される
+	 * placeWallキーが押されたときに呼び出される
 	 */
-	void onPlaceBlock(void);
+	void onPlaceWall(void);
 	/**
 	 * キーが押されたときに呼び出される．ただし，1度キーを離すまでは再度呼び出されない
 	 */
@@ -53,7 +53,7 @@ public:
 	void onLeftDown(void);
 	void onRightDown(void);
 	void onBreakBlockDown(void);
-	void onPlaceBlockDown(void);
+	void onPlaceWallDown(void);
 	/**
 	 * キーが離されたときに呼び出される．ただし，1度キーを押すまでは再度呼び出されない
 	 */
@@ -62,7 +62,7 @@ public:
 	void onLeftUp(void);
 	void onRightUp(void);
 	void onBreakBlockUp(void);
-	void onPlaceBlockUp(void);
+	void onPlaceWallUp(void);
 
 	void changeColor(void) const;
 	void draw(void);

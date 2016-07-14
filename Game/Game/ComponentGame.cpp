@@ -396,7 +396,7 @@ void ComponentGame::placeBlockEvent(void)
 	placeBlock(players);
 }
 
-void ComponentGame::keyEvent(const Key& key, Player& player, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)())
+void ComponentGame::keyEvent(const Key& key, Player& player, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceWall)())
 {
 	const Keypad& keypad = player.getKeypad();
 	if (key == keypad.getUp())
@@ -409,15 +409,15 @@ void ComponentGame::keyEvent(const Key& key, Player& player, void (Player::*func
 		((&player)->*funcRight)();
 	if (key == keypad.getBreakBlock())
 		((&player)->*funcBreakBlock)();
-	if (key == keypad.getPlaceBlock())
-		((&player)->*funcPlaceBlock)();
+	if (key == keypad.getPlaceWall())
+		((&player)->*funcPlaceWall)();
 }
 
-void ComponentGame::keyEvent(const Key& key, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)())
+void ComponentGame::keyEvent(const Key& key, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceWall)())
 {
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
 		Player& player = **itr;
-		keyEvent(key, player, funcUp, funcDown, funcLeft, funcRight, funcBreakBlock, funcPlaceBlock);
+		keyEvent(key, player, funcUp, funcDown, funcLeft, funcRight, funcBreakBlock, funcPlaceWall);
 	}
 }
 
@@ -495,12 +495,12 @@ void ComponentGame::mouse(int button, int state, int x, int y)
 
 void ComponentGame::keyboard(unsigned char key, int x, int y)
 {
-	keyEvent(Key(key), &Player::onUp, &Player::onDown, &Player::onLeft, &Player::onRight, &Player::onBreakBlock, &Player::onPlaceBlockDown);
+	keyEvent(Key(key), &Player::onUp, &Player::onDown, &Player::onLeft, &Player::onRight, &Player::onBreakBlock, &Player::onPlaceWallDown);
 }
 
 void ComponentGame::keyboardOnce(unsigned char key, int x, int y)
 {
-	keyEvent(Key(key), &Player::onUpDown, &Player::onDownDown, &Player::onLeftDown, &Player::onRightDown, &Player::onBreakBlockDown, &Player::onPlaceBlockDown);
+	keyEvent(Key(key), &Player::onUpDown, &Player::onDownDown, &Player::onLeftDown, &Player::onRightDown, &Player::onBreakBlockDown, &Player::onPlaceWallDown);
 }
 
 void ComponentGame::keyboardup(unsigned char key, int x, int y)
@@ -510,7 +510,7 @@ void ComponentGame::keyboardup(unsigned char key, int x, int y)
 
 void ComponentGame::keyboardupOnce(unsigned char key, int x, int y)
 {
-	keyEvent(Key(key), &Player::onUpUp, &Player::onDownUp, &Player::onLeftUp, &Player::onRightUp, &Player::onBreakBlockUp, &Player::onPlaceBlockDown);
+	keyEvent(Key(key), &Player::onUpUp, &Player::onDownUp, &Player::onLeftUp, &Player::onRightUp, &Player::onBreakBlockUp, &Player::onPlaceWallDown);
 }
 
 void ComponentGame::special(int key, int x, int y)

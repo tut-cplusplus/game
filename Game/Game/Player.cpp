@@ -88,7 +88,7 @@ void Player::onBreakBlock(void)
 
 }
 
-void Player::onPlaceBlock(void)
+void Player::onPlaceWall(void)
 {
 
 }
@@ -142,7 +142,7 @@ void Player::onBreakBlockDown(void)
 	startBreaking();
 }
 
-void Player::onPlaceBlockDown(void)
+void Player::onPlaceWallDown(void)
 {
 	startPlacing();
 }
@@ -172,7 +172,7 @@ void Player::onBreakBlockUp(void)
 
 }
 
-void Player::onPlaceBlockUp(void)
+void Player::onPlaceWallUp(void)
 {
 
 }
