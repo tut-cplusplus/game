@@ -25,19 +25,19 @@ void Player::startPlacing(void)
 }
 
 Player::Player()
-	: Character(), isPlacing(false)
+	: Character(), isChangingDirection(false), isPlacing(false)
 {
 	init();
 }
 
 Player::Player(const Vector<double>& position, const Size<double>& size, const Keypad& keypad)
-	: Character(position, size), keypad(keypad), isPlacing(false)
+	: Character(position, size), keypad(keypad), isChangingDirection(false), isPlacing(false)
 {
 	init();
 }
 
 Player::Player(const Vector<double>& position, const Keypad& keypad)
-	: Character(position), keypad(keypad), isPlacing(false)
+	: Character(position), keypad(keypad), isChangingDirection(false), isPlacing(false)
 {
 	init();
 }
@@ -49,22 +49,38 @@ Player::~Player()
 
 void Player::onUp(void)
 {
-
+	if (isMoving)
+		return;
+	if (isChangingDirection)
+		return;
+	startMoving();
 }
 
 void Player::onDown(void)
 {
-
+	if (isMoving)
+		return;
+	if (isChangingDirection)
+		return;
+	startMoving();
 }
 
 void Player::onLeft(void)
 {
-
+	if (isMoving)
+		return;
+	if (isChangingDirection)
+		return;
+	startMoving();
 }
 
 void Player::onRight(void)
 {
-
+	if (isMoving)
+		return;
+	if (isChangingDirection)
+		return;
+	startMoving();
 }
 
 void Player::onBreakBlock(void)
@@ -81,32 +97,44 @@ void Player::onUpDown(void)
 {
 	if (isMoving)
 		return;
-	direction = NORTH;
-	startMoving();
+	if (direction != NORTH) {
+		direction = NORTH;
+		isChangingDirection = true;
+		return;
+	}
 }
 
 void Player::onDownDown(void)
 {
 	if (isMoving)
 		return;
-	direction = SOUTH;
-	startMoving();
+	if (direction != SOUTH) {
+		direction = SOUTH;
+		isChangingDirection = true;
+		return;
+	}
 }
 
 void Player::onLeftDown(void)
 {
 	if (isMoving)
 		return;
-	direction = WEST;
-	startMoving();
+	if (direction != WEST) {
+		direction = WEST;
+		isChangingDirection = true;
+		return;
+	}
 }
 
 void Player::onRightDown(void)
 {
 	if (isMoving)
 		return;
-	direction = EAST;
-	startMoving();
+	if (direction != EAST) {
+		direction = EAST;
+		isChangingDirection = true;
+		return;
+	}
 }
 
 void Player::onBreakBlockDown(void)
@@ -121,22 +149,22 @@ void Player::onPlaceBlockDown(void)
 
 void Player::onUpUp(void)
 {
-
+	isChangingDirection = false;
 }
 
 void Player::onDownUp(void)
 {
-
+	isChangingDirection = false;
 }
 
 void Player::onLeftUp(void)
 {
-
+	isChangingDirection = false;
 }
 
 void Player::onRightUp(void)
 {
-
+	isChangingDirection = false;
 }
 
 void Player::onBreakBlockUp(void)

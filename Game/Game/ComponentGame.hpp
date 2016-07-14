@@ -241,6 +241,18 @@ private:
 	 * @param fundPlaceBlock placeBlockイベントプロシージャ
 	 */
 	void keyEvent(const Key& key, Player& player, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)());
+	/**
+	 * キーに対応したプレイヤーのキーイベントを発生させる
+	 *
+	 * @param key 対象のキー
+	 * @param fundUp upキーイベントプロシージャ
+	 * @param fundDown downキーイベントプロシージャ
+	 * @param fundLeft leftキーイベントプロシージャ
+	 * @param funcRight rightキーイベントプロシージャ
+	 * @param fundBreakBlock breakBlockイベントプロシージャ
+	 * @param fundPlaceBlock placeBlockイベントプロシージャ
+	 */
+	void keyEvent(const Key& key, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)());
 
 public:
 	ComponentGame();

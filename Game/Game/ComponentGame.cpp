@@ -413,6 +413,14 @@ void ComponentGame::keyEvent(const Key& key, Player& player, void (Player::*func
 		((&player)->*funcPlaceBlock)();
 }
 
+void ComponentGame::keyEvent(const Key& key, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)())
+{
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		Player& player = **itr;
+		keyEvent(key, player, funcUp, funcDown, funcLeft, funcRight, funcBreakBlock, funcPlaceBlock);
+	}
+}
+
 ComponentGame::ComponentGame()
 {
 
@@ -487,15 +495,12 @@ void ComponentGame::mouse(int button, int state, int x, int y)
 
 void ComponentGame::keyboard(unsigned char key, int x, int y)
 {
-
+	keyEvent(Key(key), &Player::onUp, &Player::onDown, &Player::onLeft, &Player::onRight, &Player::onBreakBlock, &Player::onPlaceBlockDown);
 }
 
 void ComponentGame::keyboardOnce(unsigned char key, int x, int y)
 {
-	for (auto itr = players.begin(); itr != players.end(); ++itr) {
-		Player& player = **itr;
-		keyEvent(Key(key), player, &Player::onUpDown, &Player::onDownDown, &Player::onLeftDown, &Player::onRightDown, &Player::onBreakBlockDown, &Player::onPlaceBlockDown);
-	}
+	keyEvent(Key(key), &Player::onUpDown, &Player::onDownDown, &Player::onLeftDown, &Player::onRightDown, &Player::onBreakBlockDown, &Player::onPlaceBlockDown);
 }
 
 void ComponentGame::keyboardup(unsigned char key, int x, int y)
@@ -505,7 +510,7 @@ void ComponentGame::keyboardup(unsigned char key, int x, int y)
 
 void ComponentGame::keyboardupOnce(unsigned char key, int x, int y)
 {
-
+	keyEvent(Key(key), &Player::onUpUp, &Player::onDownUp, &Player::onLeftUp, &Player::onRightUp, &Player::onBreakBlockUp, &Player::onPlaceBlockDown);
 }
 
 void ComponentGame::special(int key, int x, int y)
