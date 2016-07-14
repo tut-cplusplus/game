@@ -144,7 +144,7 @@ void ComponentGame::addPlayer(void)
 	int n = positions.size();
 	int idx = rnd(mt) * n;
 	const Vector<int>& position = positions[idx];
-	Keypad keypad(Key('w'), Key('s'), Key('a'), Key('d'), Key(' '), Key('z'));
+	Keypad keypad(Key('w'), Key('s'), Key('a'), Key('d'), Key(' '), Key('j'), Key('k'), Key('l'));
 	players.push_back(new Player(Vector<double>(position.getX(), position.getY()), keypad));
 }
 

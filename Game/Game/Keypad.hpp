@@ -11,10 +11,12 @@ private:
 	Key right;
 	Key breakBlock;
 	Key placeWall;
+	Key placeTrap;
+	Key placeDecoy;
 
 public:
 	Keypad();
-	Keypad(Key up, Key down, Key left, Key right, Key breakBlock, Key placeWall);
+	Keypad(Key up, Key down, Key left, Key right, Key breakBlock, Key placeWall, Key placeTrap, Key placeDecoy);
 
 	Key getUp(void) const;
 	Key getDown(void) const;
@@ -22,6 +24,8 @@ public:
 	Key getRight(void) const;
 	Key getBreakBlock(void) const;
 	Key getPlaceWall(void) const;
+	Key getPlaceTrap(void) const;
+	Key getPlaceDecoy(void) const;
 };
 
 inline Key Keypad::getUp(void) const
@@ -52,6 +56,16 @@ inline Key Keypad::getBreakBlock(void) const
 inline Key Keypad::getPlaceWall(void) const
 {
 	return placeWall;
+}
+
+inline Key Keypad::getPlaceTrap(void) const
+{
+	return placeTrap;
+}
+
+inline Key Keypad::getPlaceDecoy(void) const
+{
+	return placeDecoy;
 }
 
 #endif
