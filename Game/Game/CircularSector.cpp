@@ -4,6 +4,8 @@
 
 #include "CircularSector.hpp"
 
+#include <GL/glut.h>
+
 using namespace std;
 
 CircularSector::CircularSector()
@@ -43,5 +45,26 @@ bool CircularSector::isHit(const Vector<double>& _position) const
 	if (v.norm2() > radius * radius)
 		return false;
 	return true;
+}
+
+void CircularSector::draw(void) const
+{
+	glPushMatrix();
+	glTranslated(position.getX(), position.getY(), 0.0);
+	glRotated(angle, 0.0, 0.0, 1.0);
+	glRotated(-viewAngle / 2, 0.0, 0.0, 1.0);
+	glBegin(GL_LINE_LOOP);
+	glVertex2d(0.0, 0.0);
+	glVertex2d(radius, 1.0);
+	int n = 100;
+	for (int i = 1; i <= n; i++) {
+		double angle = (double)i / n * viewAngle / 180 * M_PI;
+		double x = cos(angle) * radius;
+		double y = sin(angle) * radius;
+		glVertex2d(x, y);
+	}
+	glVertex2d(0.0, 0.0);
+	glEnd();
+	glPopMatrix();
 }
 

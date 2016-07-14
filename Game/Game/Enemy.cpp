@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "Enemy.hpp"
+#include "CircularSector.hpp"
 
 #include <GL/glut.h>
 
@@ -101,22 +102,7 @@ void Enemy::draw(void)
 	//本体の表示
 	Character::draw();
 	//視界の表示
-	glPushMatrix();
-	glTranslated(width / 2, height / 2, 0.0);
-	glRotated(angle, 0.0, 0.0, 1.0);
-	glRotated(-viewAngle / 2, 0.0, 0.0, 1.0);
-	glBegin(GL_LINE_LOOP);
-	glVertex2d(0.0, 0.0);
-	glVertex2d(radius, 1.0);
-	int n = 100;
-	for (int i = 1; i <= n; i++) {
-		double angle2 = (double)i / n * viewAngle / 180 * M_PI;
-		double x = cos(angle2) * radius;
-		double y = sin(angle2) * radius;
-		glVertex2d(x, y);
-	}
-	glVertex2d(0.0, 0.0);
-	glEnd();
-	glPopMatrix();
+	CircularSector circularSector(Vector<double>(width / 2, height / 2), angle, viewAngle, radius);
+	circularSector.draw();
 }
 

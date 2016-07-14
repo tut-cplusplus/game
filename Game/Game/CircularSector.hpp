@@ -28,6 +28,10 @@ public:
 	 * @return 当たっていればtrue，そうでなければfalse
 	 */
 	bool isHit(const Vector<double>& position) const;
+	/**
+	 * 描画関数
+	 */
+	void draw(void) const;
 };
 
 #endif
