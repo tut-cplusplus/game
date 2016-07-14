@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Player.hpp"
+#include "CircularSector.hpp"
 
 #include <GL/glut.h>
 
@@ -165,6 +166,12 @@ void Player::draw(void)
 	glVertex2d(width, height);
 	glVertex2d(0.0, height);
 	glEnd();
+	//プレイヤーの向きを表示
+	double angle = getAngle();
+	double viewAngle = 0.0;
+	double radius = width;
+	CircularSector circularSector(Vector<double>(width / 2, height / 2), angle, viewAngle, radius);
+	circularSector.draw();
 }
 
 Keypad Player::getKeypad(void) const
