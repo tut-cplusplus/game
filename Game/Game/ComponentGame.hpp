@@ -36,7 +36,6 @@ private:
 	std::vector<Enemy*> enemies;	//敵
 	std::vector<ItemBlock*> itemBlocks;	//アイテム
 	Size<double> blockSize;			//ブロックの大きさ
-	std::list<Key> keys;			//押されているキー
 
 private:
 	/**
@@ -205,22 +204,6 @@ private:
 	 */
 	std::list<Key>::iterator searchKey(const Key& key);
 	/**
-	 * 押されているキーの配列にキーを追加する
-	 *
-	 * @param key 追加するキー
-	 */
-	void addKey(const Key& key);
-	/**
-	 * 押されているキーの配列からキーを削除する
-	 *
-	 * @param key 削除するキー
-	 */
-	void deleteKey(const Key& key);
-	/**
-	 * プレイヤーのキーイベントを発生させる
-	 */
-	void keyEvent(void);
-	/**
 	 * Characterの移動イベントを発生させる
 	 * EnemyのAIイベントを発生させる
 	 */
@@ -245,6 +228,19 @@ private:
 	 * ブロックを設置したときのイベントを発生させる
 	 */
 	void placeBlockEvent(void);
+	/**
+	 * キーに対応したプレイヤーのキーイベントを発生させる
+	 *
+	 * @param key 対象のキー
+	 * @param player プレイヤー
+	 * @param fundUp upキーイベントプロシージャ
+	 * @param fundDown downキーイベントプロシージャ
+	 * @param fundLeft leftキーイベントプロシージャ
+	 * @param funcRight rightキーイベントプロシージャ
+	 * @param fundBreakBlock breakBlockイベントプロシージャ
+	 * @param fundPlaceBlock placeBlockイベントプロシージャ
+	 */
+	void keyEvent(const Key& key, Player& player, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)());
 
 public:
 	ComponentGame();
@@ -258,9 +254,13 @@ public:
 	virtual void draw(void);
 	virtual void mouse(int button, int state, int x, int y);
 	virtual void keyboard(unsigned char key, int x, int y);
+	virtual void keyboardOnce(unsigned char key, int x, int y);
 	virtual void keyboardup(unsigned char key, int x, int y);
+	virtual void keyboardupOnce(unsigned char key, int x, int y);
 	virtual void special(int key, int x, int y);
+	virtual void specialOnce(int key, int x, int y);
 	virtual void specialup(int key, int x, int y);
+	virtual void specialupOnce(int key, int x, int y);
 };
 
 template <typename T>

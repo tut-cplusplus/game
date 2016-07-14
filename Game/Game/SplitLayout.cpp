@@ -47,33 +47,41 @@ void SplitLayout::mouse(int button, int state, int x, int y)
 
 void SplitLayout::keyboard(unsigned char key, int x, int y)
 {
-	if (component1 != nullptr)
-		component1->keyboard(key, x, y);
-	if (component2 != nullptr)
-		component2->keyboard(key, x, y);
+	keyEvent(key, x, y, &Component::keyboard);
+}
+
+void SplitLayout::keyboardOnce(unsigned char key, int x, int y)
+{
+	keyEvent(key, x, y, &Component::keyboardOnce);
 }
 
 void SplitLayout::keyboardup(unsigned char key, int x, int y)
 {
-	if (component1 != nullptr)
-		component1->keyboardup(key, x, y);
-	if (component2 != nullptr)
-		component2->keyboardup(key, x, y);
+	keyEvent(key, x, y, &Component::keyboardup);
+}
+
+void SplitLayout::keyboardupOnce(unsigned char key, int x, int y)
+{
+	keyEvent(key, x, y, &Component::keyboardupOnce);
 }
 
 void SplitLayout::special(int key, int x, int y)
 {
-	if (component1 != nullptr)
-		component1->special(key, x, y);
-	if (component2 != nullptr)
-		component2->special(key, x, y);
+	keyEvent(key, x, y, &Component::special);
+}
+
+void SplitLayout::specialOnce(int key, int x, int y)
+{
+	keyEvent(key, x, y, &Component::specialOnce);
 }
 
 void SplitLayout::specialup(int key, int x, int y)
 {
-	if (component1 != nullptr)
-		component1->specialup(key, x, y);
-	if (component2 != nullptr)
-		component2->specialup(key, x, y);
+	keyEvent(key, x, y, &Component::specialup);
+}
+
+void SplitLayout::specialupOnce(int key, int x, int y)
+{
+	keyEvent(key, x, y, &Component::specialupOnce);
 }
 

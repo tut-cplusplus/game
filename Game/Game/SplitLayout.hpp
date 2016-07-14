@@ -32,10 +32,28 @@ public:
 	 */
 	void mouse(int button, int state, int x, int y);
 	void keyboard(unsigned char key, int x, int y);
+	void keyboardOnce(unsigned char key, int x, int y);
 	void keyboardup(unsigned char key, int x, int y);
+	void keyboardupOnce(unsigned char key, int x, int y);
 	void special(int key, int x, int y);
+	void specialOnce(int key, int x, int y);
 	void specialup(int key, int x, int y);
+	void specialupOnce(int key, int x, int y);
+	/**
+	 * キーイベントをすべてのコンポーネントに送る
+	 */
+	template <typename T>
+	void keyEvent(T key, int x, int y, void (Component::*func)(T, int, int));
 };
+
+template <typename T>
+void SplitLayout::keyEvent(T key, int x, int y, void (Component::*func)(T, int, int))
+{
+	if (component1 != nullptr)
+		(component1->*func)(key, x, y);
+	if (component2 != nullptr)
+		(component2->*func)(key, x, y);
+}
 
 #endif
 

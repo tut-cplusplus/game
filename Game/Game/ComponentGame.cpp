@@ -343,119 +343,6 @@ void ComponentGame::setBlockSize(void)
 	}
 }
 
-std::list<Key>::iterator ComponentGame::searchKey(const Key& key)
-{
-	for (auto itr = keys.begin(); itr != keys.end(); ++itr) {
-		const Key& key1 = *itr;
-		if (key1 == key)
-			return itr;
-	}
-	return keys.end();
-}
-
-void ComponentGame::addKey(const Key& key)
-{
-	if (searchKey(key) == keys.end())
-		keys.push_back(key);
-}
-
-void ComponentGame::deleteKey(const Key& key)
-{
-	auto itr = searchKey(key);
-	if (itr != keys.end())
-		keys.erase(itr);
-}
-
-void ComponentGame::keyEvent(void)
-{
-	for (auto itr = players.begin(); itr != players.end(); ++itr) {
-		Player& player = **itr;
-		Keypad keypad = player.getKeypad();
-		bool up = false;
-		bool down = false;
-		bool left = false;
-		bool right = false;
-		bool breakBlock = false;
-		bool placeBlock = false;
-		for (auto itr = keys.begin(); itr != keys.end(); ++itr) {
-			const Key& key = *itr;
-			player.keyboard(key);
-			if (keypad.getUp() == key) {
-				player.onUp();
-				up = true;
-				if (!player.getLastUp()) {
-					player.onUpDown();
-					player.setLastUp(true);
-				}
-			}
-			if (keypad.getDown() == key) {
-				player.onDown();
-				down = true;
-				if (!player.getLastDown()) {
-					player.onDownDown();
-					player.setLastDown(true);
-				}
-			}
-			if (keypad.getLeft() == key) {
-				player.onLeft();
-				left = true;
-				if (!player.getLastLeft()) {
-					player.onLeftDown();
-					player.setLastLeft(true);
-				}
-			}
-			if (keypad.getRight() == key) {
-				player.onRight();
-				right = true;
-				if (!player.getLastRight()) {
-					player.onRightDown();
-					player.setLastRight(true);
-				}
-			}
-			if (keypad.getBreakBlock() == key) {
-				player.onBreakBlock();
-				breakBlock = true;
-				if (!player.getLastBreakBlock()) {
-					player.onBreakBlockDown();
-					player.setLastBreakBlock(true);
-				}
-			}
-			if (keypad.getPlaceBlock() == key) {
-				player.onPlaceBlock();
-				placeBlock = true;
-				if (!player.getLastPlaceBlock()) {
-					player.onPlaceBlockDown();
-					player.setLastPlaceBlock(true);
-				}
-			}
-		}
-		if (!up && player.getLastUp()) {
-			player.onUpUp();
-			player.setLastUp(false);
-		}
-		if (!down && player.getLastDown()) {
-			player.onDownUp();
-			player.setLastDown(false);
-		}
-		if (!left && player.getLastLeft()) {
-			player.onLeftUp();
-			player.setLastLeft(false);
-		}
-		if (!right && player.getLastRight()) {
-			player.onRightUp();
-			player.setLastRight(false);
-		}
-		if (!breakBlock && player.getLastBreakBlock()) {
-			player.onBreakBlockUp();
-			player.setLastBreakBlock(false);
-		}
-		if (!placeBlock && player.getLastPlaceBlock()) {
-			player.onPlaceBlockUp();
-			player.setLastPlaceBlock(false);
-		}
-	}
-}
-
 void ComponentGame::moveEvent(void)
 {
 	moveCharacters(players);
@@ -509,6 +396,23 @@ void ComponentGame::placeBlockEvent(void)
 	placeBlock(players);
 }
 
+void ComponentGame::keyEvent(const Key& key, Player& player, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)())
+{
+	const Keypad& keypad = player.getKeypad();
+	if (key == keypad.getUp())
+		((&player)->*funcUp)();
+	if (key == keypad.getDown())
+		((&player)->*funcDown)();
+	if (key == keypad.getLeft())
+		((&player)->*funcLeft)();
+	if (key == keypad.getRight())
+		((&player)->*funcRight)();
+	if (key == keypad.getBreakBlock())
+		((&player)->*funcBreakBlock)();
+	if (key == keypad.getPlaceBlock())
+		((&player)->*funcPlaceBlock)();
+}
+
 ComponentGame::ComponentGame()
 {
 
@@ -551,7 +455,6 @@ void ComponentGame::init(void)
 
 void ComponentGame::draw(void)
 {
-	keyEvent();
 	moveEvent();
 	hitEvent();
 	findPlayerEvent();
@@ -584,29 +487,44 @@ void ComponentGame::mouse(int button, int state, int x, int y)
 
 void ComponentGame::keyboard(unsigned char key, int x, int y)
 {
-	for (auto itr = players.begin(); itr != players.end(); ++itr)
-		(*itr)->keyboard(key, x, y);
-	addKey(Key(key));
+
+}
+
+void ComponentGame::keyboardOnce(unsigned char key, int x, int y)
+{
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		Player& player = **itr;
+		keyEvent(Key(key), player, &Player::onUpDown, &Player::onDownDown, &Player::onLeftDown, &Player::onRightDown, &Player::onBreakBlockDown, &Player::onPlaceBlockDown);
+	}
 }
 
 void ComponentGame::keyboardup(unsigned char key, int x, int y)
 {
-	for (auto itr = players.begin(); itr != players.end(); ++itr)
-		(*itr)->keyboardup(key, x, y);
-	deleteKey(Key(key));
+
+}
+
+void ComponentGame::keyboardupOnce(unsigned char key, int x, int y)
+{
+
 }
 
 void ComponentGame::special(int key, int x, int y)
 {
-	for (auto itr = players.begin(); itr != players.end(); ++itr)
-		(*itr)->special(key, x, y);
-	addKey(Key(key));
+
+}
+
+void ComponentGame::specialOnce(int key, int x, int y)
+{
+
 }
 
 void ComponentGame::specialup(int key, int x, int y)
 {
-	for (auto itr = players.begin(); itr != players.end(); ++itr)
-		(*itr)->specialup(key, x, y);
-	deleteKey(Key(key));
+
+}
+
+void ComponentGame::specialupOnce(int key, int x, int y)
+{
+
 }
 

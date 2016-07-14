@@ -8,12 +8,6 @@ using namespace std;
 
 void Player::init(void)
 {
-	lastUp = false;
-	lastDown = false;
-	lastLeft = false;
-	lastRight = false;
-	lastBreakBlock = false;
-	lastPlaceBlock = false;
 	loadAnimations();
 }
 
@@ -54,13 +48,43 @@ Player::~Player()
 
 void Player::onUp(void)
 {
+
+}
+
+void Player::onDown(void)
+{
+
+}
+
+void Player::onLeft(void)
+{
+
+}
+
+void Player::onRight(void)
+{
+
+}
+
+void Player::onBreakBlock(void)
+{
+
+}
+
+void Player::onPlaceBlock(void)
+{
+
+}
+
+void Player::onUpDown(void)
+{
 	if (isMoving)
 		return;
 	direction = NORTH;
 	startMoving();
 }
 
-void Player::onDown(void)
+void Player::onDownDown(void)
 {
 	if (isMoving)
 		return;
@@ -68,7 +92,7 @@ void Player::onDown(void)
 	startMoving();
 }
 
-void Player::onLeft(void)
+void Player::onLeftDown(void)
 {
 	if (isMoving)
 		return;
@@ -76,7 +100,7 @@ void Player::onLeft(void)
 	startMoving();
 }
 
-void Player::onRight(void)
+void Player::onRightDown(void)
 {
 	if (isMoving)
 		return;
@@ -84,44 +108,14 @@ void Player::onRight(void)
 	startMoving();
 }
 
-void Player::onBreakBlock(void)
+void Player::onBreakBlockDown(void)
 {
 	startBreaking();
 }
 
-void Player::onPlaceBlock(void)
-{
-	startPlacing();
-}
-
-void Player::onUpDown(void)
-{
-
-}
-
-void Player::onDownDown(void)
-{
-
-}
-
-void Player::onLeftDown(void)
-{
-
-}
-
-void Player::onRightDown(void)
-{
-
-}
-
-void Player::onBreakBlockDown(void)
-{
-
-}
-
 void Player::onPlaceBlockDown(void)
 {
-
+	startPlacing();
 }
 
 void Player::onUpUp(void)
