@@ -95,16 +95,9 @@ void Enemy::changeColor(void) const
 
 void Enemy::draw(void)
 {
-	static double angles[] = {
-		0.0,
-		90.0,
-		-90.0,
-		0.0,
-		180.0,
-	};
 	double width = size.getWidth();
 	double height = size.getHeight();
-	double angle = angles[direction];
+	double angle = getAngle();
 	//本体の表示
 	Character::draw();
 	//視界の表示
