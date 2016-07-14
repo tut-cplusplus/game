@@ -157,6 +157,8 @@ void init(void)
 	layout->add(new ComponentFPS(450, 16), Vector<double>(0.0, 0.0));
 	LayoutManager::registerLayout(layout);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
+	//キーを押したときと離されたときにのみイベントが呼ばれるようにする
+	glutIgnoreKeyRepeat(GL_TRUE);
 }
 
 
@@ -165,7 +167,7 @@ void display(void)
 	FPSManager::startMeasure();
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
-	LayoutManager::getLayout()->draw();
+	LayoutManager::draw();
 	glutSwapBuffers();
 	FPSManager::stopMeasure();
 	FPSManager::update();

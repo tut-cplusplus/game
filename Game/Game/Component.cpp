@@ -1,4 +1,8 @@
+#include <iostream>
+
 #include "Component.hpp"
+
+using namespace std;
 
 Component::Component()
 {
@@ -47,7 +51,17 @@ void Component::keyboard(unsigned char key, int x, int y)
 
 }
 
+void Component::keyboardOnce(unsigned char key, int x, int y)
+{
+
+}
+
 void Component::keyboardup(unsigned char key, int x, int y)
+{
+
+}
+
+void Component::keyboardupOnce(unsigned char key, int x, int y)
 {
 
 }
@@ -57,7 +71,17 @@ void Component::special(int key, int x, int y)
 
 }
 
+void Component::specialOnce(int key, int x, int y)
+{
+
+}
+
 void Component::specialup(int key, int x, int y)
+{
+
+}
+
+void Component::specialupOnce(int key, int x, int y)
 {
 
 }

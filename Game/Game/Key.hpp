@@ -19,9 +19,21 @@ public:
 	Key(bool keyType, int key);
 	Key(int key);
 
+	inline bool getKeyType(void) const;
+	inline int getKey(void) const;
 	bool operator==(const Key& key) const;
 	bool operator!=(const Key& key) const;
 };
+
+inline bool Key::getKeyType(void) const
+{
+	return keyType;
+}
+
+inline int Key::getKey(void) const
+{
+	return key;
+}
 
 inline bool Key::operator==(const Key& key) const
 {
