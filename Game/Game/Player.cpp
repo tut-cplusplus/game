@@ -53,6 +53,8 @@ void Player::onUp(void)
 		return;
 	if (isChangingDirection)
 		return;
+	if (direction != NORTH)
+		direction = NORTH;
 	startMoving();
 }
 
@@ -62,6 +64,8 @@ void Player::onDown(void)
 		return;
 	if (isChangingDirection)
 		return;
+	if (direction != SOUTH)
+		direction = SOUTH;
 	startMoving();
 }
 
@@ -71,6 +75,8 @@ void Player::onLeft(void)
 		return;
 	if (isChangingDirection)
 		return;
+	if (direction != WEST)
+		direction = WEST;
 	startMoving();
 }
 
@@ -80,6 +86,8 @@ void Player::onRight(void)
 		return;
 	if (isChangingDirection)
 		return;
+	if (direction != EAST)
+		direction = EAST;
 	startMoving();
 }
 
