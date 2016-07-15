@@ -8,6 +8,7 @@ class Player : public Character {
 private:
 	Keypad keypad;	//キーパッド
 	bool isChangingDirection;	//向きを変更中かどうか
+	int changeDirectionCount;	//向きを変更中のフレーム数
 	bool isPlacing;	//ブロックを設置中かどうか
 
 protected:

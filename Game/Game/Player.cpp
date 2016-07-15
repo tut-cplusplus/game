@@ -2,6 +2,7 @@
 
 #include "Player.hpp"
 #include "CircularSector.hpp"
+#include "FPSManager.hpp"
 
 #include <GL/glut.h>
 
@@ -179,6 +180,7 @@ void Player::try2changeDirection(Direction direction)
 	if (this->direction != direction) {
 		this->direction = direction;
 		isChangingDirection = true;
+		changeDirectionCount = 0;
 		return;
 	}
 }
@@ -187,8 +189,13 @@ void Player::try2startMoving(Direction direction)
 {
 	if (isMoving)
 		return;
-	if (isChangingDirection)
+	if (isChangingDirection) {
+		//1/4秒で移動を開始する
+		if (++changeDirectionCount >= FPSManager::getFPS() / 4) {
+			isChangingDirection = false;
+		}
 		return;
+	}
 	if (this->direction != direction)
 		this->direction = direction;
 	startMoving();
