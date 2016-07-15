@@ -49,46 +49,22 @@ Player::~Player()
 
 void Player::onUp(void)
 {
-	if (isMoving)
-		return;
-	if (isChangingDirection)
-		return;
-	if (direction != NORTH)
-		direction = NORTH;
-	startMoving();
+	try2startMoving(NORTH);
 }
 
 void Player::onDown(void)
 {
-	if (isMoving)
-		return;
-	if (isChangingDirection)
-		return;
-	if (direction != SOUTH)
-		direction = SOUTH;
-	startMoving();
+	try2startMoving(SOUTH);
 }
 
 void Player::onLeft(void)
 {
-	if (isMoving)
-		return;
-	if (isChangingDirection)
-		return;
-	if (direction != WEST)
-		direction = WEST;
-	startMoving();
+	try2startMoving(WEST);
 }
 
 void Player::onRight(void)
 {
-	if (isMoving)
-		return;
-	if (isChangingDirection)
-		return;
-	if (direction != EAST)
-		direction = EAST;
-	startMoving();
+	try2startMoving(EAST);
 }
 
 void Player::onBreakBlock(void)
@@ -113,46 +89,22 @@ void Player::onPlaceDecoy(void)
 
 void Player::onUpDown(void)
 {
-	if (isMoving)
-		return;
-	if (direction != NORTH) {
-		direction = NORTH;
-		isChangingDirection = true;
-		return;
-	}
+	try2changeDirection(NORTH);
 }
 
 void Player::onDownDown(void)
 {
-	if (isMoving)
-		return;
-	if (direction != SOUTH) {
-		direction = SOUTH;
-		isChangingDirection = true;
-		return;
-	}
+	try2changeDirection(SOUTH);
 }
 
 void Player::onLeftDown(void)
 {
-	if (isMoving)
-		return;
-	if (direction != WEST) {
-		direction = WEST;
-		isChangingDirection = true;
-		return;
-	}
+	try2changeDirection(WEST);
 }
 
 void Player::onRightDown(void)
 {
-	if (isMoving)
-		return;
-	if (direction != EAST) {
-		direction = EAST;
-		isChangingDirection = true;
-		return;
-	}
+	try2changeDirection(EAST);
 }
 
 void Player::onBreakBlockDown(void)
@@ -218,6 +170,28 @@ void Player::onPlaceDecoyUp(void)
 void Player::changeColor(void) const
 {
 	glColor3d(1.0, 1.0, 1.0);
+}
+
+void Player::try2changeDirection(Direction direction)
+{
+	if (isMoving)
+		return;
+	if (this->direction != direction) {
+		this->direction = direction;
+		isChangingDirection = true;
+		return;
+	}
+}
+
+void Player::try2startMoving(Direction direction)
+{
+	if (isMoving)
+		return;
+	if (isChangingDirection)
+		return;
+	if (this->direction != direction)
+		this->direction = direction;
+	startMoving();
 }
 
 void Player::draw(void)

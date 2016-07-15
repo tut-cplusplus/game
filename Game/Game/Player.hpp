@@ -77,6 +77,20 @@ public:
 	void onPlaceDecoyUp(void);
 
 	void changeColor(void) const;
+	/**
+	 * 向きの変更を試みる
+	 * 移動中であれば何もしない
+	 *
+	 * @param direction 方向
+	 */
+	void try2changeDirection(Direction direction);
+	/**
+	 * 移動を試みる
+	 * 移動中や向きの変更直後は何もしない
+	 *
+	 * @param direction 方向
+	 */
+	void try2startMoving(Direction direction);
 	void draw(void);
 	/**
 	 * キーパッドを取得する
