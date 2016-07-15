@@ -70,12 +70,12 @@ void Player::onRight(void)
 
 void Player::onBreakBlock(void)
 {
-
+	startBreaking();
 }
 
 void Player::onPlaceWall(void)
 {
-
+	startPlacing();
 }
 
 void Player::onPlaceTrap(void)
@@ -110,12 +110,12 @@ void Player::onRightDown(void)
 
 void Player::onBreakBlockDown(void)
 {
-	startBreaking();
+
 }
 
 void Player::onPlaceWallDown(void)
 {
-	startPlacing();
+
 }
 
 void Player::onPlaceTrapDown(void)
