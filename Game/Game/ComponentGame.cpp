@@ -294,6 +294,16 @@ bool ComponentGame::isPlaceable(const Vector<double>& position) const
 	return true;
 }
 
+void ComponentGame::breakBlock(void)
+{
+	for (int i = 0; i < MAP_HEIGHT; i++) {
+		for (int j = 0; j < MAP_WIDTH; j++) {
+			if (map[i][j]->getDamage() <= 0)
+				map[i][j] = map[i][j]->brokenBlock();
+		}
+	}
+}
+
 void ComponentGame::placeBlock(const vector<Player*> players)
 {
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
@@ -406,6 +416,7 @@ void ComponentGame::breakBlockEvent(void)
 {
 	breakBlock(players);
 	breakBlock(enemies);
+	breakBlock();
 }
 
 void ComponentGame::placeBlockEvent(void)

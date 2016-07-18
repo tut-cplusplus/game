@@ -181,6 +181,12 @@ private:
 	/**
 	 * ブロックの破壊を行う
 	 */
+	void breakBlock(void);
+	/**
+	 * ブロックの破壊を行う
+	 *
+	 * @param characters キャラクター配列
+	 */
 	template <typename T>
 	void breakBlock(const std::vector<T*> characters);
 	/**
@@ -365,7 +371,7 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 			continue;
 		//delete map[row][col];
 		itemBlocks.push_back(new ItemBlock(Vector<double>(col, row), map[row][col]));
-		map[row][col] = new BlockAir(blockSize);
+		map[row][col] = map[row][col]->brokenBlock();
 	}
 }
 

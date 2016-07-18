@@ -17,6 +17,9 @@ private:
 	Animation animation;
 	Animation itemAnimation;
 
+protected:
+	int damage;	//耐久値
+
 public:
 	Block();
 	Block(const Size<double>& size);
@@ -78,11 +81,27 @@ public:
 	 */
 	void setSize(const Size<double>& size);
 	Animation getItemAnimation(void) const;
+	int getDamage(void) const;
+	void setDamage(int damage);
 	/**
 	 * cloneを生成する
 	 */
 	virtual Block* clone(void) const;
+	/**
+	 * ブロックが壊された後に置かれるブロック
+	 */
+	virtual Block* brokenBlock(void) const;
 };
+
+inline int Block::getDamage(void) const
+{
+	return damage;
+}
+
+inline void Block::setDamage(int damage)
+{
+	this->damage = damage;
+}
 
 #endif
 

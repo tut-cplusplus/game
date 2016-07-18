@@ -1,18 +1,20 @@
 #include <iostream>
 
 #include "Block.hpp"
+#include "BlockAir.hpp"
 
 #include "GL/glut.h"
 
 using namespace std;
 
 Block::Block()
+	: damage(300)
 {
 	loadAnimations();
 }
 
 Block::Block(const Size<double>& size)
-	: Rectangle(size)
+	: Rectangle(size), damage(300)
 {
 	loadAnimations();
 }
@@ -93,4 +95,8 @@ Block* Block::clone(void) const
 	return new Block(*this);
 }
 
+Block* Block::brokenBlock(void) const
+{
+	return new BlockAir(size);
+}
 

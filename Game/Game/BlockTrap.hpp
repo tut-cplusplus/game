@@ -15,6 +15,7 @@ public:
 	void onHit(Character& character);
 	void draw(void);
 	Block* clone(void) const;
+	Block* brokenBlock(void) const;
 };
 
 #endif

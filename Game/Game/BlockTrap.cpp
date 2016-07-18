@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "BlockTrap.hpp"
+#include "BlockBrokenTrap.hpp"
 
 using namespace std;
 
@@ -50,6 +51,7 @@ void BlockTrap::onHit(Character& character)
 	character.onHit();
 	character.setPosition(destination);
 	character.setDirection(Character::WEST);
+	damage--;
 }
 
 void BlockTrap::draw(void)
@@ -60,5 +62,10 @@ void BlockTrap::draw(void)
 Block* BlockTrap::clone(void) const
 {
 	return new BlockTrap(*this);
+}
+
+Block* BlockTrap::brokenBlock(void) const
+{
+	return new BlockBrokenTrap(size);
 }
 
