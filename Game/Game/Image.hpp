@@ -1,6 +1,7 @@
 #ifndef ___Class_Image
 #define ___Class_Image
 
+#include <vector>
 #include <string>
 
 /**
@@ -30,6 +31,12 @@ private:
 	 * @throws CannotAllocateException 領域の確保に失敗した場合
 	 */
 	void allocate(void);
+	/**
+	 * 文字列をスペースで区切って返す
+	 *
+	 * @param str 文字列
+	 */
+	std::vector<std::string> getTokens(const std::string str) const;
 
 public:
 	/**

@@ -14,6 +14,23 @@ void Image::allocate(void)
 		throw CannotAllocateException();
 }
 
+vector<string> Image::getTokens(string str) const
+{
+
+	vector<string> tokens;
+	while (str.length()) {
+		size_t pos = str.find(" ");
+		if (pos == string::npos) {
+			tokens.push_back(str);
+			break;
+		}
+		string token(str, 0, pos);
+		tokens.push_back(token);
+		str.erase(0, pos + 1);
+	}
+	return tokens;
+}
+
 Image::Image()
 	: data(nullptr)
 {
@@ -49,7 +66,13 @@ void Image::readPPM(const string& fpath)
 	if (string(buf, 2) != "P6")
 		throw InvalidFileException();
 	fin.getline(buf, BUF_SIZE);
-	fin >> width >> height;
+	if (buf[0] == '#') {
+		fin >> width >> height;
+	} else {
+		vector<string> tokens = getTokens(string(buf));
+		width = atoi(tokens[0].c_str());
+		height = atoi(tokens[1].c_str());
+	}
 	int colorNum;
 	fin >> colorNum;
 	if (colorNum != 255)
