@@ -22,6 +22,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockAir.cpp" />
+    <ClCompile Include="BlockBrokenTrap.cpp" />
     <ClCompile Include="BlockNormalWall.cpp" />
     <ClCompile Include="BlockTrap.cpp" />
     <ClCompile Include="BlockUnbreakableWall.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Block.hpp" />
     <ClInclude Include="BlockAir.hpp" />
+    <ClInclude Include="BlockBrokenTrap.hpp" />
     <ClInclude Include="BlockNormalWall.hpp" />
     <ClInclude Include="BlockTrap.hpp" />
     <ClInclude Include="BlockUnbreakableWall.hpp" />
