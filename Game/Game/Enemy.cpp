@@ -17,19 +17,19 @@ void Enemy::loadAnimations(void)
 }
 
 Enemy::Enemy()
-	: Character(), viewAngle(45.0), radius(100.0), first(true)
+	: Character(), viewAngle(45.0), radius(100.0), first(true), onEyes(false)
 {
 	init();
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size)
-	: Character(position, size), viewAngle(45.0), radius(100.0), first(true)
+	: Character(position, size), viewAngle(45.0), radius(100.0), first(true), onEyes(false)
 {
 	init();
 }
 
 Enemy::Enemy(const Vector<double>& position)
-	: Character(position), viewAngle(45.0), radius(100.0), first(true)
+	: Character(position), viewAngle(45.0), radius(100.0), first(true), onEyes(false)
 {
 	init();
 }
@@ -63,6 +63,43 @@ void Enemy::onMoveAI(void)
 		direction = (Direction)randomDirection(mt);
 		first = false;
 	}
+
+
+	static int count = 0;
+	if (!onEyes) {
+		if (count != 0) {
+			count --;
+			std::cout << "find out : " << count << std::endl;
+		}
+	}
+	else {
+		count = 100;
+	}
+
+	if (count) {
+		double dx = newTarget.getX() - this->position.getX();
+		double dy = newTarget.getY() - this->position.getY();
+
+		if (pow(dx, 2.0) > pow(dy, 2.0)) {
+			if (dx < 0) {
+				direction = WEST;
+			}
+			else {
+				direction = EAST;
+			}
+		}
+		else {
+			if (dy < 0) {
+				direction = SOUTH;
+			}
+			else {
+				direction = NORTH;
+			}
+		}
+
+		onEyes = false;
+	}
+
 	//移動の開始
 	startMoving();
 }
@@ -81,7 +118,9 @@ void Enemy::onHit(void)
 
 void Enemy::onFind(const Player& player)
 {
-
+	oldTarget = newTarget;
+	newTarget = player.getPosition();
+	onEyes = true;
 }
 
 void Enemy::onFind(const Vector<int>& position, const Block& block)
@@ -105,4 +144,3 @@ void Enemy::draw(void)
 	CircularSector circularSector(Vector<double>(width / 2, height / 2), angle, viewAngle, radius);
 	circularSector.draw();
 }
-
