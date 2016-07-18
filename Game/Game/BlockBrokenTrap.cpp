@@ -23,7 +23,7 @@ void BlockBrokenTrap::loadAnimations(void)
 
 string BlockBrokenTrap::getAnimationPath(void) const
 {
-	return "data/animations/Trap.ani";
+	return "data/animations/Block/BlockBrokenTrap.ani";
 }
 
 bool BlockBrokenTrap::isTransparent(void) const
