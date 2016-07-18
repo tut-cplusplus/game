@@ -11,7 +11,7 @@ using namespace std;
 
 void Enemy::loadAnimations(void)
 {
-	animation = Animation("data/animations/Enemy.ani");
+	animation = Animation("data/animations/Enemy/Enemy.ani");
 	animations.push_back(animation);
 	Character::loadAnimations();
 }

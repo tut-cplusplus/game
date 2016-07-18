@@ -34,7 +34,7 @@ void Block::loadAnimations(void)
 
 string Block::getAnimationPath(void) const
 {
-	return "data/animations/Wall.ani";
+	return "data/animations/Block/BlockWall.ani";
 }
 
 string Block::getItemAnimationPath(void) const
