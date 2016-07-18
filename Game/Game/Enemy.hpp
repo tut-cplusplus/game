@@ -11,12 +11,15 @@ private:
 	double viewAngle;	//見ている方向
 	double radius;		//視界の半径
 	bool first;			//AIのサンプルに使用．不要であれば消す
+	Vector<double> oldTarget;
+	Vector<double> newTarget;
+	bool onEyes;
 
 protected:
 	void loadAnimations(void);
 
 public:
-	
+
 	Enemy();
 
 	Enemy(const Vector<double>& position, const Size<double>& size);
