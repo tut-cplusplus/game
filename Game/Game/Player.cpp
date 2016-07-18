@@ -15,8 +15,16 @@ void Player::init(void)
 
 void Player::loadAnimations(void)
 {
-	animation = Animation("data/animations/Player.ani");
-	animations.push_back(animation);
+	animations.push_back(Animation());
+	animations.push_back(Animation("data/animations/Player/up.ani"));
+	animations.push_back(Animation("data/animations/Player/down.ani"));
+	animations.push_back(Animation("data/animations/Player/right.ani"));
+	animations.push_back(Animation("data/animations/Player/left.ani"));
+	for (auto itr = animations.begin(); itr != animations.end(); ++itr) {
+		Animation& animation = *itr;
+		animation.setLoop(true);
+	}
+	animation = animations[direction];
 	Character::loadAnimations();
 }
 
@@ -180,6 +188,7 @@ void Player::try2changeDirection(Direction direction)
 		return;
 	if (this->direction != direction) {
 		this->direction = direction;
+		animation = animations[direction];
 		isChangingDirection = true;
 		changeDirectionCount = 0;
 		return;
@@ -197,8 +206,10 @@ void Player::try2startMoving(Direction direction)
 		}
 		return;
 	}
-	if (this->direction != direction)
+	if (this->direction != direction) {
 		this->direction = direction;
+		animation = animations[direction];
+	}
 	startMoving();
 }
 
@@ -208,12 +219,6 @@ void Player::draw(void)
 	Size<double> size = getSize();
 	double width = size.getWidth();
 	double height = size.getHeight();
-	glBegin(GL_LINE_LOOP);
-	glVertex2d(0.0, 0.0);
-	glVertex2d(width, 0.0);
-	glVertex2d(width, height);
-	glVertex2d(0.0, height);
-	glEnd();
 	//プレイヤーの向きを表示
 	double angle = getAngle();
 	double viewAngle = 0.0;

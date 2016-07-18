@@ -51,6 +51,7 @@ void Character::startMoving(void)
 	destination += directionVector;
 	source = position;
 	moveCount = 0;
+	animation.start();
 }
 
 void Character::move(void)
@@ -76,7 +77,7 @@ void Character::startBreaking(void) {
 
 void Character::onStop(void)
 {
-
+	animation.stop();
 }
 
 void Character::onHit(void)

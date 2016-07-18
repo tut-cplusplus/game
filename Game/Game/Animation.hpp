@@ -27,6 +27,7 @@ public:
 	void draw(void);
 	void update(void);
 	void start(void);
+	void pause(void);
 	void stop(void);
 	void setLoop(bool isLoop);
 
@@ -40,9 +41,15 @@ inline void Animation::start(void)
 	isPlaying = true;
 }
 
+inline void Animation::pause(void)
+{
+	isPlaying = false;
+}
+
 inline void Animation::stop(void)
 {
 	isPlaying = false;
+	cnt = 0;
 }
 
 inline void Animation::setLoop(bool isLoop)
