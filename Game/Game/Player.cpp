@@ -213,20 +213,6 @@ void Player::try2startMoving(Direction direction)
 	startMoving();
 }
 
-void Player::draw(void)
-{
-	Character::draw();
-	Size<double> size = getSize();
-	double width = size.getWidth();
-	double height = size.getHeight();
-	//プレイヤーの向きを表示
-	double angle = getAngle();
-	double viewAngle = 0.0;
-	double radius = width;
-	CircularSector circularSector(Vector<double>(width / 2, height / 2), angle, viewAngle, radius);
-	circularSector.draw();
-}
-
 Keypad Player::getKeypad(void) const
 {
 	return keypad;

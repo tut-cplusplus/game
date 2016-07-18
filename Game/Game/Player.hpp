@@ -97,7 +97,6 @@ public:
 	 * @param direction 方向
 	 */
 	void try2startMoving(Direction direction);
-	void draw(void);
 	/**
 	 * キーパッドを取得する
 	 *
