@@ -5,6 +5,7 @@
 #include "ComponentGame.hpp"
 #include "BlockNormalWall.hpp"
 #include "BlockUnbreakableWall.hpp"
+#include "BlockTrap.hpp"
 #include "Vector.hpp"
 #include "CircularSector.hpp"
 #include "Size.hpp"
@@ -227,7 +228,7 @@ bool ComponentGame::isBlocked(const Vector<double>& position1, const Vector<doub
 	Vector<double> position(position1);
 	for (int i = 0; i < DIVISION_NUMBER; i++) {
 		position += v;
-		if (isHit(position))
+		if (isHit(position, &Block::isTransparentByEnemy))
 			return true;
 	}
 	return false;
@@ -245,7 +246,7 @@ bool ComponentGame::isHit(const Vector<double>& position1, const Vector<double>&
 	return (x > left && x < right) && (y > bottom && y < top);
 }
 
-bool ComponentGame::isHit(const Vector<double>& position) const
+bool ComponentGame::isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const
 {
 	int i = position.getY();
 	int j = position.getX();
@@ -254,12 +255,12 @@ bool ComponentGame::isHit(const Vector<double>& position) const
 	if (j < 0 || j >= MAP_WIDTH)
 		return false;
 	const Block& block = *map[i][j];
-	if (block.isTransparent())
+	if (((&block)->*isTransparent)())
 		return false;
 	return true;
 }
 
-bool ComponentGame::isHit(const Character& character) const
+bool ComponentGame::isHit(const Character& character, bool (Block::*isTransparent)() const) const
 {
 	static Vector<double> dv[] = {
 		Vector<double>(0.5, 0.0),
@@ -270,7 +271,7 @@ bool ComponentGame::isHit(const Character& character) const
 	int n = sizeof(dv) / sizeof(dv[0]);
 	Vector<double> position = character.getPosition();
 	for (int i = 0; i < n; i++)
-		if (isHit(position + dv[i]))
+		if (isHit(position + dv[i], isTransparent))
 			return true;
 	return false;
 }
@@ -310,7 +311,20 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 		if (!isPlaceable(destination))
 			continue;
 		delete map[row][col];
-		map[row][col] = new BlockNormalWall(blockSize);
+		Player::BlockType blockType = player.getPlacingBlockType();
+		Block* block;
+		switch (blockType) {
+		case Player::WALL:
+			block = new BlockNormalWall(blockSize);
+			break;
+		case Player::TRAP:
+			block = new BlockTrap(blockSize);
+			break;
+		case Player::DECOY:
+			block = nullptr;
+			break;
+		}
+		map[row][col] = block;
 	}
 }
 
@@ -352,8 +366,8 @@ void ComponentGame::moveEvent(void)
 
 void ComponentGame::hitEvent(void)
 {
-	hitDetectCharacters(players);
-	hitDetectCharacters(enemies);
+	hitDetectCharacters(players, &Block::isTransparent);
+	hitDetectCharacters(enemies, &Block::isTransparentByEnemy);
 }
 
 void ComponentGame::findPlayerEvent(void)

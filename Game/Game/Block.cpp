@@ -15,7 +15,6 @@ Block::Block(const Size<double>& size)
 	: Rectangle(size)
 {
 	loadAnimations();
-	animation.setSize(size);
 }
 
 Block::~Block()
@@ -27,6 +26,8 @@ void Block::loadAnimations(void)
 {
 	animation = Animation(getAnimationPath());
 	itemAnimation = Animation(getItemAnimationPath());
+	animation.setSize(size);
+	itemAnimation.setSize(size);
 }
 
 string Block::getAnimationPath(void) const
@@ -48,6 +49,11 @@ void Block::changeColor(void) const
 bool Block::isTransparent(void) const
 {
 	return false;
+}
+
+bool Block::isTransparentByEnemy(void) const
+{
+	return isTransparent();
 }
 
 bool Block::isBreakable(void) const

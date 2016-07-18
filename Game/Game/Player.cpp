@@ -20,9 +20,10 @@ void Player::loadAnimations(void)
 	Character::loadAnimations();
 }
 
-void Player::startPlacing(void)
+void Player::startPlacing(BlockType blockType)
 {
 	isPlacing = true;
+	placingBlockType = blockType;
 }
 
 Player::Player()
@@ -75,17 +76,17 @@ void Player::onBreakBlock(void)
 
 void Player::onPlaceWall(void)
 {
-	startPlacing();
+	startPlacing(WALL);
 }
 
 void Player::onPlaceTrap(void)
 {
-
+	startPlacing(TRAP);
 }
 
 void Player::onPlaceDecoy(void)
 {
-
+	startPlacing(DECOY);
 }
 
 void Player::onUpDown(void)

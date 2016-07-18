@@ -46,6 +46,13 @@ public:
 	 */
 	virtual bool isTransparent(void) const;
 	/**
+	 * 敵から見たときに透明ブロックかどうか．
+	 *
+	 * @return true 透明である場合
+	 * @return false 透明でない場合
+	 */
+	virtual bool isTransparentByEnemy(void) const;
+	/**
 	 * 破壊可能かどうか．
 	 * 外壁など，破壊不可能であるべきブロックではoverrideする．
 	 *

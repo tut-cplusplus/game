@@ -142,16 +142,18 @@ private:
 	 * ある点がマップ上のブロックに当たっているか判定する
 	 *
 	 * @param position 対象の点
+	 * @param isTransparent 透過ブロックの判定に使用する関数のポインタ
 	 * @return true : 当たっている / false : そうでない
 	 */
-	bool isHit(const Vector<double>& position) const;
+	bool isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const;
 	/**
 	 * キャラクターがマップ上のブロックに当たっているか判定する
 	 *
 	 * @param character キャラクター
+	 * @param isTransparent 透過ブロックの判定に使用する関数のポインタ
 	 * @return true : 当たっている / false : そうでない
 	 */
-	bool isHit(const Character& character) const;
+	bool isHit(const Character& character, bool (Block::*isTransparent)() const) const;
 	/**
 	 * ブロックを置けるか判定する
 	 * プレイヤーや敵がいるかどうかも判定する
@@ -172,9 +174,10 @@ private:
 	 * キャラクターがマップ上のブロックに当たっているか判定し，当たって入ればCharacter::onHit()イベントを発生させる
 	 *
 	 * @param characters キャラクター配列
+	 * @param isTransparent 透過ブロックの判定に使用する関数のポインタ
 	 */
 	template <typename T>
-	void hitDetectCharacters(const std::vector<T*> characters);
+	void hitDetectCharacters(const std::vector<T*> characters, bool (Block::*isTransparent)() const);
 	/**
 	 * ブロックの破壊を行う
 	 */
@@ -324,11 +327,11 @@ inline bool ComponentGame::isPlaceable(const Vector<double>& position, const std
 }
 
 template <typename T>
-inline void ComponentGame::hitDetectCharacters(const std::vector<T*> characters)
+inline void ComponentGame::hitDetectCharacters(const std::vector<T*> characters, bool (Block::*isTransparent)() const)
 {
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		T& character = **itr;
-		if (isHit(character))
+		if (isHit(character, isTransparent))
 			character.onHit();
 	}
 }

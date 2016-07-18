@@ -5,17 +5,22 @@
 #include "Keypad.hpp"
 
 class Player : public Character {
+public:
+	enum BlockType {WALL, TRAP, DECOY};	//ブロックの種類
+
 private:
 	Keypad keypad;	//キーパッド
 	bool isChangingDirection;	//向きを変更中かどうか
 	int changeDirectionCount;	//向きを変更中のフレーム数
 	bool isPlacing;	//ブロックを設置中かどうか
+	BlockType placingBlockType;	//設置中のブロックの種類
 
 protected:
 	void init(void);
 	void loadAnimations(void);
 
-	void startPlacing(void);
+	void startPlacing(BlockType blockType);
+
 public:
 	Player();
 	Player(const Vector<double>& position, const Size<double>& size, const Keypad& keypad);
@@ -101,6 +106,7 @@ public:
 	Keypad getKeypad(void) const;
 	bool getIsPlacing(void) const;
 	void setIsPlacing(bool isPlacing);
+	BlockType getPlacingBlockType(void) const;
 
 };
 
@@ -112,5 +118,10 @@ inline bool Player::getIsPlacing(void) const
 inline void Player::setIsPlacing(bool isPlacing)
 {
 	this->isPlacing = isPlacing;
+}
+
+inline Player::BlockType Player::getPlacingBlockType(void) const
+{
+	return placingBlockType;
 }
 
