@@ -317,15 +317,15 @@ inline void ComponentGame::moveCharacters(const std::vector<T*> characters)
 template <typename T>
 inline bool ComponentGame::isPlaceable(const Vector<double>& position, const std::vector<T*>& characters) const
 {
-	int row = position.getY();
-	int col = position.getX();
+	int row = (int)position.getY();
+	int col = (int)position.getX();
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		T& character = **itr;
 		Vector<double> position2 = character.getPosition();
 		if (character.getIsMoving())
 			position2 = character.getSource();
-		int row2 = position2.getY();
-		int col2 = position2.getX();
+		int row2 = (int)position2.getY();
+		int col2 = (int)position2.getX();
 		if (row == row2 && col == col2)
 			return false;
 	}
@@ -360,8 +360,8 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		Vector<double> directionVector = character.getDirectionVector();
 		Vector<double> position = character.getPosition();
 		Vector<double> destination = position + directionVector;
-		int row = destination.getY();
-		int col = destination.getX();
+		int row = (int)destination.getY();
+		int col = (int)destination.getX();
 		if (row < 0 || row >= MAP_HEIGHT || col < 0 || col >= MAP_WIDTH)
 			continue;
 		const Block& block = *map[row][col];

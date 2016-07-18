@@ -56,7 +56,7 @@ public:
 
 inline int Layout::getComponentNum(void) const
 {
-	return components.size();
+	return (int)components.size();
 }
 
 template <typename T>

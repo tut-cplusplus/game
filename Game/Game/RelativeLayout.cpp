@@ -22,7 +22,7 @@ void RelativeLayout::draw(void)
 	glVertex2d(width, height);
 	glVertex2d(0.0, height);
 	glEnd();
-	unsigned n = components.size();
+	unsigned n = (unsigned)components.size();
 	for (unsigned i = 0; i < n; i++) {
 		Component* component = components[i];
 		const Vector<double>& v = vs[i];

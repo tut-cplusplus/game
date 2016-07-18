@@ -42,7 +42,7 @@ double FPSManager::getTime(void)
 void FPSManager::sleep(double seconds)
 {
 #ifndef __GNUG__
-	Sleep(seconds * 1000);
+	Sleep((DWORD)(seconds * 1000));
 #else
 	usleep(seconds * 1000000);
 #endif

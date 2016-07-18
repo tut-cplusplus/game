@@ -23,7 +23,7 @@ void ComponentGame::allocMap(void)
 		for (int i = 0; i < MAP_HEIGHT; i++)
 			map[i] = new Block*[MAP_WIDTH];
 	}
-	catch (const bad_alloc& e) {
+	catch (const bad_alloc&) {
 		throw CannotAllocateException();
 	}
 }
@@ -65,15 +65,15 @@ void ComponentGame::generateMap(void)
 		Vector<int>(0, -1),
 	};
 	while (v.size()) {
-		int idx = rnd(mt) * v.size();
+		int idx = (int)(rnd(mt) * v.size());
 		Vector<int> position = v[idx];
 		vector<int> directionIDs = getValidDirections(position);
-		int size = directionIDs.size();
+		int size = (int)directionIDs.size();
 		if (!size) {
 			v.erase(v.begin() + idx);
 			continue;
 		}
-		idx = rnd(mt) * size;
+		idx = (int)(rnd(mt) * size);
 		const Vector<int>& direction = directions[directionIDs[idx]];
 		for (int i = 0; i < 4; i++) {
 			position += direction;
@@ -142,8 +142,8 @@ void ComponentGame::deleteMap(void)
 void ComponentGame::addPlayer(void)
 {
 	vector<Vector<int>> positions = getTransparentBlockVectors();
-	int n = positions.size();
-	int idx = rnd(mt) * n;
+	int n = (int)positions.size();
+	int idx = (int)(rnd(mt) * n);
 	const Vector<int>& position = positions[idx];
 	Keypad keypad(Key('w'), Key('s'), Key('a'), Key('d'), Key(' '), Key('j'), Key('k'), Key('l'));
 	players.push_back(new Player(Vector<double>(position.getX(), position.getY()), keypad));
@@ -158,8 +158,8 @@ void ComponentGame::deletePlayers(void)
 void ComponentGame::addEnemy(void)
 {
 	vector<Vector<int>> positions = getTransparentBlockVectors();
-	int n = positions.size();
-	int idx = rnd(mt) * n;
+	int n = (int)positions.size();
+	int idx = (int)(rnd(mt) * n);
 	const Vector<int>& position = positions[idx];
 	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY())));
 }
@@ -248,8 +248,8 @@ bool ComponentGame::isHit(const Vector<double>& position1, const Vector<double>&
 
 Block* ComponentGame::isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const
 {
-	int i = position.getY();
-	int j = position.getX();
+	int i = (int)position.getY();
+	int j = (int)position.getX();
 	if (i < 0 || i >= MAP_HEIGHT)
 		return nullptr;
 	if (j < 0 || j >= MAP_WIDTH)
@@ -280,8 +280,8 @@ Block* ComponentGame::isHit(const Character& character, bool (Block::*isTranspar
 
 bool ComponentGame::isPlaceable(const Vector<double>& position) const
 {
-	int row = position.getY();
-	int col = position.getX();
+	int row = (int)position.getY();
+	int col = (int)position.getX();
 	if (row < 0 || row >= MAP_HEIGHT || col < 0 || col >= MAP_WIDTH)
 		return false;
 	const Block& block = *map[row][col];
@@ -318,8 +318,8 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 		Vector<double> directionVector = player.getDirectionVector();
 		Vector<double> position = player.getPosition();
 		Vector<double> destination = position + directionVector;
-		int row = destination.getY();
-		int col = destination.getX();
+		int row = (int)destination.getY();
+		int col = (int)destination.getX();
 		if (!isPlaceable(destination))
 			continue;
 		delete map[row][col];

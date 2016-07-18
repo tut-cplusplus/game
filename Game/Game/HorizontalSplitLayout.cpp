@@ -23,13 +23,13 @@ void HorizontalSplitLayout::setComponent1(Component* component)
 {
 	SplitLayout::setComponent1(component);
 	component->setHeight(height);
-	component->setWidth(width * pow);
+	component->setWidth((int)(width * pow));
 }
 
 void HorizontalSplitLayout::setComponent2(Component* component)
 {
 	SplitLayout::setComponent2(component);
 	component->setHeight(height);
-	component->setWidth(width * (1.0 - pow));
+	component->setWidth((int)(width * (1.0 - pow)));
 }
 

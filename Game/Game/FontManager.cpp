@@ -15,7 +15,7 @@ void FontManager::init(void)
 void FontManager::draw(char c, double width, double height)
 {
 	double colsDouble = 16.3;	//フォントテクスチャの右側にある余白への対処
-	int cols = colsDouble;
+	int cols = (int)colsDouble;
 	int rows = 8;
 	int row = c / cols;
 	int col = c % cols;
