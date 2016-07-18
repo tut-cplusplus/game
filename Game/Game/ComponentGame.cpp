@@ -323,6 +323,7 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 			block = new BlockTrap(blockSize);
 			break;
 		case Player::DECOY:
+		default:
 			block = nullptr;
 			break;
 		}
