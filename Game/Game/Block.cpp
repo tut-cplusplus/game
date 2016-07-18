@@ -66,6 +66,11 @@ void Block::onDestroy(void)
 
 }
 
+void Block::onHit(Character& character)
+{
+
+}
+
 void Block::draw(void)
 {
 	changeColor();

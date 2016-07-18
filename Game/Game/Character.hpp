@@ -125,6 +125,7 @@ public:
 	 * ゲッタ及びセッタ
 	 */
 	Vector<double> getPosition(void) const;
+	Vector<double> getDestination(void) const;
 	Vector<double> getSource(void) const;
 	Direction getDirection(void) const;
 	Vector<double> getDirectionVector(void) const;
@@ -135,6 +136,7 @@ public:
 	 */
 	double getAngle(void) const;
 	void setPosition(const Vector<double>& position);
+	void setDirection(Direction direction);
 	void setSize(const Size<double>& size);
 	bool getIsMoving(void) const;
 	bool getIsBreaking(void) const;
@@ -144,6 +146,11 @@ public:
 inline Vector<double> Character::getPosition(void) const
 {
 	return position;
+}
+
+inline Vector<double> Character::getDestination(void) const
+{
+	return destination;
 }
 
 inline Vector<double> Character::getSource(void) const
@@ -171,6 +178,13 @@ inline double Character::getAngle(void) const
 inline void Character::setPosition(const Vector<double>& position)
 {
 	this->position = position;
+	this->source = position;
+	this->destination = position;
+}
+
+inline void Character::setDirection(Direction direction)
+{
+	this->direction = direction;
 }
 
 inline bool Character::getIsMoving(void) const

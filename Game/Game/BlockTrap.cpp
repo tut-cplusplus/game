@@ -36,6 +36,22 @@ bool BlockTrap::isTransparentByEnemy(void) const
 	return true;
 }
 
+void BlockTrap::onHit(Character& character)
+{
+	Vector<double> destination = character.getDestination();
+	double x = (int)destination.getX();
+	double y = (int)destination.getY();
+	Vector<double> position = character.getPosition();
+	double dx = position.getX() - x;
+	double dy = position.getY() - y;
+	double r2 = dx * dx + dy * dy;
+	if (r2 > 0.10)
+		return;
+	character.onHit();
+	character.setPosition(destination);
+	character.setDirection(Character::WEST);
+}
+
 void BlockTrap::draw(void)
 {
 	Block::draw();

@@ -6,6 +6,7 @@
 #include "Size.hpp"
 #include "Rectangle.hpp"
 #include "Animation.hpp"
+#include "Character.hpp"
 
 /**
  * ブロッククラス．
@@ -64,6 +65,10 @@ public:
 	 * ブロックの破壊時に呼ばれる．
 	 */
 	virtual void onDestroy(void);
+	/**
+	 * キャラクターが当たったときに呼び出される
+	 */
+	virtual void onHit(Character& character);
 	/**
 	 * 描画時に呼ばれる．
 	 */

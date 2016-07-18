@@ -143,17 +143,17 @@ private:
 	 *
 	 * @param position 対象の点
 	 * @param isTransparent 透過ブロックの判定に使用する関数のポインタ
-	 * @return true : 当たっている / false : そうでない
+	 * @return nullptr : 当たっていない / else : そうでない
 	 */
-	bool isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const;
+	Block* isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const;
 	/**
 	 * キャラクターがマップ上のブロックに当たっているか判定する
 	 *
 	 * @param character キャラクター
 	 * @param isTransparent 透過ブロックの判定に使用する関数のポインタ
-	 * @return true : 当たっている / false : そうでない
+	 * @return nullptr : 当たっていない / else : そうでない
 	 */
-	bool isHit(const Character& character, bool (Block::*isTransparent)() const) const;
+	Block* isHit(const Character& character, bool (Block::*isTransparent)() const) const;
 	/**
 	 * ブロックを置けるか判定する
 	 * プレイヤーや敵がいるかどうかも判定する
@@ -331,7 +331,10 @@ inline void ComponentGame::hitDetectCharacters(const std::vector<T*> characters,
 {
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		T& character = **itr;
-		if (isHit(character, isTransparent))
+		Block* block = isHit(character, &Block::isTransparent);
+		if (block != nullptr)
+			block->onHit(character);
+		if (isHit(character, isTransparent) != nullptr)
 			character.onHit();
 	}
 }
