@@ -47,7 +47,7 @@ bool CircularSector::isHit(const Vector<double>& _position) const
 	return true;
 }
 
-void CircularSector::draw(void) const
+void CircularSector::draw(void)
 {
 	glPushMatrix();
 	glTranslated(position.getX(), position.getY(), 0.0);

@@ -51,20 +51,27 @@ public:
 	 */
 	void onHit(void);
 	/**
-	 * プレイヤーを発見したときに呼び出される
+	 * プレイヤーを目視で発見したときに呼び出される
 	 * 情報伝達オブジェクトのインスタンス化などを行う
 	 *
-	 * @param player プレイヤー
+	 * @param character キャラクター
 	 */
-	void onFind(const Player& player);
+	void onFindDirect(const Character& character);
+	/**
+	 * プレイヤーを発見したときに呼び出される
+	 * 情報伝達で情報が伝わった場合にも呼び出される
+	 *
+	 * @param character キャラクター
+	 */
+	void onFind(const Character& character);
 	/**
 	 * プレイヤーを始めて発見したときに呼び出される
 	 * 一度見失うまでは再び呼び出されない
 	 * 情報伝達オブジェクトのインスタンス化などを行う
 	 *
-	 * @param player プレイヤー
+	 * @param character キャラクター
 	 */
-	void onFindFirst(const Player& player);
+	void onFindFirst(const Character& character);
 	/**
 	 * ブロックを発見したときに呼び出される
 	 * 透過ブロックに対しては呼び出されない

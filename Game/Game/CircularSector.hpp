@@ -31,7 +31,7 @@ public:
 	/**
 	 * 描画関数
 	 */
-	virtual void draw(void) const;
+	virtual void draw(void);
 	/**
 	 * アクセッサ
 	 */

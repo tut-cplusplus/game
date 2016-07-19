@@ -390,7 +390,7 @@ void ComponentGame::findPlayerEvent(void)
 		for (auto itr2 = enemies.begin(); itr2 != enemies.end(); ++itr2) {
 			Enemy& enemy = **itr2;
 			if (isFound(player, enemy))
-				enemy.onFind(player);
+				enemy.onFindDirect(player);
 		}
 	}
 }

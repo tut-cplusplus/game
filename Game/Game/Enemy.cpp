@@ -122,20 +122,25 @@ void Enemy::onHit(void)
 	startMoving();
 }
 
-void Enemy::onFind(const Player& player)
+void Enemy::onFindDirect(const Character& character)
 {
 	isFindPlayer = true;
-	oldTarget = newTarget;
-	newTarget = player.getPosition();
-	onEyes = true;
 	if (!isLookingPlayer)
-		onFindFirst(player);
+		onFindFirst(character);
 	isLookingPlayer = true;
+	onFind(character);
 }
 
-void Enemy::onFindFirst(const Player& player)
+void Enemy::onFind(const Character& character)
 {
-	informations.push_back(Information(position, 50, player));
+	oldTarget = newTarget;
+	newTarget = character.getPosition();
+	onEyes = true;
+}
+
+void Enemy::onFindFirst(const Character& character)
+{
+	informations.push_back(Information(position, 50, character));
 }
 
 void Enemy::onFind(const Vector<int>& position, const Block& block)
