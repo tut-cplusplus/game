@@ -2,12 +2,14 @@
 #include <random>
 #include <cmath>
 
+#include "Global.hpp"
 #include "Enemy.hpp"
 #include "CircularSector.hpp"
 
 #include <GL/glut.h>
 
 using namespace std;
+using namespace Global;
 
 void Enemy::loadAnimations(void)
 {
@@ -50,8 +52,14 @@ double Enemy::getRadius(void) const
 	return radius;
 }
 
+vector<Information>& Enemy::getInformations(void)
+{
+	return informations;
+}
+
 void Enemy::onMoveAI(void)
 {
+	isFindPlayer = false;
 	//移動中であれば何もしない
 	if (isMoving)
 		return;
@@ -116,9 +124,18 @@ void Enemy::onHit(void)
 
 void Enemy::onFind(const Player& player)
 {
+	isFindPlayer = true;
 	oldTarget = newTarget;
 	newTarget = player.getPosition();
 	onEyes = true;
+	if (!isLookingPlayer)
+		onFindFirst(player);
+	isLookingPlayer = true;
+}
+
+void Enemy::onFindFirst(const Player& player)
+{
+	informations.push_back(Information(position, 50, player));
 }
 
 void Enemy::onFind(const Vector<int>& position, const Block& block)
@@ -133,6 +150,8 @@ void Enemy::changeColor(void) const
 
 void Enemy::draw(void)
 {
+	if (!isFindPlayer)
+		isLookingPlayer = false;
 	double width = size.getWidth();
 	double height = size.getHeight();
 	double angle = getAngle();
@@ -141,4 +160,16 @@ void Enemy::draw(void)
 	//視界の表示
 	CircularSector circularSector(Vector<double>(width / 2, height / 2), angle, viewAngle, radius);
 	circularSector.draw();
+	glPopMatrix();
+	//伝達情報の表示
+	for (auto itr = informations.begin(); itr != informations.end(); ++itr) {
+		Information& information = *itr;
+		information.draw();
+		double radius = information.getRadius();
+		if (radius > WORLD_WIDTH) {
+			itr = informations.erase(itr);
+			break;
+		}
+	}
+	glPushMatrix();
 }

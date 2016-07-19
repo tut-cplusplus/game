@@ -1,10 +1,13 @@
 #ifndef __Class_Enemy
 #define __Class_Enemy
 
+#include <vector>
+
 #include "Character.hpp"
 #include "Size.hpp"
 #include "Player.hpp"
 #include "Block.hpp"
+#include "Information.hpp"
 
 class Enemy : public Character {
 private:
@@ -15,6 +18,9 @@ private:
 	Vector<double> newTarget;
 	bool onEyes;
 	int count;
+	bool isFindPlayer;
+	bool isLookingPlayer;
+	std::vector<Information> informations;	//プレイヤーの伝達情報
 
 protected:
 	void loadAnimations(void);
@@ -32,6 +38,7 @@ public:
 	 */
 	double getViewAngle(void) const;
 	double getRadius(void) const;
+	std::vector<Information>& getInformations(void);
 
 	/**
 	 * 毎フレーム呼び出される
@@ -50,6 +57,14 @@ public:
 	 * @param player プレイヤー
 	 */
 	void onFind(const Player& player);
+	/**
+	 * プレイヤーを始めて発見したときに呼び出される
+	 * 一度見失うまでは再び呼び出されない
+	 * 情報伝達オブジェクトのインスタンス化などを行う
+	 *
+	 * @param player プレイヤー
+	 */
+	void onFindFirst(const Player& player);
 	/**
 	 * ブロックを発見したときに呼び出される
 	 * 透過ブロックに対しては呼び出されない
