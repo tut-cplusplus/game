@@ -14,6 +14,9 @@ public:
 	enum Direction { INVALID, NORTH, SOUTH, EAST, WEST };	//向き
 
 private:
+	static int IDCounter;		//インスタンスごとに固有のIDを割り当てるためのstaticメンバ
+
+private:
 	Vector<double> destination;	//移動後の座標
 	Vector<double> source;		//移動前の座標
 	int moveCount;				//移動における何フレーム目か
@@ -26,6 +29,7 @@ protected:
 	Direction direction;		//キャラクターの向き
 	std::vector<Animation> animations;	//アニメーションのベクタ
 	Animation animation;		//現在再生中のアニメーション
+	int ID;	//ID
 
 	/**
 	 * 初期化関数
@@ -135,6 +139,7 @@ public:
 	 * @return x軸の正の向きを0度とした反時計回りの角度(-90~180)
 	 */
 	double getAngle(void) const;
+	int getID(void) const;
 	void setPosition(const Vector<double>& position);
 	void setDirection(Direction direction);
 	void setSize(const Size<double>& size);
@@ -173,6 +178,11 @@ inline double Character::getAngle(void) const
 		180.0,
 	};
 	return angles[direction];
+}
+
+inline int Character::getID(void) const
+{
+	return ID;
 }
 
 inline void Character::setPosition(const Vector<double>& position)

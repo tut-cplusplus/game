@@ -6,6 +6,8 @@
 
 using namespace std;
 
+int Character::IDCounter = 0;
+
 void Character::init(void) {
 	loadAnimations();
 }
@@ -16,19 +18,19 @@ void Character::loadAnimations(void)
 }
 
 Character::Character()
-	: speed(1.0), isMoving(false), isBreaking(false), position(0.0, 0.0), direction(WEST)
+	: speed(1.0), isMoving(false), isBreaking(false), position(0.0, 0.0), direction(WEST), ID(IDCounter++)
 {
 	init();
 }
 
 Character::Character(const Vector<double>& position, const Size<double>& size)
-	: Rectangle(size), speed(1.0), isMoving(false), isBreaking(false), position(position), direction(WEST)
+	: Rectangle(size), speed(1.0), isMoving(false), isBreaking(false), position(position), direction(WEST), ID(IDCounter++)
 {
 	init();
 }
 
 Character::Character(const Vector<double>& position)
-	: speed(1.0), isMoving(false), isBreaking(false), position(position), direction(WEST)
+	: speed(1.0), isMoving(false), isBreaking(false), position(position), direction(WEST), ID(IDCounter++)
 {
 	init();
 }

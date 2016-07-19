@@ -178,6 +178,9 @@ private:
 	 */
 	template <typename T>
 	void hitDetectCharacters(const std::vector<T*> characters, bool (Block::*isTransparent)() const);
+	void hitDetectInformations(void);
+	void hitDetectInformations(std::vector<Information>& informations);
+	void hitDetectInformation(Information& information);
 	/**
 	 * ブロックの破壊を行う
 	 */

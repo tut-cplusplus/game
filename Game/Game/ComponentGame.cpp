@@ -381,6 +381,7 @@ void ComponentGame::hitEvent(void)
 {
 	hitDetectCharacters(players, &Block::isTransparent);
 	hitDetectCharacters(enemies, &Block::isTransparentByEnemy);
+	hitDetectInformations();
 }
 
 void ComponentGame::findPlayerEvent(void)
@@ -417,6 +418,41 @@ void ComponentGame::breakBlockEvent(void)
 	breakBlock(players);
 	breakBlock(enemies);
 	breakBlock();
+}
+
+void ComponentGame::hitDetectInformations(void)
+{
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		Enemy& enemy = **itr;
+		hitDetectInformations(enemy.getInformations());
+	}
+}
+
+void ComponentGame::hitDetectInformations(vector<Information>& informations)
+{
+	for (auto itr = informations.begin(); itr != informations.end(); ++itr) {
+		Information& information = *itr;
+		hitDetectInformation(information);
+	}
+}
+
+void ComponentGame::hitDetectInformation(Information& information)
+{
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		Enemy& enemy = **itr;
+		int ID = enemy.getID();
+		if (information.searchID(ID))
+			continue;
+		Vector<double> position = enemy.getPosition();
+		position += Vector<double>(0.5, 0.5);
+		Size<double> size = enemy.getSize();
+		position.setX(position.getX() * size.getWidth());
+		position.setY(position.getY() * size.getHeight());
+		if (information.isHit(position)) {
+			information.registerID(ID);
+			enemy.onFind(information.getCharacter());
+		}
+	}
 }
 
 void ComponentGame::placeBlockEvent(void)

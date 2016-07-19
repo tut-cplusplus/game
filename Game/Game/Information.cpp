@@ -17,6 +17,20 @@ Information::Information(const Vector<double>& position, double radius, const Ch
 
 }
 
+void Information::registerID(int ID)
+{
+	IDs.push_back(ID);
+}
+
+bool Information::searchID(int ID) const
+{
+	for (auto itr = IDs.begin(); itr != IDs.end(); ++itr) {
+		if (*itr == ID)
+			return true;
+	}
+	return false;
+}
+
 bool Information::isHit(const Vector<double>& position) const
 {
 	Vector<double> dposition = this->position - position;
@@ -31,9 +45,8 @@ bool Information::isHit(const Vector<double>& position) const
 void Information::draw(void)
 {
 	glPushMatrix();
-	Size<double> size = character.getSize();
-	double x = position.getX() * size.getWidth();
-	double y = position.getY() * size.getHeight();
+	double x = position.getX();
+	double y = position.getY();
 	glTranslated(x, y, 0.0);
 	glBegin(GL_LINE_LOOP);
 	int n = 100;

@@ -140,7 +140,13 @@ void Enemy::onFind(const Character& character)
 
 void Enemy::onFindFirst(const Character& character)
 {
-	informations.push_back(Information(position, 50, character));
+	Vector<double> position = this->position;
+	Size<double> size = character.getSize();
+	position.setX(position.getX() * size.getWidth());
+	position.setY(position.getY() * size.getHeight());
+	Information information(position, 50, character);
+	information.registerID(ID);
+	informations.push_back(information);
 }
 
 void Enemy::onFind(const Vector<int>& position, const Block& block)
