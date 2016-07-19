@@ -14,6 +14,7 @@ private:
 	Vector<double> oldTarget;
 	Vector<double> newTarget;
 	bool onEyes;
+	int count;
 
 protected:
 	void loadAnimations(void);

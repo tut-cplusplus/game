@@ -17,19 +17,19 @@ void Enemy::loadAnimations(void)
 }
 
 Enemy::Enemy()
-	: Character(), viewAngle(45.0), radius(100.0), first(true), onEyes(false)
+	: Character(), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0)
 {
 	init();
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size)
-	: Character(position, size), viewAngle(45.0), radius(100.0), first(true), onEyes(false)
+	: Character(position, size), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0)
 {
 	init();
 }
 
 Enemy::Enemy(const Vector<double>& position)
-	: Character(position), viewAngle(45.0), radius(100.0), first(true), onEyes(false)
+	: Character(position), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0)
 {
 	init();
 }
@@ -64,8 +64,6 @@ void Enemy::onMoveAI(void)
 		first = false;
 	}
 
-
-	static int count = 0;
 	if (!onEyes) {
 		if (count != 0) {
 			count --;
@@ -73,7 +71,7 @@ void Enemy::onMoveAI(void)
 		}
 	}
 	else {
-		count = 100;
+		count = 10;
 	}
 
 	if (count) {
