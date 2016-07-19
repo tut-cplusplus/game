@@ -171,7 +171,7 @@ void Enemy::draw(void)
 		Information& information = *itr;
 		information.draw();
 		double radius = information.getRadius();
-		if (radius > WORLD_WIDTH) {
+		if (radius > 2 * WORLD_WIDTH) {
 			itr = informations.erase(itr);
 			break;
 		}
