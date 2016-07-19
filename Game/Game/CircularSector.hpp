@@ -8,7 +8,7 @@
  * あたり判定に用いる
  */
 class CircularSector {
-private:
+protected:
 	Vector<double> position;	//円弧の中心位置
 	double angle;				//角度
 	double viewAngle;			//視野角
@@ -27,12 +27,27 @@ public:
 	 * @param position 対象の位置
 	 * @return 当たっていればtrue，そうでなければfalse
 	 */
-	bool isHit(const Vector<double>& position) const;
+	virtual bool isHit(const Vector<double>& position) const;
 	/**
 	 * 描画関数
 	 */
-	void draw(void) const;
+	virtual void draw(void) const;
+	/**
+	 * アクセッサ
+	 */
+	double getRadius(void) const;
+	void setRadius(double radius);
 };
+
+inline double CircularSector::getRadius(void) const
+{
+	return radius;
+}
+
+inline void CircularSector::setRadius(double radius)
+{
+	this->radius = radius;
+}
 
 #endif
 
