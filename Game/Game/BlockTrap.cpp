@@ -39,7 +39,7 @@ bool BlockTrap::isTransparentByEnemy(void) const
 
 void BlockTrap::onHit(Character& character)
 {
-	const Vector<double>& destination = character.getDestination();
+	Vector<double> destination = character.getDestination();
 	double x = (int)destination.getX();
 	double y = (int)destination.getY();
 	const Vector<double>& position = character.getPosition();
