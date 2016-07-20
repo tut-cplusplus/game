@@ -159,6 +159,8 @@ void init(void)
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	//キーを押したときと離されたときにのみイベントが呼ばれるようにする
 	glutIgnoreKeyRepeat(GL_TRUE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 

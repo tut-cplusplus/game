@@ -40,8 +40,6 @@ void Animation::draw(void)
 	double width = size.getWidth();
 	double height = size.getHeight();
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture(GL_TEXTURE_2D, ID);
 	glBegin(GL_QUADS);
 	glTexCoord2d(left, bottom);
