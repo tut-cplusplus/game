@@ -39,6 +39,7 @@
     <ClCompile Include="FPSManager.cpp" />
     <ClCompile Include="HorizontalSplitLayout.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Information.cpp" />
     <ClCompile Include="ItemBlock.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Keypad.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="Global.hpp" />
     <ClInclude Include="HorizontalSplitLayout.hpp" />
     <ClInclude Include="Image.hpp" />
+    <ClInclude Include="Information.hpp" />
     <ClInclude Include="ItemBlock.hpp" />
     <ClInclude Include="Key.hpp" />
     <ClInclude Include="Keypad.hpp" />
