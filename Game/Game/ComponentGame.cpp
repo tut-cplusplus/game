@@ -391,22 +391,19 @@ void ComponentGame::findPlayerEvent(void)
 
 void ComponentGame::findBlockEvent(void)
 {
-	//30frameに一回判定を行う
 	static int cnt = 0;
-	if (++cnt < 30)
-		return;
-	cnt = 0;
+	if (++cnt >= MAP_WIDTH)
+		cnt = 0;
 	for (int i = 0; i < MAP_HEIGHT; i++) {
-		for (int j = 0; j < MAP_WIDTH; j++) {
-			Vector<double> position(j, i);
-			Block& block = *map[i][j];
-			if (block.isTransparent())
-				continue;
-			for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
-				Enemy& enemy = **itr;
-				if (isFound(position, block, enemy))
-					enemy.onFind(Vector<int>(j, i), block);
-			}
+		int j = cnt;
+		Vector<double> position(j, i);
+		Block& block = *map[i][j];
+		if (block.isTransparent())
+			continue;
+		for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+			Enemy& enemy = **itr;
+			if (isFound(position, block, enemy))
+				enemy.onFind(Vector<int>(j, i), block);
 		}
 	}
 }
