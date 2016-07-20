@@ -11,6 +11,7 @@
 #include "FPSManager.hpp"
 #include "FontManager.hpp"
 
+#include <AL/alut.h>
 #include <GL/glut.h>
 
 using namespace std;
@@ -115,6 +116,16 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
+	ALuint buffer, source;
+	alutInit(&argc, argv);
+	buffer = alutCreateBufferHelloWorld();
+	alGenSources(1, &source);
+	alSourcei(source, AL_BUFFER, buffer);
+	alSourcei(source, AL_LOOPING, AL_TRUE);
+	alSourcePlay(source);
+	alutSleep(1);
+	alutExit();
+
 	glutInitWindowSize(Global::WINDOW_WIDTH, Global::WINDOW_HEIGHT);
 	//glutの初期化
 	glutInit(&argc, argv);
