@@ -216,11 +216,11 @@ bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Utili
 		Vector<double>(0.0, 1.0),
 		Vector<double>(1.0, 1.0),
 	};
-	int n = sizeof(dtable) / sizeof(dtable[0]);
+	static int n = sizeof(dtable) / sizeof(dtable[0]);
 	Vector<double> enemyPosition = enemy.getPosition();
 	enemyPosition += Vector<double>(0.5, 0.5);
 	Vector<double> enemyWorldPosition(enemyPosition);
-	Size<double> enemySize = enemy.getSize();
+	const Size<double>& enemySize = enemy.getSize();
 	enemyWorldPosition.setX(enemyWorldPosition.getX() * enemySize.getWidth());
 	enemyWorldPosition.setY(enemyWorldPosition.getY() * enemySize.getHeight());
 	CircularSector circularSector(enemyWorldPosition, enemy.getAngle(), enemy.getViewAngle(), enemy.getRadius());
@@ -391,6 +391,11 @@ void ComponentGame::findPlayerEvent(void)
 
 void ComponentGame::findBlockEvent(void)
 {
+	//30frameに一回判定を行う
+	static int cnt = 0;
+	if (++cnt < 30)
+		return;
+	cnt = 0;
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			Vector<double> position(j, i);
