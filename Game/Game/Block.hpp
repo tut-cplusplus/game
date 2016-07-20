@@ -80,7 +80,7 @@ public:
 	 * アクセッサ
 	 */
 	void setSize(const Size<double>& size);
-	Animation getItemAnimation(void) const;
+	const Animation& getItemAnimation(void) const;
 	int getDamage(void) const;
 	void setDamage(int damage);
 	/**

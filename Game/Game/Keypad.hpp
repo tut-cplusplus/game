@@ -18,52 +18,52 @@ public:
 	Keypad();
 	Keypad(Key up, Key down, Key left, Key right, Key breakBlock, Key placeWall, Key placeTrap, Key placeDecoy);
 
-	Key getUp(void) const;
-	Key getDown(void) const;
-	Key getLeft(void) const;
-	Key getRight(void) const;
-	Key getBreakBlock(void) const;
-	Key getPlaceWall(void) const;
-	Key getPlaceTrap(void) const;
-	Key getPlaceDecoy(void) const;
+	const Key& getUp(void) const;
+	const Key& getDown(void) const;
+	const Key& getLeft(void) const;
+	const Key& getRight(void) const;
+	const Key& getBreakBlock(void) const;
+	const Key& getPlaceWall(void) const;
+	const Key& getPlaceTrap(void) const;
+	const Key& getPlaceDecoy(void) const;
 };
 
-inline Key Keypad::getUp(void) const
+inline const Key& Keypad::getUp(void) const
 {
 	return up;
 }
 
-inline Key Keypad::getDown(void) const
+inline const Key& Keypad::getDown(void) const
 {
 	return down;
 }
 
-inline Key Keypad::getLeft(void) const
+inline const Key& Keypad::getLeft(void) const
 {
 	return left;
 }
 
-inline Key Keypad::getRight(void) const
+inline const Key& Keypad::getRight(void) const
 {
 	return right;
 }
 
-inline Key Keypad::getBreakBlock(void) const
+inline const Key& Keypad::getBreakBlock(void) const
 {
 	return breakBlock;
 }
 
-inline Key Keypad::getPlaceWall(void) const
+inline const Key& Keypad::getPlaceWall(void) const
 {
 	return placeWall;
 }
 
-inline Key Keypad::getPlaceTrap(void) const
+inline const Key& Keypad::getPlaceTrap(void) const
 {
 	return placeTrap;
 }
 
-inline Key Keypad::getPlaceDecoy(void) const
+inline const Key& Keypad::getPlaceDecoy(void) const
 {
 	return placeDecoy;
 }

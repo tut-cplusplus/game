@@ -102,7 +102,7 @@ public:
 	 *
 	 * @return キーパッド
 	 */
-	Keypad getKeypad(void) const;
+	const Keypad& getKeypad(void) const;
 	bool getIsPlacing(void) const;
 	void setIsPlacing(bool isPlacing);
 	BlockType getPlacingBlockType(void) const;

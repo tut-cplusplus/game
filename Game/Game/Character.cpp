@@ -129,7 +129,7 @@ void Character::specialup(int key, int x, int y)
 
 }
 
-Vector<double> Character::getDirectionVector(void) const
+const Vector<double>& Character::getDirectionVector(void) const
 {
 	static Vector<double> directionVectorTable[] = {
 		Vector<double>(0.0, 0.0),

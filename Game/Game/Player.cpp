@@ -213,7 +213,7 @@ void Player::try2startMoving(Direction direction)
 	startMoving();
 }
 
-Keypad Player::getKeypad(void) const
+const Keypad& Player::getKeypad(void) const
 {
 	return keypad;
 }

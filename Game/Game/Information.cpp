@@ -61,7 +61,7 @@ void Information::draw(void)
 	radius += 1.0;
 }
 
-Character Information::getCharacter(void) const
+const Character& Information::getCharacter(void) const
 {
 	return character;
 }

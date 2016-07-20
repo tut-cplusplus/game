@@ -19,13 +19,13 @@ namespace Utility {
 		/**
 		 * アクセッサ
 		 */
-		Size<double> getSize(void) const;
+		const Size<double>& getSize(void) const;
 		virtual void setSize(const Size<double>& size);
 	};
 
 }
 
-inline Size<double> Utility::Rectangle::getSize(void) const
+inline const Size<double>& Utility::Rectangle::getSize(void) const
 {
 	return size;
 }

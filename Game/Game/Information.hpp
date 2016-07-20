@@ -21,7 +21,7 @@ public:
 	bool isHit(const Vector<double>& position) const;
 	void draw(void);
 
-	Character getCharacter(void) const;
+	const Character& getCharacter(void) const;
 };
 
 #endif

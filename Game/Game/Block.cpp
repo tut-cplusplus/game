@@ -85,7 +85,7 @@ void Block::setSize(const Size<double>& size)
 	animation.setSize(size);
 }
 
-Animation Block::getItemAnimation(void) const
+const Animation& Block::getItemAnimation(void) const
 {
 	return itemAnimation;
 }

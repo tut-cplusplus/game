@@ -128,11 +128,11 @@ public:
 	/**
 	 * ゲッタ及びセッタ
 	 */
-	Vector<double> getPosition(void) const;
-	Vector<double> getDestination(void) const;
-	Vector<double> getSource(void) const;
+	const Vector<double>& getPosition(void) const;
+	const Vector<double>& getDestination(void) const;
+	const Vector<double>& getSource(void) const;
 	Direction getDirection(void) const;
-	Vector<double> getDirectionVector(void) const;
+	const Vector<double>& getDirectionVector(void) const;
 	/**
 	 * directionを角度として返す
 	 *
@@ -148,17 +148,17 @@ public:
 	void setIsBreaking(bool isBreaking);
 };
 
-inline Vector<double> Character::getPosition(void) const
+inline const Vector<double>& Character::getPosition(void) const
 {
 	return position;
 }
 
-inline Vector<double> Character::getDestination(void) const
+inline const Vector<double>& Character::getDestination(void) const
 {
 	return destination;
 }
 
-inline Vector<double> Character::getSource(void) const
+inline const Vector<double>& Character::getSource(void) const
 {
 	return source;
 }
