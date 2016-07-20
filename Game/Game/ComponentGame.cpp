@@ -172,10 +172,12 @@ void ComponentGame::deleteEnemies(void)
 
 void ComponentGame::drawItemBlocks(void)
 {
+	glEnable(GL_TEXTURE_2D);
 	for (auto itr = itemBlocks.begin(); itr != itemBlocks.end(); ++itr) {
 		ItemBlock& itemBlock = **itr;
 		itemBlock.draw();
 	}
+	glDisable(GL_TEXTURE_2D);
 }
 
 void ComponentGame::moveEnemiesAI(void)
