@@ -172,12 +172,10 @@ void ComponentGame::deleteEnemies(void)
 
 void ComponentGame::drawItemBlocks(void)
 {
-	glEnable(GL_TEXTURE_2D);
 	for (auto itr = itemBlocks.begin(); itr != itemBlocks.end(); ++itr) {
 		ItemBlock& itemBlock = **itr;
 		itemBlock.draw();
 	}
-	glDisable(GL_TEXTURE_2D);
 }
 
 void ComponentGame::drawEnemyVisibilities(void) const
@@ -534,6 +532,7 @@ void ComponentGame::draw(void)
 	placeBlockEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
+	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		glPushMatrix();
@@ -547,9 +546,10 @@ void ComponentGame::draw(void)
 	glPopMatrix();
 	drawCharacters(players);
 	drawCharacters(enemies);
+	drawItemBlocks();
+	glDisable(GL_TEXTURE_2D);
 	drawEnemyVisibilities();
 	drawEnemyInformations();
-	drawItemBlocks();
 }
 
 void ComponentGame::mouse(int button, int state, int x, int y)

@@ -76,9 +76,7 @@ void Block::onHit(Character& character)
 void Block::draw(void)
 {
 	changeColor();
-	glEnable(GL_TEXTURE_2D);
 	animation.draw();
-	glDisable(GL_TEXTURE_2D);
 }
 
 Block* Block::clone(void) const
