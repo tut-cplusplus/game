@@ -148,15 +148,22 @@ void Enemy::draw(void)
 {
 	if (!isFindPlayer)
 		isLookingPlayer = false;
+	//本体の表示
+	Character::draw();
+}
+
+void Enemy::drawVisibility() const
+{
 	double width = size.getWidth();
 	double height = size.getHeight();
 	double angle = getAngle();
-	//本体の表示
-	Character::draw();
 	//視界の表示
 	CircularSector circularSector(Vector<double>(width / 2, height / 2), angle, viewAngle, radius);
 	circularSector.draw();
-	glPopMatrix();
+}
+
+void Enemy::drawInformations(void)
+{
 	//伝達情報の表示
 	for (auto itr = informations.begin(); itr != informations.end(); ++itr) {
 		Information& information = *itr;
@@ -167,5 +174,5 @@ void Enemy::draw(void)
 			break;
 		}
 	}
-	glPushMatrix();
 }
+

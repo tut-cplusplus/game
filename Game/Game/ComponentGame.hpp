@@ -95,6 +95,14 @@ private:
 	 */
 	void drawItemBlocks(void);
 	/**
+	 * 敵の視界を描画する
+	 */
+	void drawEnemyVisibilities(void) const;
+	/**
+	 * 敵の情報を描画する
+	 */
+	void drawEnemyInformations(void);
+	/**
 	 * キャラクターを移動させる
 	 *
 	 * @param characters キャラクターのvector配列

@@ -180,6 +180,30 @@ void ComponentGame::drawItemBlocks(void)
 	glDisable(GL_TEXTURE_2D);
 }
 
+void ComponentGame::drawEnemyVisibilities(void) const
+{
+	double blockWidth = blockSize.getWidth();
+	double blockHeight = blockSize.getHeight();
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		Enemy& enemy = **itr;
+		glPushMatrix();
+		const Vector<double>& position = enemy.getPosition();
+		double x = position.getX();
+		double y = position.getY();
+		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		enemy.drawVisibility();
+		glPopMatrix();
+	}
+}
+
+void ComponentGame::drawEnemyInformations(void)
+{
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		Enemy& enemy = **itr;
+		enemy.drawInformations();
+	}
+}
+
 void ComponentGame::moveEnemiesAI(void)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
@@ -523,6 +547,8 @@ void ComponentGame::draw(void)
 	glPopMatrix();
 	drawCharacters(players);
 	drawCharacters(enemies);
+	drawEnemyVisibilities();
+	drawEnemyInformations();
 	drawItemBlocks();
 }
 

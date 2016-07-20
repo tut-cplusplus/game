@@ -88,6 +88,14 @@ public:
 	void changeColor(void) const;
 
 	void draw(void);
+	/**
+	 * 視界の表示
+	 */
+	void drawVisibility(void) const;
+	/**
+	 * 情報伝達の表示
+	 */
+	void drawInformations(void);
 };
 
 inline double Enemy::getViewAngle(void) const
