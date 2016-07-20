@@ -200,7 +200,7 @@ bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Utili
 	enemyWorldPosition.setX(enemyWorldPosition.getX() * enemySize.getWidth());
 	enemyWorldPosition.setY(enemyWorldPosition.getY() * enemySize.getHeight());
 	CircularSector circularSector(enemyWorldPosition, enemy.getAngle(), enemy.getViewAngle(), enemy.getRadius());
-	Size<double> rectangleSize= rectangle.getSize();
+	const Size<double>& rectangleSize = rectangle.getSize();
 	for (int i = 0; i < n; i++) {
 		const Vector<double>& v = dtable[i];
 		Vector<double> position = rectanglePosition + v;
@@ -238,7 +238,7 @@ Block* ComponentGame::isHit(const Character& character, bool (Block::*isTranspar
 		Vector<double>(0.95, 0.5),
 	};
 	int n = sizeof(dv) / sizeof(dv[0]);
-	Vector<double> position = character.getPosition();
+	const Vector<double>& position = character.getPosition();
 	for (int i = 0; i < n; i++) {
 		Block* block = isHit(position + dv[i], isTransparent);
 		if (block != nullptr)
@@ -284,8 +284,8 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 		if (!player.getIsPlacing())
 			continue;
 		player.setIsPlacing(false);
-		Vector<double> directionVector = player.getDirectionVector();
-		Vector<double> position = player.getPosition();
+		const Vector<double>& directionVector = player.getDirectionVector();
+		const Vector<double>& position = player.getPosition();
 		Vector<double> destination = position + directionVector;
 		int row = (int)destination.getY();
 		int col = (int)destination.getX();
@@ -414,7 +414,7 @@ void ComponentGame::hitDetectInformation(Information& information)
 			continue;
 		Vector<double> position = enemy.getPosition();
 		position += Vector<double>(0.5, 0.5);
-		Size<double> size = enemy.getSize();
+		const Size<double>& size = enemy.getSize();
 		position.setX(position.getX() * size.getWidth());
 		position.setY(position.getY() * size.getHeight());
 		if (information.isHit(position)) {

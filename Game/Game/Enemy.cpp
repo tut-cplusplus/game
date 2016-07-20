@@ -126,7 +126,7 @@ void Enemy::onFind(const Character& character)
 void Enemy::onFindFirst(const Character& character)
 {
 	Vector<double> position = this->position;
-	Size<double> size = character.getSize();
+	const Size<double>& size = character.getSize();
 	position.setX(position.getX() * size.getWidth());
 	position.setY(position.getY() * size.getHeight());
 	Information information(position, 50, character);

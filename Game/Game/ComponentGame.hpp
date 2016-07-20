@@ -299,7 +299,7 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters) cons
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		glPushMatrix();
 		T& character = **itr;
-		Vector<double> position = character.getPosition();
+		const Vector<double>& position = character.getPosition();
 		double x = position.getX();
 		double y = position.getY();
 		glTranslated(x * blockWidth, y * blockHeight, 0.0);
@@ -355,9 +355,7 @@ inline bool ComponentGame::isPlaceable(const Vector<double>& position, const std
 	int col = (int)position.getX();
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		T& character = **itr;
-		Vector<double> position2 = character.getPosition();
-		if (character.getIsMoving())
-			position2 = character.getSource();
+		const Vector<double>& position2 = character.getIsMoving() ? character.getSource() : character.getPosition();
 		int row2 = (int)position2.getY();
 		int col2 = (int)position2.getX();
 		if (row == row2 && col == col2)
@@ -391,8 +389,8 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		if (!character.getIsBreaking())
 			continue;
 		character.setIsBreaking(false);
-		Vector<double> directionVector = character.getDirectionVector();
-		Vector<double> position = character.getPosition();
+		const Vector<double>& directionVector = character.getDirectionVector();
+		const Vector<double>& position = character.getPosition();
 		Vector<double> destination = position + directionVector;
 		int row = (int)destination.getY();
 		int col = (int)destination.getX();

@@ -47,7 +47,7 @@ void Character::startMoving(void)
 		return;
 	isMoving = true;
 	//進行方向のベクトル
-	Vector<double> directionVector = getDirectionVector();
+	const Vector<double>& directionVector = getDirectionVector();
 	//出発地点と目的地を設定する
 	destination = position;
 	destination += directionVector;
