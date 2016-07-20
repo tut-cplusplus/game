@@ -42,21 +42,6 @@ Enemy::~Enemy()
 
 }
 
-double Enemy::getViewAngle(void) const
-{
-	return viewAngle;
-}
-
-double Enemy::getRadius(void) const
-{
-	return radius;
-}
-
-vector<Information>& Enemy::getInformations(void)
-{
-	return informations;
-}
-
 void Enemy::onMoveAI(void)
 {
 	isFindPlayer = false;

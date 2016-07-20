@@ -79,17 +79,6 @@ void Block::draw(void)
 	animation.draw();
 }
 
-void Block::setSize(const Size<double>& size)
-{
-	Rectangle::setSize(size);
-	animation.setSize(size);
-}
-
-const Animation& Block::getItemAnimation(void) const
-{
-	return itemAnimation;
-}
-
 Block* Block::clone(void) const
 {
 	return new Block(*this);

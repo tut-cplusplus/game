@@ -90,4 +90,19 @@ public:
 	void draw(void);
 };
 
+inline double Enemy::getViewAngle(void) const
+{
+	return viewAngle;
+}
+
+inline double Enemy::getRadius(void) const
+{
+	return radius;
+}
+
+inline vector<Information>& Enemy::getInformations(void)
+{
+	return informations;
+}
+
 #endif

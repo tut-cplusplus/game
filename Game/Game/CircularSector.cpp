@@ -20,13 +20,6 @@ CircularSector::CircularSector(const Vector<double>& position, double angle, dou
 	adjustAngle();
 }
 
-void CircularSector::adjustAngle(void)
-{
-	angle += 360.0;
-	while (angle >= 360.0)
-		angle -= 360.0;
-}
-
 bool CircularSector::isHit(const Vector<double>& _position) const
 {
 	Vector<double> v(_position);

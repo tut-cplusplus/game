@@ -17,20 +17,6 @@ Information::Information(const Vector<double>& position, double radius, const Ch
 
 }
 
-void Information::registerID(int ID)
-{
-	IDs.push_back(ID);
-}
-
-bool Information::searchID(int ID) const
-{
-	for (auto itr = IDs.begin(); itr != IDs.end(); ++itr) {
-		if (*itr == ID)
-			return true;
-	}
-	return false;
-}
-
 bool Information::isHit(const Vector<double>& position) const
 {
 	Vector<double> dposition = this->position - position;
@@ -59,10 +45,5 @@ void Information::draw(void)
 	glEnd();
 	glPopMatrix();
 	radius += 1.0;
-}
-
-const Character& Information::getCharacter(void) const
-{
-	return character;
 }
 

@@ -93,6 +93,17 @@ public:
 	virtual Block* brokenBlock(void) const;
 };
 
+inline void Block::setSize(const Size<double>& size)
+{
+	Rectangle::setSize(size);
+	animation.setSize(size);
+}
+
+inline const Animation& Block::getItemAnimation(void) const
+{
+	return itemAnimation;
+}
+
 inline int Block::getDamage(void) const
 {
 	return damage;

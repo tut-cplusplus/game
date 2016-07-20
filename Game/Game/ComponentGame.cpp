@@ -216,11 +216,6 @@ bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Utili
 	return false;
 }
 
-bool ComponentGame::isFound(const Player& player, const Enemy& enemy) const
-{
-	return isFound(player.getPosition(), player, enemy);
-}
-
 bool ComponentGame::isBlocked(const Vector<double>& position1, const Vector<double>& position2) const
 {
 	Vector<double> v = position2 - position1;
@@ -232,32 +227,6 @@ bool ComponentGame::isBlocked(const Vector<double>& position1, const Vector<doub
 			return true;
 	}
 	return false;
-}
-
-bool ComponentGame::isHit(const Vector<double>& position1, const Vector<double>& position2) const
-{
-	double bottom = position1.getY();
-	double left = position1.getX();
-	double top = bottom + 1.0;
-	double right = left + 1.0;
-	double x = position2.getX();
-	double y = position2.getY();
-
-	return (x > left && x < right) && (y > bottom && y < top);
-}
-
-Block* ComponentGame::isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const
-{
-	int i = (int)position.getY();
-	int j = (int)position.getX();
-	if (i < 0 || i >= MAP_HEIGHT)
-		return nullptr;
-	if (j < 0 || j >= MAP_WIDTH)
-		return nullptr;
-	Block& block = *map[i][j];
-	if (((&block)->*isTransparent)())
-		return nullptr;
-	return &block;
 }
 
 Block* ComponentGame::isHit(const Character& character, bool (Block::*isTransparent)() const) const

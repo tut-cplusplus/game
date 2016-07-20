@@ -24,5 +24,24 @@ public:
 	const Character& getCharacter(void) const;
 };
 
+inline void Information::registerID(int ID)
+{
+	IDs.push_back(ID);
+}
+
+inline bool Information::searchID(int ID) const
+{
+	for (auto itr = IDs.begin(); itr != IDs.end(); ++itr) {
+		if (*itr == ID)
+			return true;
+	}
+	return false;
+}
+
+inline const Character& Information::getCharacter(void) const
+{
+	return character;
+}
+
 #endif
 
