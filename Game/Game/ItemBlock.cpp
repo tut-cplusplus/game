@@ -54,9 +54,11 @@ void ItemBlock::draw(void)
 {
 	double width = size.getWidth();
 	double height = size.getHeight();
+	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glTranslated(position.getX() * width, position.getY() * height, 0.0);
 	animation.draw();
 	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
 }
 

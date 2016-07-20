@@ -96,7 +96,9 @@ void Character::changeColor(void) const
 void Character::draw(void)
 {
 	changeColor();
+	glEnable(GL_TEXTURE_2D);
 	animation.draw();
+	glDisable(GL_TEXTURE_2D);
 }
 
 void Character::keyboard(const Key& key)

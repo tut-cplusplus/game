@@ -40,7 +40,6 @@ void Animation::draw(void)
 	double width = size.getWidth();
 	double height = size.getHeight();
 
-	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture(GL_TEXTURE_2D, ID);
@@ -54,7 +53,6 @@ void Animation::draw(void)
 	glTexCoord2d(left, top);
 	glVertex2d(0.0, height);
 	glEnd();
-	glDisable(GL_TEXTURE_2D);
 
 	update();
 }
