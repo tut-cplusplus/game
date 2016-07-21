@@ -169,6 +169,8 @@
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <DisableSpecificWarnings>4819</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>C:\Program Files %28x86%29\OpenAL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Program Files %28x86%29\OpenAL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
