@@ -3,6 +3,7 @@
 #include "Character.hpp"
 #include "Size.hpp"
 #include "Keypad.hpp"
+#include "Audio.hpp"
 
 class Player : public Character {
 public:

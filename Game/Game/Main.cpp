@@ -116,15 +116,8 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
-	ALuint buffer, source;
+	//alutの初期化
 	alutInit(&argc, argv);
-	buffer = alutCreateBufferHelloWorld();
-	alGenSources(1, &source);
-	alSourcei(source, AL_BUFFER, buffer);
-	alSourcei(source, AL_LOOPING, AL_TRUE);
-	alSourcePlay(source);
-	alutSleep(1);
-	alutExit();
 
 	glutInitWindowSize(Global::WINDOW_WIDTH, Global::WINDOW_HEIGHT);
 	//glutの初期化
@@ -229,6 +222,7 @@ void keyboard(unsigned char key, int x, int y)
 	case 'q':
 	case 'Q':
 	case '\033':
+		alutExit();
 		exit(0);
 	}
 	LayoutManager::keyboard(key, x, y);

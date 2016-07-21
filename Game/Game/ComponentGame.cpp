@@ -490,7 +490,7 @@ ComponentGame::ComponentGame()
 }
 
 ComponentGame::ComponentGame(int width, int height)
-	: Component(width, height), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize((double)width / MAP_WIDTH, (double)height / MAP_HEIGHT)
+	: Component(width, height), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize((double)width / MAP_WIDTH, (double)height / MAP_HEIGHT), audio("data/music")
 {
 	init();
 }

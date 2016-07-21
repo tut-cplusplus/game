@@ -15,6 +15,7 @@
 #include "ItemBlock.hpp"
 
 #include "GL/glut.h"
+#include "AL/alut.h"
 
 class ComponentGame : public Component {
 public:
@@ -36,6 +37,7 @@ private:
 	std::vector<Enemy*> enemies;	//敵
 	std::vector<ItemBlock*> itemBlocks;	//アイテム
 	Size<double> blockSize;			//ブロックの大きさ
+	Audio audio;
 
 private:
 	/**
@@ -412,6 +414,7 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		//delete map[row][col];
 		itemBlocks.push_back(new ItemBlock(Vector<double>(col, row), map[row][col]));
 		map[row][col] = map[row][col]->brokenBlock();
+		audio.play();
 	}
 }
 

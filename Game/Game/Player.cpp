@@ -119,7 +119,6 @@ void Player::onRightDown(void)
 
 void Player::onBreakBlockDown(void)
 {
-
 }
 
 void Player::onPlaceWallDown(void)
