@@ -6,7 +6,7 @@ Audio::Audio()
 {
 }
 
-Audio::Audio(string const &file_path):buffer(alutCreateBufferHelloWorld()), source(0) {
+Audio::Audio(string const &file_path):buffer(alutCreateBufferFromFile(file_path.c_str())), source(0) {
 	alGenSources(1, &source);
 	alSourcei(source, AL_BUFFER, buffer);
 }
