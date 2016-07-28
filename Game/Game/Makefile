@@ -9,7 +9,7 @@ all : makefolder $(OBJPATHS)
 
 $(BUILDPATH)/%.o : %.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CPPFLAGS) -o $@ -c $<
+	ccache $(CXX) $(CPPFLAGS) -o $@ -c $<
 
 makefolder:
 	@mkdir -p $(BUILDPATH)
