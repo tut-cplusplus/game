@@ -19,19 +19,19 @@ void Enemy::loadAnimations(void)
 }
 
 Enemy::Enemy()
-	: Character(), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0)
+	: Character(), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0), life(0)
 {
 	init();
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size)
-	: Character(position, size), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0)
+	: Character(position, size), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0), life(0)
 {
 	init();
 }
 
 Enemy::Enemy(const Vector<double>& position)
-	: Character(position), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0)
+	: Character(position), viewAngle(45.0), radius(100.0), first(true), onEyes(false), count(0), life(0)
 {
 	init();
 }

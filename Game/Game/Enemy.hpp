@@ -21,6 +21,7 @@ private:
 	bool isFindPlayer;
 	bool isLookingPlayer;
 	std::vector<Information> informations;	//プレイヤーの伝達情報
+	int life;			//ブロックを破壊できる回数
 
 protected:
 	void loadAnimations(void);
@@ -39,6 +40,7 @@ public:
 	double getViewAngle(void) const;
 	double getRadius(void) const;
 	std::vector<Information>& getInformations(void);
+	int getLife(void) const;
 
 	/**
 	 * 毎フレーム呼び出される
@@ -111,6 +113,11 @@ inline double Enemy::getRadius(void) const
 inline vector<Information>& Enemy::getInformations(void)
 {
 	return informations;
+}
+
+inline int Enemy::getLife(void) const
+{
+	return life;
 }
 
 #endif
