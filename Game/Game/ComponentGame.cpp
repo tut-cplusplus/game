@@ -315,7 +315,6 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 		int col = (int)destination.getX();
 		if (!isPlaceable(destination))
 			continue;
-		delete map[row][col];
 		Player::BlockType blockType = player.getPlacingBlockType();
 		Block* block;
 		switch (blockType) {
@@ -326,11 +325,15 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 			block = new BlockTrap(blockSize);
 			break;
 		case Player::DECOY:
-		default:
 			block = nullptr;
+			decoys.push_back(new Decoy(destination, player.getSize()));
+			cout << "decoy" << endl;
 			break;
 		}
-		map[row][col] = block;
+		if (block != nullptr) {
+			delete map[row][col];
+			map[row][col] = block;
+		}
 	}
 }
 
@@ -375,18 +378,6 @@ void ComponentGame::hitEvent(void)
 	hitDetectCharacters(players, &Block::isTransparent);
 	hitDetectCharacters(enemies, &Block::isTransparentByEnemy);
 	hitDetectInformations();
-}
-
-void ComponentGame::findPlayerEvent(void)
-{
-	for (auto itr1 = players.begin(); itr1 != players.end(); ++itr1) {
-		Player& player = **itr1;
-		for (auto itr2 = enemies.begin(); itr2 != enemies.end(); ++itr2) {
-			Enemy& enemy = **itr2;
-			if (isFound(player, enemy))
-				enemy.onFindDirect(player);
-		}
-	}
 }
 
 void ComponentGame::findBlockEvent(void)
@@ -528,7 +519,8 @@ void ComponentGame::draw(void)
 {
 	moveEvent();
 	hitEvent();
-	findPlayerEvent();
+	findCharacterEvent(players);
+	findCharacterEvent(decoys);
 	findBlockEvent();
 	breakBlockEvent();
 	placeBlockEvent();
@@ -548,6 +540,7 @@ void ComponentGame::draw(void)
 	glPopMatrix();
 	drawCharacters(players);
 	drawCharacters(enemies);
+	drawCharacters(decoys);
 	drawItemBlocks();
 	glDisable(GL_TEXTURE_2D);
 	drawEnemyVisibilities();

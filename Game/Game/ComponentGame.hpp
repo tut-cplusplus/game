@@ -11,6 +11,7 @@
 #include "Vector.hpp"
 #include "Player.hpp"
 #include "NormalEnemy.hpp"
+#include "Decoy.hpp"
 #include "Size.hpp"
 #include "ItemBlock.hpp"
 
@@ -34,6 +35,7 @@ private:
 
 	Block*** map;					//マップ
 	std::vector<Player*> players;	//プレイヤー
+	std::vector<Decoy*> decoys;		//デコイ
 	std::vector<Enemy*> enemies;	//敵
 	std::vector<ItemBlock*> itemBlocks;	//アイテム
 	Size<double> blockSize;			//ブロックの大きさ
@@ -125,13 +127,13 @@ private:
 	 */
 	bool isFound(const Vector<double>& rectanglePosition, const Utility::Rectangle& rectangle, const Enemy& enemy) const;
 	/**
-	 * プレイヤーが敵の視界に入っているか判定する
+	 * キャラクターが敵の視界に入っているか判定する
 	 *
-	 * @param player プレイヤー
+	 * @param character キャラクター
 	 * @param enemy 敵
 	 * @return true : 視界に入っている / false : そうでない
 	 */
-	bool isFound(const Player& player, const Enemy& enemy) const;
+	bool isFound(const Character& character, const Enemy& enemy) const;
 	/**
 	 * 2点がマップ上のブロックで遮られているか判定する
 	 *
@@ -235,9 +237,10 @@ private:
 	 */
 	void hitEvent(void);
 	/**
-	 * プレイヤーが敵の視界に入ったときのイベントを発生させる
+	 * キャラクターが敵の視界に入ったときのイベントを発生させる
 	 */
-	void findPlayerEvent(void);
+	template <typename T>
+	void findCharacterEvent(const std::vector<T*>& characters);
 	/**
 	 * ブロックが敵の視界に入ったときのイベントを発生させる
 	 */
@@ -327,9 +330,9 @@ inline void ComponentGame::moveCharacters(const std::vector<T*> characters)
 	}
 }
 
-inline bool ComponentGame::isFound(const Player& player, const Enemy& enemy) const
+inline bool ComponentGame::isFound(const Character& character, const Enemy& enemy) const
 {
-	return isFound(player.getPosition(), player, enemy);
+	return isFound(character.getPosition(), character, enemy);
 }
 
 inline bool ComponentGame::isHit(const Vector<double>& position1, const Vector<double>& position2) const
@@ -415,6 +418,19 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		itemBlocks.push_back(new ItemBlock(Vector<double>(col, row), map[row][col]));
 		map[row][col] = map[row][col]->brokenBlock();
 		audio.play();
+	}
+}
+
+template <typename T>
+inline void ComponentGame::findCharacterEvent(const std::vector<T*>& characters)
+{
+	for (auto itr1 = characters.begin(); itr1 != characters.end(); ++itr1) {
+		Character& character = **itr1;
+		for (auto itr2 = enemies.begin(); itr2 != enemies.end(); ++itr2) {
+			Enemy& enemy = **itr2;
+			if (isFound(character, enemy))
+				enemy.onFindDirect(character);
+		}
 	}
 }
 
