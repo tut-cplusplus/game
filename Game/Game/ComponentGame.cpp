@@ -326,6 +326,10 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 			break;
 		case Player::DECOY:
 			block = nullptr;
+			vector<double> distances = getDistances(decoys, destination);
+			for (auto itr = distances.begin(); itr != distances.end(); ++itr)
+				if (*itr < 0.5)
+					return;
 			decoys.push_back(new Decoy(destination, player.getSize()));
 			cout << "decoy" << endl;
 			break;

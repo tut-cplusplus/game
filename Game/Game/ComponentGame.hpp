@@ -282,6 +282,15 @@ private:
 	 * @param funcPlaceDecoy placeDecoyイベントプロシージャ
 	 */
 	void keyEvent(const Key& key, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceBlock)(), void (Player::*funcPlaceTrap)(), void (Player::*funcPlaceDecoy)());
+	/**
+	 * キャラクターとの距離を取得する
+	 *
+	 * @param characters 距離を取得する対象のキャラクター配列
+	 * @param position 位置
+	 * @return positionと各characterとの距離の2乗を格納するvector配列
+	 */
+	template <typename T>
+	std::vector<double> getDistances(const std::vector<T*>& characters, const Vector<double>& position) const;
 
 public:
 	ComponentGame();
@@ -432,6 +441,19 @@ inline void ComponentGame::findCharacterEvent(const std::vector<T*>& characters)
 				enemy.onFindDirect(character);
 		}
 	}
+}
+
+template <typename T>
+inline std::vector<double> ComponentGame::getDistances(const std::vector<T*>& characters, const Vector<double>& position) const
+{
+	std::vector<double> distances;
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		Character& character = **itr;
+		const Vector<double>& characterPosition = character.getPosition();
+		double distance = (characterPosition - position).norm2();
+		distances.push_back(distance);
+	}
+	return distances;
 }
 
 #endif
