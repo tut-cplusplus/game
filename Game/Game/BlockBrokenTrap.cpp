@@ -31,3 +31,8 @@ bool BlockBrokenTrap::isTransparent(void) const
 	return true;
 }
 
+Block* BlockBrokenTrap::clone(void) const
+{
+	return new BlockBrokenTrap(*this);
+}
+

@@ -19,3 +19,8 @@ void BlockWall::draw(void)
 	Block::draw();
 }
 
+Block* BlockWall::clone(void) const
+{
+	return new BlockWall(*this);
+}
+

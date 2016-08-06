@@ -11,6 +11,7 @@ public:
 	void loadAnimations(void);
 	std::string getAnimationPath(void) const;
 	bool isTransparent(void) const;
+	virtual Block* clone(void) const;
 };
 
 #endif

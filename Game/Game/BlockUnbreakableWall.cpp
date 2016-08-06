@@ -31,3 +31,8 @@ void BlockUnbreakableWall::draw(void)
 	BlockWall::draw();
 }
 
+Block* BlockUnbreakableWall::clone(void) const
+{
+	return new BlockUnbreakableWall(*this);
+}
+

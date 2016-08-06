@@ -12,6 +12,7 @@ public:
 	void changeColor(void) const;
 	bool isBreakable(void) const;
 	void draw(void);
+	virtual Block* clone(void) const;
 };
 
 #endif

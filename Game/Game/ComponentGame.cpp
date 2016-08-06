@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <random>
+#include <typeinfo>
 
 #include "ComponentGame.hpp"
 #include "BlockNormalWall.hpp"
@@ -88,8 +89,11 @@ void ComponentGame::allocMap(void)
 {
 	try {
 		map = new Block**[MAP_HEIGHT];
-		for (int i = 0; i < MAP_HEIGHT; i++)
+		visibleMap = new Block**[MAP_HEIGHT];
+		for (int i = 0; i < MAP_HEIGHT; i++) {
 			map[i] = new Block*[MAP_WIDTH];
+			visibleMap[i] = new Block*[MAP_WIDTH];
+		}
 	}
 	catch (const bad_alloc&) {
 		throw CannotAllocateException();
@@ -98,22 +102,30 @@ void ComponentGame::allocMap(void)
 
 void ComponentGame::clearMap(void)
 {
-	deleteMap();
+	deleteMap(map);
+	deleteMap(visibleMap);
 	allocMap();
 }
 
 void ComponentGame::generateMap(void)
 {
-	for (int i = 1; i < MAP_HEIGHT - 1; i++)
-	for (int j = 1; j < MAP_WIDTH - 1; j++)
-		map[i][j] = nullptr;
+	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
+		for (int j = 1; j < MAP_WIDTH - 1; j++) {
+			map[i][j] = nullptr;
+			visibleMap[i][j] = nullptr;
+		}
+	}
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		map[i][0] = new BlockUnbreakableWall(blockSize);
+		visibleMap[i][0] = new BlockUnbreakableWall(blockSize);
 		map[i][MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
+		visibleMap[i][MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
 	}
 	for (int i = 0; i < MAP_WIDTH; i++) {
 		map[0][i] = new BlockUnbreakableWall(blockSize);
+		visibleMap[0][i] = new BlockUnbreakableWall(blockSize);
 		map[MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
+		visibleMap[MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
 	}
 
 	vector<Vector<int>> v;
@@ -149,15 +161,20 @@ void ComponentGame::generateMap(void)
 			int x = position.getX();
 			int y = position.getY();
 			map[y][x] = new BlockNormalWall(blockSize);
+			visibleMap[y][x] = new BlockNormalWall(blockSize);
 			mapGraph.removeNode(position);
 			if (i == 3)
 				v.push_back(position);
 		}
 	}
-	for (int i = 1; i < MAP_HEIGHT - 1; i++)
-	for (int j = 1; j < MAP_WIDTH - 1; j++)
-		if (map[i][j] == nullptr)
-			map[i][j] = new BlockAir(blockSize);
+	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
+		for (int j = 1; j < MAP_WIDTH - 1; j++) {
+			if (map[i][j] == nullptr) {
+				map[i][j] = new BlockAir(blockSize);
+				visibleMap[i][j] = new BlockAir(blockSize);
+			}
+		}
+	}
 	startUpdatingMapTrees();
 }
 
@@ -195,7 +212,7 @@ vector<int> ComponentGame::getValidDirections(const Vector<int>& _position)
 	return ret;
 }
 
-void ComponentGame::deleteMap(void)
+void ComponentGame::deleteMap(Block*** map)
 {
 	if (map == nullptr)
 		return;
@@ -479,8 +496,10 @@ vector<Vector<int>> ComponentGame::getTransparentBlockVectors(void) const
 void ComponentGame::setBlockSize(void)
 {
 	for (int i = 0; i < MAP_HEIGHT; i++) {
-		for (int j = 0; j < MAP_WIDTH; j++)
+		for (int j = 0; j < MAP_WIDTH; j++) {
 			map[i][j]->setSize(blockSize);
+			visibleMap[i][j]->setSize(blockSize);
+		}
 	}
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
 		Player& player = **itr;
@@ -614,7 +633,8 @@ ComponentGame::ComponentGame(int width, int height)
 
 ComponentGame::~ComponentGame()
 {
-	deleteMap();
+	deleteMap(map);
+	deleteMap(visibleMap);
 	deletePlayers();
 }
 
@@ -659,7 +679,22 @@ void ComponentGame::draw(void)
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		glPushMatrix();
 		for (int j = 0; j < MAP_WIDTH; j++) {
-			map[i][j]->draw();
+			bool visible = false;
+			Vector<double> position(j + 0.5, i + 0.5);
+			for (auto itr = players.begin(); itr != players.end(); ++itr) {
+				const Player& player = **itr;
+				const Vector<double>& playerPosition = player.getPosition();
+				double norm2 = (position - playerPosition).norm2();
+				if (norm2 < Global::PLAYER_RADIUS * Global::PLAYER_RADIUS) {
+					visible = true;
+					break;
+				}
+			}
+			if (visible && (typeid(*visibleMap[i][j]) != typeid(*map[i][j]))) {
+				delete visibleMap[i][j];
+				visibleMap[i][j] = map[i][j]->clone();
+			}
+			visibleMap[i][j]->draw();
 			glTranslated(blockWidth, 0.0, 0.0);
 		}
 		glPopMatrix();

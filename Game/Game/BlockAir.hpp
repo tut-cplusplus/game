@@ -23,6 +23,7 @@ public:
 	 * 描画時に呼ばれる．
 	 */
 	virtual void draw(void);
+	virtual Block* clone(void) const;
 };
 
 #endif

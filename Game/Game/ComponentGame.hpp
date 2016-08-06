@@ -46,6 +46,7 @@ private:
 	std::vector<Tree<Vector<int>>> mapTrees;
 	std::vector<Tree<Vector<int>>> mapTreesTmp;
 	bool isMapTreesUpdated;
+	Block*** visibleMap;
 
 private:
 	/**
@@ -67,6 +68,7 @@ private:
 	 * ただし，ブロックのインスタンス生成は行わない
 	 */
 	void allocMap(void);
+	void allocIsVisibleMap(void);
 	/**
 	 * マップの配列を生成しなおす
 	 * ただし，ブロックのインスタンス生成は行わない
@@ -87,8 +89,11 @@ private:
 	/**
 	 * マップの配列を解放する
 	 * この後にgenerateMap()を行ってはならない
+	 *
+	 * @param map マップ
 	 */
-	void deleteMap(void);
+	void deleteMap(Block*** map);
+	void deleteIsVisibleMap(void);
 	/**
 	 * プレイヤーを一人追加する
 	 * ランダムな位置に追加される

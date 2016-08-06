@@ -24,3 +24,8 @@ void BlockAir::draw(void)
 	//何も描画しない
 }
 
+Block* BlockAir::clone(void) const
+{
+	return new BlockAir(*this);
+}
+
