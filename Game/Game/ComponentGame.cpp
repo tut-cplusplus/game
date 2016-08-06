@@ -665,12 +665,18 @@ void ComponentGame::init(void)
 	allocMap();
 	generateMap();
 	addPlayer();
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 5; i++)
 		addEnemy();
 }
 
 void ComponentGame::draw(void)
 {
+	if (!players.size()) {
+		RelativeLayout* layout = new RelativeLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT);
+		layout->add(new ComponentTeapot(Global::WORLD_WIDTH, Global::WORLD_HEIGHT), Vector<double>(0.0, 0.0));
+		cout << "game over" << endl;
+		throw layout;
+	}
 	if (!enemies.size()) {
 		RelativeLayout* layout = new RelativeLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT);
 		layout->add(new ComponentTeapot(Global::WORLD_WIDTH, Global::WORLD_HEIGHT), Vector<double>(0.0, 0.0));
