@@ -9,6 +9,7 @@
 #include "Vector.hpp"
 #include "CircularSector.hpp"
 #include "Size.hpp"
+#include "Global.hpp"
 
 #include "GL/glut.h"
 
@@ -238,6 +239,29 @@ void ComponentGame::deleteEnemies(void)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
 		delete *itr;
+}
+
+void ComponentGame::killEnemies(void)
+{
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		const Enemy& enemy = **itr;
+		if (enemy.getLife())
+			continue;
+		const Vector<double>& position = enemy.getSource();
+		Vector<int> node((int)position.getX(), (int)position.getY());
+		for (auto itr2 = mapTrees.begin(); itr2 != mapTrees.end(); itr2++) {
+			const Tree<Vector<int>>& mapTree = *itr2;
+			try {
+				mapTree.searchNode(node);
+				if (mapTree.getNodeNum() <= Global::KILL_ENEMY_THRESHOLD) {
+					delete *itr;
+					enemies.erase(itr);
+				}
+			}
+			catch (...) {
+			}
+		}
+	}
 }
 
 void ComponentGame::drawItemBlocks(void)
@@ -600,6 +624,7 @@ void ComponentGame::draw(void)
 	breakBlockEvent();
 	placeBlockEvent();
 	updateMapTrees();
+	killEnemies();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glEnable(GL_TEXTURE_2D);

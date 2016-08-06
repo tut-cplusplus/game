@@ -108,6 +108,10 @@ private:
 	 */
 	void deleteEnemies(void);
 	/**
+	 * 条件を満たす敵を殺す
+	 */
+	void killEnemies(void);
+	/**
 	 * キャラクターを描画する
 	 *
 	 * @param characters キャラクターのvector配列
