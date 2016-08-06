@@ -31,6 +31,54 @@ void ComponentGame::clearGraph(void)
 	}
 }
 
+void ComponentGame::updateMapTrees(void)
+{
+	if (isMapTreesUpdated)
+		return;
+	if (!mapTreesTmp.size())
+		return;
+	Tree<Vector<int>>& tree = mapTreesTmp[mapTreesTmp.size() - 1];
+	tree.update();
+	if (tree.isUpdated()) {
+		const vector<Vector<int>>& nodes = mapGraph.getNodes();
+		bool isUpdated = true;
+		for (auto itr = nodes.begin(); itr != nodes.end(); ++itr) {
+			const Vector<int>& node = *itr;
+			bool flag = false;
+			for (auto itr = mapTreesTmp.begin(); itr != mapTreesTmp.end(); itr++) {
+				const Tree<Vector<int>>& mapTree = *itr;
+				try {
+					mapTree.searchNode(node);
+					flag = true;
+					break;
+				}
+				catch (...) {
+				}
+			}
+			if (flag)
+				continue;
+			Tree<Vector<int>> mapTree(100);
+			mapTree.depthFirstSearch(mapGraph, node);
+			mapTreesTmp.push_back(mapTree);
+			isUpdated = false;
+			break;
+		}
+		if (isUpdated) {
+			isMapTreesUpdated = true;
+			cout << "number of regions : " << mapTreesTmp.size() << endl;
+		}
+	}
+}
+
+void ComponentGame::startUpdatingMapTrees(void)
+{
+	mapTreesTmp = vector<Tree<Vector<int>>>();
+	mapTreesTmp.push_back(Tree<Vector<int>>(100));
+	Tree<Vector<int>>& tree = mapTreesTmp[0];
+	tree.depthFirstSearch(mapGraph);
+	isMapTreesUpdated = false;
+}
+
 void ComponentGame::allocMap(void)
 {
 	try {
@@ -105,6 +153,7 @@ void ComponentGame::generateMap(void)
 	for (int j = 1; j < MAP_WIDTH - 1; j++)
 		if (map[i][j] == nullptr)
 			map[i][j] = new BlockAir(blockSize);
+	startUpdatingMapTrees();
 }
 
 vector<int> ComponentGame::getValidDirections(const Vector<int>& _position)
@@ -354,6 +403,7 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 			delete map[row][col];
 			map[row][col] = block;
 			mapGraph.removeNode(Vector<int>(col, row));
+			startUpdatingMapTrees();
 		}
 	}
 }
@@ -545,6 +595,7 @@ void ComponentGame::draw(void)
 	findBlockEvent();
 	breakBlockEvent();
 	placeBlockEvent();
+	updateMapTrees();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glEnable(GL_TEXTURE_2D);

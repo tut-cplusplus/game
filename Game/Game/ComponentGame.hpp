@@ -15,6 +15,7 @@
 #include "Size.hpp"
 #include "ItemBlock.hpp"
 #include "Graph.hpp"
+#include "Tree.hpp"
 
 #include "GL/glut.h"
 #include "AL/alut.h"
@@ -42,12 +43,25 @@ private:
 	Size<double> blockSize;			//ブロックの大きさ
 	Audio audio;
 	Graph<Vector<int>> mapGraph;	//マップの空間の認識に用いる（敵の死亡処理用）
+	std::vector<Tree<Vector<int>>> mapTrees;
+	std::vector<Tree<Vector<int>>> mapTreesTmp;
+	bool isMapTreesUpdated;
 
 private:
 	/**
 	 * 外壁のみのマップに対応するグラフを生成する
 	 */
 	void clearGraph(void);
+	/**
+	 * マップ探索木を更新する
+	 * 毎フレーム呼び出す
+	 */
+	void updateMapTrees(void);
+	/**
+	 * マップ探索木の更新を開始する
+	 * マップの変化時に呼び出す（ブロックの破壊など）
+	 */
+	void startUpdatingMapTrees(void);
 	/**
 	 * マップの配列を生成する
 	 * ただし，ブロックのインスタンス生成は行わない
@@ -442,6 +456,7 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(0, -1));
 		if (row < MAP_HEIGHT - 2)
 			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(0, 1));
+		startUpdatingMapTrees();
 		audio.play();
 	}
 }

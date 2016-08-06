@@ -1,16 +1,17 @@
+#ifndef ___Class_Graph
+#define ___Class_Graph
+
 #include <vector>
+#include <stack>
 
 template <typename T>
 class Graph {
-private:
+protected:
 	class NodeNotFoundException{};
 
-private:
+protected:
 	std::vector<T> nodes;
 	std::vector<std::vector<unsigned char>> adjacencyMatrix;
-
-private:
-	unsigned searchNode(const T& node) const;
 
 public:
 	Graph();
@@ -24,18 +25,10 @@ public:
 	void removeEdge(const T& v1, const T& v2);
 
 	unsigned getNodeNum(void) const;
+	const std::vector<T>& getNodes(void) const;
+	const std::vector<std::vector<unsigned char>>& getAdjacencyMatrix(void) const;
+	unsigned searchNode(const T& node) const;
 };
-
-template <typename T>
-unsigned Graph<T>::searchNode(const T& node) const
-{
-	for (unsigned i = 0; i < nodes.size(); i++) {
-		const T& n = nodes[i];
-		if (n == node)
-			return i;
-	}
-	throw NodeNotFoundException();
-}
 
 template <typename T>
 Graph<T>::Graph()
@@ -118,4 +111,29 @@ inline unsigned Graph<T>::getNodeNum(void) const
 {
 	return nodes.size();
 }
+
+template <typename T>
+inline const std::vector<T>& Graph<T>::getNodes(void) const
+{
+	return nodes;
+}
+
+template <typename T>
+inline const std::vector<std::vector<unsigned char>>& Graph<T>::getAdjacencyMatrix(void) const
+{
+	return adjacencyMatrix;
+}
+
+template <typename T>
+unsigned Graph<T>::searchNode(const T& node) const
+{
+	for (unsigned i = 0; i < nodes.size(); i++) {
+		const T& n = nodes[i];
+		if (n == node)
+			return i;
+	}
+	throw NodeNotFoundException();
+}
+
+#endif
 
