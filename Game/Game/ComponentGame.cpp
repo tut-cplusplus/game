@@ -38,6 +38,8 @@ void ComponentGame::updateMapTrees(void)
 	if (!mapTreesTmp.size())
 		return;
 	Tree<Vector<int>>& tree = mapTreesTmp[mapTreesTmp.size() - 1];
+	static int cnt = 0;
+	cnt++;
 	tree.update();
 	if (tree.isUpdated()) {
 		const vector<Vector<int>>& nodes = mapGraph.getNodes();
@@ -57,7 +59,7 @@ void ComponentGame::updateMapTrees(void)
 			}
 			if (flag)
 				continue;
-			Tree<Vector<int>> mapTree(100);
+			Tree<Vector<int>> mapTree(10);
 			mapTree.depthFirstSearch(mapGraph, node);
 			mapTreesTmp.push_back(mapTree);
 			isUpdated = false;
@@ -65,7 +67,9 @@ void ComponentGame::updateMapTrees(void)
 		}
 		if (isUpdated) {
 			isMapTreesUpdated = true;
-			cout << "number of regions : " << mapTreesTmp.size() << endl;
+			cout << "number of regions : " << mapTreesTmp.size() << " (" << cnt << " frames)" << endl;
+			cnt = 0;
+			mapTrees = mapTreesTmp;
 		}
 	}
 }
@@ -73,7 +77,7 @@ void ComponentGame::updateMapTrees(void)
 void ComponentGame::startUpdatingMapTrees(void)
 {
 	mapTreesTmp = vector<Tree<Vector<int>>>();
-	mapTreesTmp.push_back(Tree<Vector<int>>(100));
+	mapTreesTmp.push_back(Tree<Vector<int>>(10));
 	Tree<Vector<int>>& tree = mapTreesTmp[0];
 	tree.depthFirstSearch(mapGraph);
 	isMapTreesUpdated = false;
