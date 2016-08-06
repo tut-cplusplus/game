@@ -34,24 +34,11 @@ void Player::startPlacing(BlockType blockType)
 	placingBlockType = blockType;
 }
 
-Player::Player()
-	: Character(), isChangingDirection(false), isPlacing(false)
+Player::Player(const Vector<double>& position, const Size<double>& size, double speed, const Keypad& keypad)
+	: Character(position, size, speed), keypad(keypad), isChangingDirection(false), isPlacing(false)
 {
 	init();
 }
-
-Player::Player(const Vector<double>& position, const Size<double>& size, const Keypad& keypad)
-	: Character(position, size), keypad(keypad), isChangingDirection(false), isPlacing(false)
-{
-	init();
-}
-
-Player::Player(const Vector<double>& position, const Keypad& keypad)
-	: Character(position), keypad(keypad), isChangingDirection(false), isPlacing(false)
-{
-	init();
-}
-
 
 Player::~Player()
 {

@@ -17,8 +17,8 @@ void Character::loadAnimations(void)
 	setSize(size);
 }
 
-Character::Character(const Vector<double>& position, const Size<double>& size)
-	: Rectangle(size), speed(1.0), isMoving(false), isBreaking(false), position(position), direction(WEST), ID(IDCounter++)
+Character::Character(const Vector<double>& position, const Size<double>& size, double speed)
+	: Rectangle(size), speed(speed), isMoving(false), isBreaking(false), position(position), direction(WEST), ID(IDCounter++)
 {
 	init();
 }

@@ -23,9 +23,7 @@ protected:
 	void startPlacing(BlockType blockType);
 
 public:
-	Player();
-	Player(const Vector<double>& position, const Size<double>& size, const Keypad& keypad);
-	Player(const Vector<double>& position, const Keypad& keypad);
+	Player(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0), double speed = 1.0, const Keypad& keypad = Keypad());
 	~Player();
 
 	/**

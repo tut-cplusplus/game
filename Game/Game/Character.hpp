@@ -46,7 +46,7 @@ protected:
 	virtual void startBreaking(void);
 
 public:
-	Character(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0));
+	Character(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0), double speed = 0.0);
 	virtual ~Character();
 	
 	/**
