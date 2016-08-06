@@ -11,6 +11,9 @@
 #include "CircularSector.hpp"
 #include "Size.hpp"
 #include "Global.hpp"
+#include "LayoutManager.hpp"
+#include "RelativeLayout.hpp"
+#include "ComponentTeapot.hpp"
 
 #include "GL/glut.h"
 
@@ -281,6 +284,8 @@ void ComponentGame::killEnemies(void)
 			catch (...) {
 			}
 		}
+		if (itr == enemies.end())
+			break;
 	}
 }
 
@@ -660,12 +665,18 @@ void ComponentGame::init(void)
 	allocMap();
 	generateMap();
 	addPlayer();
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 1; i++)
 		addEnemy();
 }
 
 void ComponentGame::draw(void)
 {
+	if (!enemies.size()) {
+		RelativeLayout* layout = new RelativeLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT);
+		layout->add(new ComponentTeapot(Global::WORLD_WIDTH, Global::WORLD_HEIGHT), Vector<double>(0.0, 0.0));
+		cout << "game clear" << endl;
+		throw layout;
+	}
 	moveEvent();
 	hitEvent();
 	findCharacterEvent(players);

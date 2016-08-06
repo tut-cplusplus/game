@@ -32,7 +32,12 @@ void LayoutManager::registerLayout(Layout* _layout)
 void LayoutManager::draw(void)
 {
 	keyEvent();
-	layout->draw();
+	try {
+		layout->draw();
+	}
+	catch (Layout* layout) {
+		registerLayout(layout);
+	}
 }
 
 void LayoutManager::mouse(int button, int state, int x, int y)
