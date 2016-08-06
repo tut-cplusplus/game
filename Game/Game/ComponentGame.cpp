@@ -255,7 +255,7 @@ void ComponentGame::killEnemies(void)
 				mapTree.searchNode(node);
 				if (mapTree.getNodeNum() <= Global::KILL_ENEMY_THRESHOLD) {
 					delete *itr;
-					enemies.erase(itr);
+					itr = enemies.erase(itr);
 				}
 			}
 			catch (...) {
