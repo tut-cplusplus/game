@@ -16,6 +16,7 @@
 #include "ItemBlock.hpp"
 #include "Graph.hpp"
 #include "Tree.hpp"
+#include "Global.hpp"
 
 #include "GL/glut.h"
 #include "AL/alut.h"
@@ -47,6 +48,7 @@ private:
 	std::vector<Tree<Vector<int>>> mapTreesTmp;
 	bool isMapTreesUpdated;
 	Block*** visibleMap;
+	std::vector<Enemy*> visibleEnemies;
 
 private:
 	/**
@@ -124,6 +126,15 @@ private:
 	template <typename T>
 	void drawCharacters(const std::vector<T*> characters) const;
 	/**
+	 * ある地点から一定距離内のキャラクターを描画する
+	 *
+	 * @param characters キャラクターのvector配列
+	 * @param position 中心地点
+	 * @param distance 距離
+	 */
+	template <typename T>
+	void drawCharacters(const std::vector<T*> characters, const Vector<double>& position, double distance) const;
+	/**
 	 * アイテムを描画する
 	 */
 	void drawItemBlocks(void);
@@ -132,9 +143,12 @@ private:
 	 */
 	void drawPlayerVisibilities(void) const;
 	/**
-	 * 敵の視界を描画する
+	 * ある地点から一定距離内の敵の視界を描画する
+	 *
+	 * @param position 中心地点
+	 * @param distance 距離
 	 */
-	void drawEnemyVisibilities(void) const;
+	void drawEnemyVisibilities(const Vector<double>& position, double distance) const;
 	/**
 	 * 敵の情報を描画する
 	 */
@@ -349,6 +363,7 @@ public:
 template <typename T>
 inline void ComponentGame::drawCharacters(const std::vector<T*> characters) const
 {
+	/*
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
@@ -357,6 +372,29 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters) cons
 		const Vector<double>& position = character.getPosition();
 		double x = position.getX();
 		double y = position.getY();
+		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		character.draw();
+		glPopMatrix();
+	}
+	*/
+	double distance = (MAP_WIDTH > MAP_HEIGHT) ? MAP_WIDTH : MAP_HEIGHT;
+	distance *= 2;
+	drawCharacters(characters, Vector<double>(MAP_WIDTH / 2, MAP_HEIGHT / 2), distance);
+}
+
+template <typename T>
+inline void ComponentGame::drawCharacters(const std::vector<T*> characters, const Vector<double>& position, double distance) const
+{
+	double blockWidth = blockSize.getWidth();
+	double blockHeight = blockSize.getHeight();
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		glPushMatrix();
+		T& character = **itr;
+		const Vector<double>& characterPosition = character.getPosition();
+		if ((position - characterPosition).norm2() > distance * distance)
+			continue;
+		double x = characterPosition.getX();
+		double y = characterPosition.getY();
 		glTranslated(x * blockWidth, y * blockHeight, 0.0);
 		character.draw();
 		glPopMatrix();

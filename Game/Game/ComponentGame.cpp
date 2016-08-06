@@ -310,17 +310,19 @@ void ComponentGame::drawPlayerVisibilities(void) const
 	}
 }
 
-void ComponentGame::drawEnemyVisibilities(void) const
+void ComponentGame::drawEnemyVisibilities(const Vector<double>& position, double distance) const
 {
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glColor3d(1.0, 1.0, 1.0);
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 		Enemy& enemy = **itr;
+		const Vector<double>& enemyPosition = enemy.getPosition();
+		if ((position - enemyPosition).norm2() > distance * distance)
+			continue;
+		double x = enemyPosition.getX();
+		double y = enemyPosition.getY();
 		glPushMatrix();
-		const Vector<double>& position = enemy.getPosition();
-		double x = position.getX();
-		double y = position.getY();
 		glTranslated(x * blockWidth, y * blockHeight, 0.0);
 		enemy.drawVisibility();
 		glPopMatrix();
@@ -464,11 +466,6 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 				if (*itr < 0.5)
 					return;
 			decoys.push_back(new Decoy(destination, player.getSize()));
-			//test code
-			delete map[1][1];
-			map[1][1] = new BlockNormalWall(blockSize);
-			mapGraph.removeNode(Vector<int>(1, 1));
-			startUpdatingMapTrees();
 			break;
 		}
 		if (block != nullptr) {
@@ -702,12 +699,20 @@ void ComponentGame::draw(void)
 	}
 	glPopMatrix();
 	drawCharacters(players);
-	drawCharacters(enemies);
-	drawCharacters(decoys);
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		const Player& player = **itr;
+		const Vector<double>& playerPosition = player.getPosition();
+		drawCharacters(enemies, playerPosition, Global::PLAYER_RADIUS);
+		drawCharacters(decoys, playerPosition, Global::PLAYER_RADIUS);
+	}
 	drawItemBlocks();
 	glDisable(GL_TEXTURE_2D);
 	drawPlayerVisibilities();
-	drawEnemyVisibilities();
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		const Player& player = **itr;
+		const Vector<double>& playerPosition = player.getPosition();
+		drawEnemyVisibilities(playerPosition, Global::PLAYER_RADIUS);
+	}
 	drawEnemyInformations();
 }
 
