@@ -679,6 +679,8 @@ void ComponentGame::draw(void)
 	}
 	moveEvent();
 	hitEvent();
+	killCharacterEvent(players);
+	killCharacterEvent(decoys);
 	findCharacterEvent(players);
 	findCharacterEvent(decoys);
 	findBlockEvent();

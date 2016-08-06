@@ -200,6 +200,21 @@ private:
 	 */
 	bool isHit(const Vector<double>& position1, const Vector<double>& position2) const;
 	/**
+	 * キャラクター同士の当たり判定
+	 *
+	 * @param character1 キャラクター
+	 * @param character2 キャラクター
+	 */
+	bool isHit(const Character& character1, const Character& character2) const;
+	/**
+	 * キャラクター同士の当たり判定
+	 *
+	 * @param character キャラクター
+	 * @param characters キャラクター配列
+	 */
+	template <typename T>
+	bool isHit(const Character& character, const std::vector<T*>& characters) const;
+	/**
 	 * ある点がマップ上のブロックに当たっているか判定する
 	 *
 	 * @param position 対象の点
@@ -302,6 +317,8 @@ private:
 	 * ブロックを設置したときのイベントを発生させる
 	 */
 	void placeBlockEvent(void);
+	template <typename T>
+	void killCharacterEvent(std::vector<T*>& characters);
 	/**
 	 * キーに対応したプレイヤーのキーイベントを発生させる
 	 *
@@ -429,6 +446,26 @@ inline bool ComponentGame::isHit(const Vector<double>& position1, const Vector<d
 	return (x > left && x < right) && (y > bottom && y < top);
 }
 
+inline bool ComponentGame::isHit(const Character& character1, const Character& character2) const
+{
+	const Vector<double>& position1 = character1.getPosition();
+	const Vector<double>& position2 = character2.getPosition();
+	if ((position1 - position2).norm2() > 1.0)
+		return false;
+	return true;
+}
+
+template <typename T>
+inline bool ComponentGame::isHit(const Character& character, const std::vector<T*>& characters) const
+{
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		const T& c = **itr;
+		if (isHit(character, c))
+			return true;
+	}
+	return false;
+}
+
 inline Block* ComponentGame::isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const
 {
 	int i = (int)position.getY();
@@ -524,6 +561,20 @@ inline void ComponentGame::findCharacterEvent(const std::vector<T*>& characters)
 			if (isFound(character, enemy))
 				enemy.onFindDirect(character);
 		}
+	}
+}
+
+template <typename T>
+inline void ComponentGame::killCharacterEvent(std::vector<T*>& characters)
+{
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		const T& character = **itr;
+		if (isHit(character, enemies)) {
+			delete *itr;
+			itr = characters.erase(itr);
+		}
+		if (itr == characters.end())
+			break;
 	}
 }
 
