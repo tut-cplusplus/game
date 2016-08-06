@@ -17,6 +17,7 @@
 #include "Graph.hpp"
 #include "Tree.hpp"
 #include "Global.hpp"
+#include "EnemyGenerator.hpp"
 
 #include "GL/glut.h"
 #include "AL/alut.h"
@@ -48,6 +49,7 @@ private:
 	std::vector<Tree<Vector<int>>> mapTreesTmp;
 	bool isMapTreesUpdated;
 	Block*** visibleMap;
+	EnemyGenerator enemyGenerator;
 
 private:
 	/**
@@ -359,8 +361,7 @@ private:
 	std::vector<double> getDistances(const std::vector<T*>& characters, const Vector<double>& position) const;
 
 public:
-	ComponentGame();
-	ComponentGame(int width, int height);
+	ComponentGame(int width = 0, int height = 0, const std::string& fpath = "");
 	~ComponentGame();
 
 	void setWidth(int width);

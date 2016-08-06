@@ -252,7 +252,12 @@ void ComponentGame::addEnemy(void)
 	int n = (int)positions.size();
 	int idx = (int)(rnd(mt) * n);
 	const Vector<int>& position = positions[idx];
-	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY())));
+	double speed;
+	double viewAngle;
+	double radius;
+	int life;
+	enemyGenerator.getParameter(speed, viewAngle, radius, life);
+	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY()), Size<double>(0.0, 0.0), speed, viewAngle, radius, life));
 }
 
 void ComponentGame::deleteEnemies(void)
@@ -628,13 +633,8 @@ void ComponentGame::keyEvent(const Key& key, void (Player::*funcUp)(), void (Pla
 	}
 }
 
-ComponentGame::ComponentGame()
-{
-
-}
-
-ComponentGame::ComponentGame(int width, int height)
-	: Component(width, height), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize((double)width / MAP_WIDTH, (double)height / MAP_HEIGHT), audio("data/music/BreakWall.wav")
+ComponentGame::ComponentGame(int width, int height, const string& fpath)
+	: Component(width, height), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize((double)width / MAP_WIDTH, (double)height / MAP_HEIGHT), audio("data/music/BreakWall.wav"), enemyGenerator(fpath)
 {
 	init();
 }
@@ -665,7 +665,7 @@ void ComponentGame::init(void)
 	allocMap();
 	generateMap();
 	addPlayer();
-	for (int i = 0; i < 5; i++)
+	for (unsigned i = 0; i < enemyGenerator.getFirstSpawnNum(); i++)
 		addEnemy();
 }
 

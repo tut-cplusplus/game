@@ -157,7 +157,7 @@ void init(void)
 	RelativeLayout* layout = new RelativeLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT);
 	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT, 0.05);
 	layout->add(verticalSplitLayout, Vector<double>(0.0, 0.0));
-	verticalSplitLayout->setComponent2(new ComponentGame(0, 0));
+	verticalSplitLayout->setComponent2(new ComponentGame(0, 0, "data/stages/stage01.txt"));
 	layout->add(new ComponentFPS(450, 16), Vector<double>(0.0, 0.0));
 	LayoutManager::registerLayout(layout);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
