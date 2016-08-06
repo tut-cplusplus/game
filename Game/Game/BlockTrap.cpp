@@ -64,6 +64,10 @@ void BlockTrap::onHit(Character& character, const Vector<int>& position)
 		return;
 	character.setPosition(Vector<double>(position.getX(), position.getY()));
 	damage--;
+	if (damage <= 0) {
+		character.setIsMoving(false);
+		character.startMoving();
+	}
 }
 
 void BlockTrap::draw(void)

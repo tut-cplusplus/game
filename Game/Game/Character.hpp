@@ -142,6 +142,7 @@ public:
 	void setDirection(Direction direction);
 	void setSize(const Size<double>& size);
 	bool getIsMoving(void) const;
+	void setIsMoving(bool isMoving);
 	bool getIsBreaking(void) const;
 	void setIsBreaking(bool isBreaking);
 };
@@ -198,6 +199,11 @@ inline void Character::setDirection(Direction direction)
 inline bool Character::getIsMoving(void) const
 {
 	return isMoving;
+}
+
+inline void Character::setIsMoving(bool isMoving)
+{
+	this->isMoving = isMoving;
 }
 
 inline bool Character::getIsBreaking(void) const
