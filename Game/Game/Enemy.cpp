@@ -9,7 +9,6 @@
 #include <GL/glut.h>
 
 using namespace std;
-using namespace Global;
 
 void Enemy::loadAnimations(void)
 {
@@ -169,7 +168,7 @@ void Enemy::drawInformations(void)
 		Information& information = *itr;
 		information.draw();
 		double radius = information.getRadius();
-		if (radius > 2 * WORLD_WIDTH) {
+		if (radius > 2 * Global::WORLD_WIDTH) {
 			itr = informations.erase(itr);
 			break;
 		}

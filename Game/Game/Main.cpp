@@ -165,6 +165,8 @@ void init(void)
 	glutIgnoreKeyRepeat(GL_TRUE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	cout << "D key : toggle debug mode" << endl;
 }
 
 
@@ -224,6 +226,12 @@ void keyboard(unsigned char key, int x, int y)
 	case '\033':
 		alutExit();
 		exit(0);
+	case 'D':
+		if (Global::PLAYER_RADIUS == Global::PLAYER_DEFAULT_RADIUS)
+			Global::PLAYER_RADIUS = 100.0;
+		else
+			Global::PLAYER_RADIUS = 10.0;
+		break;
 	}
 	LayoutManager::keyboard(key, x, y);
 }
