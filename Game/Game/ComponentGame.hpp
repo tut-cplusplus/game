@@ -14,6 +14,7 @@
 #include "Decoy.hpp"
 #include "Size.hpp"
 #include "ItemBlock.hpp"
+#include "Graph.hpp"
 
 #include "GL/glut.h"
 #include "AL/alut.h"
@@ -40,8 +41,13 @@ private:
 	std::vector<ItemBlock*> itemBlocks;	//アイテム
 	Size<double> blockSize;			//ブロックの大きさ
 	Audio audio;
+	Graph<Vector<int>> mapGraph;	//マップの空間の認識に用いる（敵の死亡処理用）
 
 private:
+	/**
+	 * 外壁のみのマップに対応するグラフを生成する
+	 */
+	void clearGraph(void);
 	/**
 	 * マップの配列を生成する
 	 * ただし，ブロックのインスタンス生成は行わない
@@ -426,6 +432,16 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		//delete map[row][col];
 		itemBlocks.push_back(new ItemBlock(Vector<double>(col, row), map[row][col]));
 		map[row][col] = map[row][col]->brokenBlock();
+		Vector<int> nodePosition(col, row);
+		mapGraph.addNode(nodePosition);
+		if (col > 1)
+			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(-1, 0));
+		if (col < MAP_WIDTH - 2)
+			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(1, 0));
+		if (row > 1)
+			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(0, -1));
+		if (row < MAP_HEIGHT - 2)
+			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(0, 1));
 		audio.play();
 	}
 }

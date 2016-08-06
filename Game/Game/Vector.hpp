@@ -39,6 +39,7 @@ public:
 	void operator/=(const T& value);
 	Vector<T> operator+(const Vector<T>& v) const;
 	Vector<T> operator-(const Vector<T>& v) const;
+	bool operator==(const Vector<T>& v) const;
 };
 
 template <typename T>
@@ -136,6 +137,12 @@ template <typename T>
 inline Vector<T> Vector<T>::operator-(const Vector<T>& v) const
 {
 	return (*this)+(-v);
+}
+
+template <typename T>
+inline bool Vector<T>::operator==(const Vector<T>& v) const
+{
+	return x == v.x && y == v.y;
 }
 
 #endif

@@ -16,6 +16,21 @@ const int ComponentGame::MAP_WIDTH = 45;
 const int ComponentGame::MAP_HEIGHT = 45;
 const int ComponentGame::DIVISION_NUMBER = 100;
 
+void ComponentGame::clearGraph(void)
+{
+	mapGraph = Graph<Vector<int>>();
+	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
+		for (int j = 1; j < MAP_WIDTH - 1; j++) {
+			Vector<int> position(j, i);
+			mapGraph.addNode(position);
+			if (j > 1)
+				mapGraph.addEdge(position, Vector<int>(j - 1, i));
+			if (i > 1)
+				mapGraph.addEdge(position, Vector<int>(j, i - 1));
+		}
+	}
+}
+
 void ComponentGame::allocMap(void)
 {
 	try {
@@ -64,6 +79,7 @@ void ComponentGame::generateMap(void)
 		Vector<int>(0, 1),
 		Vector<int>(0, -1),
 	};
+	clearGraph();
 	while (v.size()) {
 		int idx = (int)(rnd(mt) * v.size());
 		Vector<int> position = v[idx];
@@ -80,6 +96,7 @@ void ComponentGame::generateMap(void)
 			int x = position.getX();
 			int y = position.getY();
 			map[y][x] = new BlockNormalWall(blockSize);
+			mapGraph.removeNode(position);
 			if (i == 3)
 				v.push_back(position);
 		}
@@ -331,12 +348,12 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 				if (*itr < 0.5)
 					return;
 			decoys.push_back(new Decoy(destination, player.getSize()));
-			cout << "decoy" << endl;
 			break;
 		}
 		if (block != nullptr) {
 			delete map[row][col];
 			map[row][col] = block;
+			mapGraph.removeNode(Vector<int>(col, row));
 		}
 	}
 }
