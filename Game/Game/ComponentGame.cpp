@@ -411,6 +411,12 @@ bool ComponentGame::isBlocked(const Vector<double>& position1, const Vector<doub
 
 Block* ComponentGame::isHit(const Character& character, bool (Block::*isTransparent)() const) const
 {
+	Vector<int> dummy;
+	return isHit(character, isTransparent, dummy);
+}
+
+Block* ComponentGame::isHit(const Character& character, bool (Block::*isTransparent)() const, Vector<int>& position) const
+{
 	static Vector<double> dv[] = {
 		Vector<double>(0.5, 0.0),
 		Vector<double>(0.5, 0.95),
@@ -418,9 +424,9 @@ Block* ComponentGame::isHit(const Character& character, bool (Block::*isTranspar
 		Vector<double>(0.95, 0.5),
 	};
 	int n = sizeof(dv) / sizeof(dv[0]);
-	const Vector<double>& position = character.getPosition();
+	const Vector<double>& characterPosition = character.getPosition();
 	for (int i = 0; i < n; i++) {
-		Block* block = isHit(position + dv[i], isTransparent);
+		Block* block = isHit(characterPosition + dv[i], isTransparent, position);
 		if (block != nullptr)
 			return block;
 	}

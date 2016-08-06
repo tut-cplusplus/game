@@ -87,6 +87,11 @@ void Enemy::onHit(void)
 	static random_device rd;
 	static mt19937 mt(rd());
 	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
+	static uniform_int_distribution<int> randomIsBreak(0, 5);
+	if (!randomIsBreak(mt)) {
+		isBreaking = true;
+		return;
+	}
 	//方向を決める（変更する）
 	direction = (Direction)randomDirection(mt);
 	//移動の開始

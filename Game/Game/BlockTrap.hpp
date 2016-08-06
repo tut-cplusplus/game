@@ -12,7 +12,7 @@ public:
 	std::string getAnimationPath(void) const;
 	bool isTransparent(void) const;
 	bool isTransparentByEnemy(void) const;
-	void onHit(Character& character);
+	void onHit(Character& character, const Vector<int>& position);
 	void draw(void);
 	Block* clone(void) const;
 	Block* brokenBlock(void) const;

@@ -231,6 +231,15 @@ private:
 	 */
 	Block* isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const;
 	/**
+	 * ある点がマップ上のブロックに当たっているか判定する
+	 *
+	 * @param position 対象の点
+	 * @param isTransparent 透過ブロックの判定に使用する関数のポインタ
+	 * @param blockPosition ブロックの座標
+	 * @return nullptr : 当たっていない / else : そうでない
+	 */
+	Block* isHit(const Vector<double>& position, bool (Block::*isTransparent)() const, Vector<int>& blockPosition) const;
+	/**
 	 * キャラクターがマップ上のブロックに当たっているか判定する
 	 *
 	 * @param character キャラクター
@@ -238,6 +247,15 @@ private:
 	 * @return nullptr : 当たっていない / else : そうでない
 	 */
 	Block* isHit(const Character& character, bool (Block::*isTransparent)() const) const;
+	/**
+	 * キャラクターがマップ上のブロックに当たっているか判定する
+	 *
+	 * @param character キャラクター
+	 * @param isTransparent 透過ブロックの判定に使用する関数のポインタ
+	 * @param position ブロックの位置
+	 * @return nullptr : 当たっていない / else : そうでない
+	 */
+	Block* isHit(const Character& character, bool (Block::*isTransparent)() const, Vector<int>& position) const;
 	/**
 	 * ブロックを置けるか判定する
 	 * プレイヤーや敵がいるかどうかも判定する
@@ -475,6 +493,12 @@ inline bool ComponentGame::isHit(const Character& character, const std::vector<T
 
 inline Block* ComponentGame::isHit(const Vector<double>& position, bool (Block::*isTransparent)() const) const
 {
+	Vector<int> dummy;
+	return isHit(position, isTransparent, dummy);
+}
+
+inline Block* ComponentGame::isHit(const Vector<double>& position, bool (Block::*isTransparent)() const, Vector<int>& blockPosition) const
+{
 	int i = (int)position.getY();
 	int j = (int)position.getX();
 	if (i < 0 || i >= MAP_HEIGHT)
@@ -484,6 +508,7 @@ inline Block* ComponentGame::isHit(const Vector<double>& position, bool (Block::
 	Block& block = *map[i][j];
 	if (((&block)->*isTransparent)())
 		return nullptr;
+	blockPosition = Vector<int>(j, i);
 	return &block;
 }
 
@@ -508,9 +533,10 @@ inline void ComponentGame::hitDetectCharacters(const std::vector<T*> characters,
 {
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		T& character = **itr;
-		Block* block = isHit(character, &Block::isTransparent);
+		Vector<int> position;
+		Block* block = isHit(character, &Block::isTransparent, position);
 		if (block != nullptr)
-			block->onHit(character);
+			block->onHit(character, position);
 		if (isHit(character, isTransparent) != nullptr)
 			character.onHit();
 	}

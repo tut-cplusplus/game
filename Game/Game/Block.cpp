@@ -68,7 +68,7 @@ void Block::onDestroy(void)
 
 }
 
-void Block::onHit(Character& character)
+void Block::onHit(Character& character, const Vector<int>& position)
 {
 
 }

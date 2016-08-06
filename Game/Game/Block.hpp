@@ -70,8 +70,11 @@ public:
 	virtual void onDestroy(void);
 	/**
 	 * キャラクターが当たったときに呼び出される
+	 *
+	 * @param character キャラクター
+	 * @param position ブロックの座標
 	 */
-	virtual void onHit(Character& character);
+	virtual void onHit(Character& character, const Vector<int>& position);
 	/**
 	 * 描画時に呼ばれる．
 	 */

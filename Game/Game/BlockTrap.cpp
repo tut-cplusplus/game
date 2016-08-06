@@ -37,20 +37,32 @@ bool BlockTrap::isTransparentByEnemy(void) const
 	return true;
 }
 
-void BlockTrap::onHit(Character& character)
+void BlockTrap::onHit(Character& character, const Vector<int>& position)
 {
-	Vector<double> destination = character.getDestination();
-	double x = (int)destination.getX();
-	double y = (int)destination.getY();
+	/*
+	const Vector<double>& destination = character.getDestination();
+	const Vector<double>& source = character.getSource();
+	double x = (int)source.getX();
+	double y = (int)source.getY();
 	const Vector<double>& position = character.getPosition();
 	double dx = position.getX() - x;
 	double dy = position.getY() - y;
 	double r2 = dx * dx + dy * dy;
 	if (r2 > 0.10)
+		character.setPosition(
+	*/
+
+	//character.setPosition(destination);
+	//character.setDirection(Character::WEST);
+	const Vector<double>& characterPosition = character.getPosition();
+	double x = position.getX();
+	double y = position.getY();
+	double dx = x - characterPosition.getX();
+	double dy = y - characterPosition.getY();
+	double r2 = dx * dx + dy * dy;
+	if (r2 > 0.10)
 		return;
-	character.onHit();
-	character.setPosition(destination);
-	character.setDirection(Character::WEST);
+	character.setPosition(Vector<double>(position.getX(), position.getY()));
 	damage--;
 }
 
