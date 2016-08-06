@@ -264,15 +264,18 @@ void ComponentGame::killEnemies(void)
 		const Enemy& enemy = **itr;
 		if (enemy.getLife())
 			continue;
-		const Vector<double>& position = enemy.getSource();
-		Vector<int> node((int)position.getX(), (int)position.getY());
+		const Vector<double>& source = enemy.getSource();
+		Vector<int> node((int)source.getX(), (int)source.getY());
 		for (auto itr2 = mapTrees.begin(); itr2 != mapTrees.end(); itr2++) {
 			const Tree<Vector<int>>& mapTree = *itr2;
 			try {
 				mapTree.searchNode(node);
 				if (mapTree.getNodeNum() <= Global::KILL_ENEMY_THRESHOLD) {
+					const Vector<double>& position = enemy.getPosition();
+					itemBlocks.push_back(new ItemBlock(position, new BlockUnbreakableWall(blockSize)));
 					delete *itr;
 					itr = enemies.erase(itr);
+					break;
 				}
 			}
 			catch (...) {
