@@ -8,8 +8,8 @@ void SplitLayout::deleteComponent(Component** component)
 	*component = nullptr;
 }
 
-SplitLayout::SplitLayout(int width, int height, double pow)
-	: Layout(width, height), pow(pow), component1(nullptr), component2(nullptr)
+SplitLayout::SplitLayout(const Size<double>& size, double pow)
+	: Layout(size), pow(pow), component1(nullptr), component2(nullptr)
 {
 
 }

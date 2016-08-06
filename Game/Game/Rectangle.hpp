@@ -13,8 +13,7 @@ namespace Utility {
 		Size<double> size;
 
 	public:
-		Rectangle();
-		Rectangle(const Size<double>& size);
+		Rectangle(const Size<double>& size = Size<double>(0.0, 0.0));
 
 		/**
 		 * アクセッサ

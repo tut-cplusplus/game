@@ -9,8 +9,7 @@
 
 class ComponentFPS : public Component{
 public:
-  ComponentFPS();
-  ComponentFPS(int width, int height);
+  ComponentFPS(const Size<double>& size = Size<double>(0.0, 0.0));
   ~ComponentFPS();
 
   void draw();

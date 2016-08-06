@@ -17,12 +17,11 @@ public:
 	/**
 	 * コンストラクタ
 	 *
-	 * @param width コンポーネントの幅
-	 * @param height コンポーネントの高さ
+	 * @param size コンポーネントの大きさ
 	 * @param path 画像ファイルのパス
 	 * @throws TextureManager::registerTexture()を参照
 	 */
-	ComponentTexture(int width, int height, const std::string& path);
+	ComponentTexture(const Size<double>& size, const std::string& path);
 
 	virtual void draw(void);
 };

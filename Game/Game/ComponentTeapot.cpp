@@ -8,19 +8,16 @@ random_device ComponentTeapot::rd;
 mt19937 ComponentTeapot::mt(rd());
 uniform_int_distribution<int> ComponentTeapot::rnd(1, 10);
 
-ComponentTeapot::ComponentTeapot()
-{
-
-}
-
-ComponentTeapot::ComponentTeapot(int width, int height)
-	: Component(width, height), angle(0.0)
+ComponentTeapot::ComponentTeapot(const Size<double>& size)
+	: Component(size), angle(0.0)
 {
 	step = rnd(mt);
 }
 
 void ComponentTeapot::draw(void)
 {
+	double width = size.getWidth();
+	double height = size.getHeight();
 	int size = (width < height) ? width : height;
 	glColor3d(1.0, 1.0, 1.0);
 	glBegin(GL_LINE_LOOP);

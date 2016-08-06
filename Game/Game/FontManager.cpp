@@ -12,7 +12,7 @@ void FontManager::init(void)
 	ID = TextureManager::registerTexture("data/fonts/opensans.ppm");
 }
 
-void FontManager::draw(char c, double width, double height)
+void FontManager::draw(char c, const Size<double>& size)
 {
 	double colsDouble = 16.3;	//フォントテクスチャの右側にある余白への対処
 	int cols = (int)colsDouble;
@@ -24,6 +24,9 @@ void FontManager::draw(char c, double width, double height)
 	double right = (double)(col + 1) / colsDouble;
 	double bottom = (double)(rows - row) / rows;
 	double top = (double)(rows - (row + 1)) / rows;
+
+	double width = size.getWidth();
+	double height = size.getHeight();
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
@@ -42,12 +45,14 @@ void FontManager::draw(char c, double width, double height)
 	glDisable(GL_TEXTURE_2D);
 }
 
-void FontManager::draw(const string& str, double width, double height)
+void FontManager::draw(const string& str, const Size<double>& size)
 {
+	double width = size.getWidth();
+	double height = size.getHeight();
 	double step = width / str.length();
 	glPushMatrix();
 	for (unsigned i = 0; i < str.length(); i++) {
-		draw(str[i], step, height);
+		draw(str[i], Size<double>(step, height));
 		glTranslated(step, 0.0, 0.0);
 	}
 	glPopMatrix();

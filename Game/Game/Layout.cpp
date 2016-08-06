@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Layout::Layout(int width, int height)
-	: Component(width, height)
+Layout::Layout(const Size<double>& size)
+	: Component(size)
 {
 
 }

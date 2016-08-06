@@ -11,7 +11,7 @@ protected:
 	std::vector<Vector<double>> vs;
 
 public:
-	RelativeLayout(int width, int height);
+	RelativeLayout(const Size<double>& size = Size<double>(0.0, 0.0));
 	virtual void init(void);
 	/**
 	 * 描画する．

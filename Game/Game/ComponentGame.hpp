@@ -368,11 +368,10 @@ private:
 	std::vector<double> getDistances(const std::vector<T*>& characters, const Vector<double>& position) const;
 
 public:
-	ComponentGame(int width = 0, int height = 0, const std::string& fpath = "");
+	ComponentGame(const Size<double>& size = Size<double>(0.0, 0.0), const std::string& fpath = "");
 	~ComponentGame();
 
-	void setWidth(int width);
-	void setHeight(int height);
+	void setSize(const Size<double>& size);
 
 	virtual void init(void);
 	virtual void draw(void);

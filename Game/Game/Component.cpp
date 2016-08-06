@@ -4,31 +4,15 @@
 
 using namespace std;
 
-Component::Component()
+Component::Component(const Size<double>& size)
+	: Rectangle(size)
 {
-  return ;
-}
 
-Component::Component(int width, int height)
-{
-  this->width = width;
-  this->height = height;
-  return ;
 }
 
 Component::~Component()
 {
   
-}
-
-void Component::setWidth(int width)
-{
-	this->width = width;
-}
-
-void Component::setHeight(int height)
-{
-	this->height = height;
 }
 
 void Component::init(void)

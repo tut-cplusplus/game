@@ -11,14 +11,10 @@
 
 using namespace std;
 
-ComponentFPS::ComponentFPS()
+ComponentFPS::ComponentFPS(const Size<double>& size)
+	: Component(size)
 {
-  return ;
-}
 
-ComponentFPS::ComponentFPS(int width, int height) : Component(width, height)
-{
-  return ;
 }
 
 ComponentFPS::~ComponentFPS()
@@ -32,6 +28,6 @@ void ComponentFPS::draw()
 	oss << "fps : " << (int)FPSManager::getFPS() << " (utilization : " << fixed << setprecision(1) << FPSManager::getUtilization() << "%)";
 
 	glColor3d(1.0, 1.0, 1.0);
-	FontManager::draw(oss.str(), width, height);
+	FontManager::draw(oss.str(), size);
 }
 

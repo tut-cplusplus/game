@@ -18,7 +18,7 @@ private:
 	void deleteComponent(Component** component);
 
 public:
-	SplitLayout(int width, int height, double pow);
+	SplitLayout(const Size<double>& size = Size<double>(0.0, 0.0), double pow = 0.5);
 	~SplitLayout();
 	virtual void init(void);
 	virtual void draw(void) = 0;

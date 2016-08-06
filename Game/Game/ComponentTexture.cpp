@@ -2,19 +2,16 @@
 
 using namespace std;
 
-ComponentTexture::ComponentTexture()
-{
-
-}
-
-ComponentTexture::ComponentTexture(int width, int height, const string& path)
-	: Component(width, height)
+ComponentTexture::ComponentTexture(const Size<double>& size, const string& path)
+	: Component(size)
 {
 	ID = TextureManager::registerTexture(path);
 }
 
 void ComponentTexture::draw(void)
 {
+	double width = size.getWidth();
+	double height = size.getHeight();
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ID);
 	glBegin(GL_QUADS);

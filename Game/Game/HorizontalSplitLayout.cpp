@@ -2,14 +2,15 @@
 
 #include "GL/glut.h"
 
-HorizontalSplitLayout::HorizontalSplitLayout(int width, int height, double pow)
-	: SplitLayout(width, height, pow)
+HorizontalSplitLayout::HorizontalSplitLayout(const Size<double>& size, double pow)
+	: SplitLayout(size, pow)
 {
 
 }
 
 void HorizontalSplitLayout::draw(void)
 {
+	double width = size.getWidth();
 	glPushMatrix();
 	if (component1 != nullptr)
 		component1->draw();
@@ -21,15 +22,17 @@ void HorizontalSplitLayout::draw(void)
 
 void HorizontalSplitLayout::setComponent1(Component* component)
 {
+	double width = size.getWidth();
+	double height = size.getHeight();
 	SplitLayout::setComponent1(component);
-	component->setHeight(height);
-	component->setWidth((int)(width * pow));
+	component->setSize(Size<double>(width * pow, height));
 }
 
 void HorizontalSplitLayout::setComponent2(Component* component)
 {
+	double width = size.getWidth();
+	double height = size.getHeight();
 	SplitLayout::setComponent2(component);
-	component->setHeight(height);
-	component->setWidth((int)(width * (1.0 - pow)));
+	component->setSize(Size<double>(width * (1.0 - pow), height));
 }
 

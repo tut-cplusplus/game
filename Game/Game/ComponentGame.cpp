@@ -662,8 +662,8 @@ void ComponentGame::keyEvent(const Key& key, void (Player::*funcUp)(), void (Pla
 	}
 }
 
-ComponentGame::ComponentGame(int width, int height, const string& fpath)
-	: Component(width, height), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize((double)width / MAP_WIDTH, (double)height / MAP_HEIGHT), audio("data/music/BreakWall.wav"), enemyGenerator(fpath)
+ComponentGame::ComponentGame(const Size<double>& size, const string& fpath)
+	: Component(size), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize(size.getWidth()/ MAP_WIDTH, size.getHeight() / MAP_HEIGHT), audio("data/music/BreakWall.wav"), enemyGenerator(fpath)
 {
 	init();
 }
@@ -675,17 +675,10 @@ ComponentGame::~ComponentGame()
 	deletePlayers();
 }
 
-void ComponentGame::setWidth(int width)
+void ComponentGame::setSize(const Size<double>& size)
 {
-	this->width = width;
-	blockSize.setWidth((double)width / MAP_WIDTH);
-	setBlockSize();
-}
-
-void ComponentGame::setHeight(int height)
-{
-	this->height = height;
-	blockSize.setHeight((double)height / MAP_HEIGHT);
+	this->size = size;
+	blockSize = Size<double>(size.getWidth() / MAP_WIDTH, size.getHeight() / MAP_HEIGHT);
 	setBlockSize();
 }
 
@@ -701,14 +694,14 @@ void ComponentGame::init(void)
 void ComponentGame::draw(void)
 {
 	if (!players.size()) {
-		RelativeLayout* layout = new RelativeLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT);
-		layout->add(new ComponentTeapot(Global::WORLD_WIDTH, Global::WORLD_HEIGHT), Vector<double>(0.0, 0.0));
+		RelativeLayout* layout = new RelativeLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT));
+		layout->add(new ComponentTeapot(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT)), Vector<double>(0.0, 0.0));
 		cout << "game over" << endl;
 		throw layout;
 	}
 	if (!enemies.size()) {
-		RelativeLayout* layout = new RelativeLayout(Global::WORLD_WIDTH, Global::WORLD_HEIGHT);
-		layout->add(new ComponentTeapot(Global::WORLD_WIDTH, Global::WORLD_HEIGHT), Vector<double>(0.0, 0.0));
+		RelativeLayout* layout = new RelativeLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT));
+		layout->add(new ComponentTeapot(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT)), Vector<double>(0.0, 0.0));
 		cout << "game clear" << endl;
 		throw layout;
 	}

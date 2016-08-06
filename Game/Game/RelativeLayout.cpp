@@ -2,8 +2,8 @@
 
 #include "GL/glut.h"
 
-RelativeLayout::RelativeLayout(int width, int height)
-	: Layout(width, height)
+RelativeLayout::RelativeLayout(const Size<double>& size)
+	: Layout(size)
 {
 
 }
@@ -15,6 +15,8 @@ void RelativeLayout::init(void)
 
 void RelativeLayout::draw(void)
 {
+	double width = size.getWidth();
+	double height = size.getHeight();
 	glColor3d(1.0, 0.0, 0.0);
 	glBegin(GL_LINE_LOOP);
 	glVertex2d(0.0, 0.0);

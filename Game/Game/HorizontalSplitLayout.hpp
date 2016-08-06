@@ -8,7 +8,7 @@
  */
 class HorizontalSplitLayout : public SplitLayout {
 public:
-	HorizontalSplitLayout(int width, int height, double pow);
+	HorizontalSplitLayout(const Size<double>& size = Size<double>(0.0, 0.0), double pow = 0.5);
 	virtual void draw(void);
 	virtual void setComponent1(Component* component);
 	virtual void setComponent2(Component* component);

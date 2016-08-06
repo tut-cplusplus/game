@@ -19,8 +19,7 @@ private:
 	int step;		//ステップ角
 
 public:
-	ComponentTeapot();
-	ComponentTeapot(int width, int height);
+	ComponentTeapot(const Size<double>& size = Size<double>(0.0, 0.0));
 
 	virtual void draw(void);
 };
