@@ -252,12 +252,17 @@ void ComponentGame::addEnemy(void)
 	int n = (int)positions.size();
 	int idx = (int)(rnd(mt) * n);
 	const Vector<int>& position = positions[idx];
+	addEnemy(Vector<double>(position.getX(), position.getY()));
+}
+
+void ComponentGame::addEnemy(const Vector<double>& position)
+{
 	double speed;
 	double viewAngle;
 	double radius;
 	int life;
 	enemyGenerator.getParameter(speed, viewAngle, radius, life);
-	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY()), Size<double>(0.0, 0.0), speed, viewAngle, radius, life));
+	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY()), blockSize, speed, viewAngle, radius, life));
 }
 
 void ComponentGame::deleteEnemies(void)
@@ -604,6 +609,30 @@ void ComponentGame::placeBlockEvent(void)
 	placeBlock(players);
 }
 
+void ComponentGame::spawnEnemyEvent(void)
+{
+	static int cnt = 0;
+	if (enemyGenerator.getSpawnedNum() == enemyGenerator.getSpawnNum())
+		return;
+	cnt++;
+	if (cnt <= 600)
+		return;
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		const Enemy& enemy1 = **itr;
+		for (auto itr1 = enemies.begin(); itr1 != enemies.end(); ++itr1) {
+			if (itr1 == itr)
+				continue;
+			const Enemy& enemy2 = **itr1;
+			if (isHit(enemy1, enemy2)) {
+				cnt = 0;
+				const Vector<double>& position = enemy1.getSource();
+				addEnemy(position);
+				return;
+			}
+		}
+	}
+}
+
 void ComponentGame::keyEvent(const Key& key, Player& player, void (Player::*funcUp)(), void (Player::*funcDown)(), void (Player::*funcLeft)(), void (Player::*funcRight)(), void (Player::*funcBreakBlock)(), void (Player::*funcPlaceWall)(), void (Player::*funcPlaceTrap)(), void (Player::*funcPlaceDecoy)())
 {
 	const Keypad& keypad = player.getKeypad();
@@ -694,6 +723,7 @@ void ComponentGame::draw(void)
 	placeBlockEvent();
 	updateMapTrees();
 	killEnemies();
+	spawnEnemyEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glEnable(GL_TEXTURE_2D);

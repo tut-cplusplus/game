@@ -112,6 +112,12 @@ private:
 	 */
 	void addEnemy(void);
 	/**
+	 * 敵を一体追加する
+	 *
+	 * @param position 座標
+	 */
+	void addEnemy(const Vector<double>& position);
+	/**
 	 * 敵を全員解放する
 	 */
 	void deleteEnemies(void);
@@ -321,6 +327,7 @@ private:
 	void placeBlockEvent(void);
 	template <typename T>
 	void killCharacterEvent(std::vector<T*>& characters);
+	void spawnEnemyEvent(void);
 	/**
 	 * キーに対応したプレイヤーのキーイベントを発生させる
 	 *
