@@ -13,10 +13,11 @@ protected:
 	double angle;				//角度
 	double viewAngle;			//視野角
 	double radius;				//半径
+	bool isDrawRadius;
 
 public:
 	CircularSector();
-	CircularSector(const Vector<double>& position, double angle, double viewAngle, double radius);
+	CircularSector(const Vector<double>& position, double angle, double viewAngle, double radius, bool isDrawRadius = true);
 	/**
 	 * angleを0~360に調整する
 	 */

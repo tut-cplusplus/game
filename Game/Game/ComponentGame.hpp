@@ -123,6 +123,10 @@ private:
 	 */
 	void drawItemBlocks(void);
 	/**
+	 * プレイヤーの視界を描画する
+	 */
+	void drawPlayerVisibilities(void) const;
+	/**
 	 * 敵の視界を描画する
 	 */
 	void drawEnemyVisibilities(void) const;

@@ -14,8 +14,8 @@ CircularSector::CircularSector()
 	adjustAngle();
 }
 
-CircularSector::CircularSector(const Vector<double>& position, double angle, double viewAngle, double radius)
-	: position(position), angle(angle), viewAngle(viewAngle), radius(radius)
+CircularSector::CircularSector(const Vector<double>& position, double angle, double viewAngle, double radius, bool isDrawRadius)
+	: position(position), angle(angle), viewAngle(viewAngle), radius(radius), isDrawRadius(isDrawRadius)
 {
 	adjustAngle();
 }
@@ -47,7 +47,8 @@ void CircularSector::draw(void)
 	glRotated(angle, 0.0, 0.0, 1.0);
 	glRotated(-viewAngle / 2, 0.0, 0.0, 1.0);
 	glBegin(GL_LINE_LOOP);
-	glVertex2d(0.0, 0.0);
+	if (isDrawRadius)
+		glVertex2d(0.0, 0.0);
 	glVertex2d(radius, 1.0);
 	int n = 100;
 	for (int i = 1; i <= n; i++) {
@@ -56,7 +57,8 @@ void CircularSector::draw(void)
 		double y = sin(angle) * radius;
 		glVertex2d(x, y);
 	}
-	glVertex2d(0.0, 0.0);
+	if (isDrawRadius)
+		glVertex2d(0.0, 0.0);
 	glEnd();
 	glPopMatrix();
 }

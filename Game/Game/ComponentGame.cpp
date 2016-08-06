@@ -272,10 +272,32 @@ void ComponentGame::drawItemBlocks(void)
 	}
 }
 
+void ComponentGame::drawPlayerVisibilities(void) const
+{
+	double blockWidth = blockSize.getWidth();
+	double blockHeight = blockSize.getHeight();
+	glColor3d(0.0, 1.0, 0.0);
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		Player& player = **itr;
+		glPushMatrix();
+		const Vector<double>& position = player.getPosition();
+		double x = position.getX();
+		double y = position.getY();
+		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		const Size<double>& size = player.getSize();
+		double width = size.getWidth();
+		double height = size.getHeight();
+		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, Global::PLAYER_RADIUS * blockWidth, false);
+		circularSector.draw();
+		glPopMatrix();
+	}
+}
+
 void ComponentGame::drawEnemyVisibilities(void) const
 {
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
+	glColor3d(1.0, 1.0, 1.0);
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 		Enemy& enemy = **itr;
 		glPushMatrix();
@@ -425,6 +447,11 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 				if (*itr < 0.5)
 					return;
 			decoys.push_back(new Decoy(destination, player.getSize()));
+			//test code
+			delete map[1][1];
+			map[1][1] = new BlockNormalWall(blockSize);
+			mapGraph.removeNode(Vector<int>(1, 1));
+			startUpdatingMapTrees();
 			break;
 		}
 		if (block != nullptr) {
@@ -644,6 +671,7 @@ void ComponentGame::draw(void)
 	drawCharacters(decoys);
 	drawItemBlocks();
 	glDisable(GL_TEXTURE_2D);
+	drawPlayerVisibilities();
 	drawEnemyVisibilities();
 	drawEnemyInformations();
 }
