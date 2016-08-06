@@ -29,11 +29,17 @@ public:
 	 * アクセッサ
 	 */
 	void setSize(const Size<double>& size);
+	const Vector<double>& getPosition(void) const;
 };
 
 inline void ItemBlock::setSize(const Size<double>& size)
 {
 	this->size = size;
+}
+
+inline const Vector<double>& ItemBlock::getPosition(void) const
+{
+	return position;
 }
 
 #endif

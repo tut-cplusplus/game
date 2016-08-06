@@ -284,10 +284,13 @@ void ComponentGame::killEnemies(void)
 	}
 }
 
-void ComponentGame::drawItemBlocks(void)
+void ComponentGame::drawItemBlocks(const Vector<double>& position, double distance)
 {
 	for (auto itr = itemBlocks.begin(); itr != itemBlocks.end(); ++itr) {
 		ItemBlock& itemBlock = **itr;
+		const Vector<double>& itemBlockPosition = itemBlock.getPosition();
+		if ((itemBlockPosition - position).norm2() > distance * distance)
+			continue;
 		itemBlock.draw();
 	}
 }
@@ -707,8 +710,8 @@ void ComponentGame::draw(void)
 		const Vector<double>& playerPosition = player.getPosition();
 		drawCharacters(enemies, playerPosition, Global::PLAYER_RADIUS);
 		drawCharacters(decoys, playerPosition, Global::PLAYER_RADIUS);
+		drawItemBlocks(playerPosition, Global::PLAYER_RADIUS);
 	}
-	drawItemBlocks();
 	glDisable(GL_TEXTURE_2D);
 	drawPlayerVisibilities();
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {

@@ -134,9 +134,12 @@ private:
 	template <typename T>
 	void drawCharacters(const std::vector<T*> characters, const Vector<double>& position, double distance) const;
 	/**
-	 * アイテムを描画する
+	 * ある地点から一定距離内のアイテムを描画する
+	 *
+	 * @param position 中心地点
+	 * @param distance 距離
 	 */
-	void drawItemBlocks(void);
+	void drawItemBlocks(const Vector<double>& position, double distance);
 	/**
 	 * プレイヤーの視界を描画する
 	 */
