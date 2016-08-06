@@ -50,11 +50,12 @@ void Character::move(void)
 		return;
 	//進行方向のベクトル
 	Vector<double> directionVector = getDirectionVector();
-	//20フレームで1マス進む
-	directionVector *= 1.0 / 20;
+	int maxMoveCount = (int)(60 / speed);
+	//60フレームでspeedマス進む
+	directionVector *= speed / 60;
 	position += directionVector;
 	moveCount++;
-	if (moveCount == 20) {
+	if (moveCount == maxMoveCount) {
 		isMoving = false;
 		position = destination;
 		onStop();
