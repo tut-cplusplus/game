@@ -11,8 +11,7 @@ protected:
 	void loadAnimations(void);
 
 public:
-	Decoy();
-	Decoy(const Vector<double>& position, const Size<double>& size);
+	Decoy(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0));
 	~Decoy();
 
 	void changeColor(void) const;

@@ -16,12 +16,6 @@ void Decoy::loadAnimations(void)
 	Character::loadAnimations();
 }
 
-Decoy::Decoy()
-	: Character()
-{
-	init();
-}
-
 Decoy::Decoy(const Vector<double>& position, const Size<double>& size)
 	: Character(position, size)
 {

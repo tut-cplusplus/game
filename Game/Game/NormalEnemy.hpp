@@ -9,9 +9,7 @@
  */
 class NormalEnemy : public Enemy {
 public:
-	NormalEnemy();
-	NormalEnemy(const Vector<double>& position, const Size<double>& size);
-	NormalEnemy(const Vector<double>& position);
+	NormalEnemy(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0));
 };
 
 #endif
