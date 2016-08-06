@@ -48,7 +48,6 @@ private:
 	std::vector<Tree<Vector<int>>> mapTreesTmp;
 	bool isMapTreesUpdated;
 	Block*** visibleMap;
-	std::vector<Enemy*> visibleEnemies;
 
 private:
 	/**
