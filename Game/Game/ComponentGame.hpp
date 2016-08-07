@@ -465,7 +465,7 @@ inline bool ComponentGame::isHit(const Character& character1, const Character& c
 {
 	const Vector<double>& position1 = character1.getPosition();
 	const Vector<double>& position2 = character2.getPosition();
-	if ((position1 - position2).norm2() > 1.0)
+	if ((position1 - position2).norm2() > 0.5)
 		return false;
 	return true;
 }
