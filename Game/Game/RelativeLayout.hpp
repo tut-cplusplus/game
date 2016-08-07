@@ -23,7 +23,7 @@ public:
 	 * @param component コンポーネント
 	 * @param v 位置
 	 */
-	void add(Component* component, const Vector<double>& v);
+	void add(Component* component, const Vector<double>& v = Vector<double>(0.0, 0.0));
 };
 
 inline void RelativeLayout::add(Component* component, const Vector<double>& v)
