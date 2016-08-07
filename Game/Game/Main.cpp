@@ -155,8 +155,8 @@ void init(void)
 	TextureManager::init();
 	FontManager::init();
 	RelativeLayout* layout = new RelativeLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT));
-	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT), 0.05);
-	layout->add(verticalSplitLayout);
+	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(Size<double>(0, 0), 0.05);
+	layout->add(verticalSplitLayout, Vector<double>(0.0, 0.0), true);
 	verticalSplitLayout->setComponent2(new ComponentGame(Size<double>(0.0, 0.0), "data/stages/stage01.txt"));
 	layout->add(new ComponentFPS(Size<double>(450.0, 16.0)));
 	LayoutManager::registerLayout(layout);

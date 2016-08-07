@@ -701,13 +701,13 @@ void ComponentGame::draw(void)
 {
 	if (!players.size()) {
 		RelativeLayout* layout = new RelativeLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT));
-		layout->add(new ComponentTeapot(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT)));
+		layout->add(new ComponentTeapot(Size<double>(0, 0)), Vector<double>(0.0, 0.0), true);
 		cout << "game over" << endl;
 		throw layout;
 	}
 	if (!enemies.size()) {
 		RelativeLayout* layout = new RelativeLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT));
-		layout->add(new ComponentTeapot(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT)));
+		layout->add(new ComponentTeapot(Size<double>(0, 0)), Vector<double>(0.0, 0.0), true);
 		cout << "game clear" << endl;
 		throw layout;
 	}
