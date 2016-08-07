@@ -12,8 +12,11 @@ Layout::Layout(const Size<double>& size)
 
 Layout::~Layout()
 {
-	for (auto itr = components.begin(); itr != components.end(); ++itr)
+	for (auto itr = components.begin(); itr != components.end(); ++itr) {
+		if (*itr == nullptr)
+			continue;
 		delete *itr;
+	}
 }
 
 void Layout::init(void)
@@ -23,9 +26,11 @@ void Layout::init(void)
 
 void Layout::mouse(int button, int state, int x, int y)
 {
-	for (auto itr = components.begin(); itr != components.end(); ++itr)
-		(**itr).mouse(button, state, x, y);
-
+	for (auto itr = components.begin(); itr != components.end(); ++itr) {
+		if (*itr == nullptr)
+			continue;
+		(*itr)->mouse(button, state, x, y);
+	}
 }
 
 void Layout::keyboard(unsigned char key, int x, int y)

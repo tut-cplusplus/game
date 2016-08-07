@@ -62,8 +62,11 @@ inline int Layout::getComponentNum(void) const
 template <typename T>
 void Layout::keyEvent(T key, int x, int y, void (Component::*func)(T, int, int))
 {
-	for (auto itr = components.begin(); itr != components.end(); ++itr)
+	for (auto itr = components.begin(); itr != components.end(); ++itr) {
+		if (*itr == nullptr)
+			continue;
 		((*itr)->*func)(key, x, y);
+	}
 }
 
 #endif
