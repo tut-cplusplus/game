@@ -149,9 +149,10 @@ private:
 	 */
 	void drawItemBlocks(const Vector<double>& position, double distance);
 	/**
-	 * プレイヤーの視界を描画する
+	 * キャラクターの視界を描画する
 	 */
-	void drawPlayerVisibilities(void) const;
+	template <typename T>
+	void drawCharacterVisibilities(const std::vector<T*>& characters) const;
 	/**
 	 * ある地点から一定距離内の敵の視界を描画する
 	 *
@@ -431,6 +432,28 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters, cons
 		double y = characterPosition.getY();
 		glTranslated(x * blockWidth, y * blockHeight, 0.0);
 		character.draw();
+		glPopMatrix();
+	}
+}
+
+template <typename T>
+void ComponentGame::drawCharacterVisibilities(const std::vector<T*>& characters) const
+{
+	double blockWidth = blockSize.getWidth();
+	double blockHeight = blockSize.getHeight();
+	glColor3d(0.0, 1.0, 0.0);
+	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+		Character& character = **itr;
+		glPushMatrix();
+		const Vector<double>& position = character.getPosition();
+		double x = position.getX();
+		double y = position.getY();
+		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		const Size<double>& size = character.getSize();
+		double width = size.getWidth();
+		double height = size.getHeight();
+		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, Global::PLAYER_RADIUS, false);
+		circularSector.draw();
 		glPopMatrix();
 	}
 }

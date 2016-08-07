@@ -312,27 +312,6 @@ void ComponentGame::drawItemBlocks(const Vector<double>& position, double distan
 	}
 }
 
-void ComponentGame::drawPlayerVisibilities(void) const
-{
-	double blockWidth = blockSize.getWidth();
-	double blockHeight = blockSize.getHeight();
-	glColor3d(0.0, 1.0, 0.0);
-	for (auto itr = players.begin(); itr != players.end(); ++itr) {
-		Player& player = **itr;
-		glPushMatrix();
-		const Vector<double>& position = player.getPosition();
-		double x = position.getX();
-		double y = position.getY();
-		glTranslated(x * blockWidth, y * blockHeight, 0.0);
-		const Size<double>& size = player.getSize();
-		double width = size.getWidth();
-		double height = size.getHeight();
-		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, Global::PLAYER_RADIUS, false);
-		circularSector.draw();
-		glPopMatrix();
-	}
-}
-
 void ComponentGame::drawEnemyVisibilities(const Vector<double>& position, double distance) const
 {
 	double blockWidth = blockSize.getWidth();
@@ -767,8 +746,16 @@ void ComponentGame::draw(void)
 		drawCharacters(decoys, playerPosition, Global::PLAYER_RADIUS);
 		drawItemBlocks(playerPosition, Global::PLAYER_RADIUS);
 	}
+	for (auto itr = decoys.begin(); itr != decoys.end(); ++itr) {
+		const Decoy& decoy = **itr;
+		const Vector<double>& decoyPosition = decoy.getPosition();
+		drawCharacters(enemies, decoyPosition, Global::PLAYER_RADIUS);
+		drawCharacters(decoys, decoyPosition, Global::PLAYER_RADIUS);
+		drawItemBlocks(decoyPosition, Global::PLAYER_RADIUS);
+	}
 	glDisable(GL_TEXTURE_2D);
-	drawPlayerVisibilities();
+	drawCharacterVisibilities(players);
+	drawCharacterVisibilities(decoys);
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
 		const Player& player = **itr;
 		const Vector<double>& playerPosition = player.getPosition();
