@@ -163,6 +163,12 @@ void Player::onPlaceDecoyUp(void)
 
 }
 
+void Player::onHit(void)
+{
+	Character::onHit();
+	Character::onStop();
+}
+
 void Player::changeColor(void) const
 {
 	glColor3d(1.0, 1.0, 1.0);

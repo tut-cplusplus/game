@@ -81,6 +81,7 @@ public:
 	void onPlaceTrapUp(void);
 	void onPlaceDecoyUp(void);
 
+	void onHit(void);
 	void changeColor(void) const;
 	/**
 	 * 向きの変更を試みる
