@@ -228,9 +228,9 @@ void keyboard(unsigned char key, int x, int y)
 		exit(0);
 	case 'D':
 		if (Global::PLAYER_RADIUS == Global::PLAYER_DEFAULT_RADIUS)
-			Global::PLAYER_RADIUS = 100.0;
+			Global::PLAYER_RADIUS = Global::PLAYER_DEFAULT_RADIUS * 10;
 		else
-			Global::PLAYER_RADIUS = 10.0;
+			Global::PLAYER_RADIUS = Global::PLAYER_DEFAULT_RADIUS;
 		break;
 	}
 	LayoutManager::keyboard(key, x, y);

@@ -407,22 +407,9 @@ public:
 template <typename T>
 inline void ComponentGame::drawCharacters(const std::vector<T*> characters) const
 {
-	/*
-	double blockWidth = blockSize.getWidth();
-	double blockHeight = blockSize.getHeight();
-	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
-		glPushMatrix();
-		T& character = **itr;
-		const Vector<double>& position = character.getPosition();
-		double x = position.getX();
-		double y = position.getY();
-		glTranslated(x * blockWidth, y * blockHeight, 0.0);
-		character.draw();
-		glPopMatrix();
-	}
-	*/
-	double distance = (MAP_WIDTH > MAP_HEIGHT) ? MAP_WIDTH : MAP_HEIGHT;
-	distance *= 2;
+	double distance = Global::WORLD_WIDTH;
+	if (Global::WORLD_HEIGHT > distance)
+		distance = Global::WORLD_HEIGHT;
 	drawCharacters(characters, Vector<double>(MAP_WIDTH / 2, MAP_HEIGHT / 2), distance);
 }
 
@@ -435,7 +422,10 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters, cons
 		glPushMatrix();
 		T& character = **itr;
 		const Vector<double>& characterPosition = character.getPosition();
-		if ((position - characterPosition).norm2() > distance * distance)
+		Vector<double> displacement = position - characterPosition;
+		displacement.setX(displacement.getX() * blockSize.getWidth());
+		displacement.setY(displacement.getY() * blockSize.getHeight());
+		if (displacement.norm2() > distance * distance)
 			continue;
 		double x = characterPosition.getX();
 		double y = characterPosition.getY();

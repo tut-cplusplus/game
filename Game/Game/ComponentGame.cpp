@@ -303,8 +303,10 @@ void ComponentGame::drawItemBlocks(const Vector<double>& position, double distan
 {
 	for (auto itr = itemBlocks.begin(); itr != itemBlocks.end(); ++itr) {
 		ItemBlock& itemBlock = **itr;
-		const Vector<double>& itemBlockPosition = itemBlock.getPosition();
-		if ((itemBlockPosition - position).norm2() > distance * distance)
+		Vector<double> displacement = itemBlock.getPosition() - position;
+		displacement.setX(displacement.getX() * blockSize.getWidth());
+		displacement.setY(displacement.getY() * blockSize.getHeight());
+		if (displacement.norm2() > distance * distance)
 			continue;
 		itemBlock.draw();
 	}
@@ -325,7 +327,7 @@ void ComponentGame::drawPlayerVisibilities(void) const
 		const Size<double>& size = player.getSize();
 		double width = size.getWidth();
 		double height = size.getHeight();
-		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, Global::PLAYER_RADIUS * blockWidth, false);
+		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, Global::PLAYER_RADIUS, false);
 		circularSector.draw();
 		glPopMatrix();
 	}
@@ -339,7 +341,10 @@ void ComponentGame::drawEnemyVisibilities(const Vector<double>& position, double
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 		Enemy& enemy = **itr;
 		const Vector<double>& enemyPosition = enemy.getPosition();
-		if ((position - enemyPosition).norm2() > distance * distance)
+		Vector<double> displacement = position - enemyPosition;
+		displacement.setX(displacement.getX() * blockSize.getWidth());
+		displacement.setY(displacement.getY() * blockSize.getHeight());
+		if (displacement.norm2() > distance * distance)
 			continue;
 		double x = enemyPosition.getX();
 		double y = enemyPosition.getY();
@@ -731,12 +736,14 @@ void ComponentGame::draw(void)
 		glPushMatrix();
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			bool visible = false;
-			Vector<double> position(j + 0.5, i + 0.5);
+			Vector<double> position(j, i);
 			for (auto itr = players.begin(); itr != players.end(); ++itr) {
 				const Player& player = **itr;
 				const Vector<double>& playerPosition = player.getPosition();
-				double norm2 = (position - playerPosition).norm2();
-				if (norm2 < Global::PLAYER_RADIUS * Global::PLAYER_RADIUS) {
+				Vector<double> displacement = position - playerPosition;
+				displacement.setX(displacement.getX() * blockSize.getWidth());
+				displacement.setY(displacement.getY() * blockSize.getHeight());
+				if (displacement.norm2() < Global::PLAYER_RADIUS * Global::PLAYER_RADIUS) {
 					visible = true;
 					break;
 				}
