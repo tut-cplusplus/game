@@ -22,7 +22,7 @@ protected:
 	void add(Component* component);
 
 public:
-	Layout(const Size<double>& size = Size<double>(0.0, 0.0));
+	Layout(const Size<double>& size = Size<double>(0.0, 0.0), unsigned num = 0);
 	~Layout();
 	virtual void init(void);
 	/**

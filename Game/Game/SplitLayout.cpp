@@ -8,16 +8,21 @@ void SplitLayout::deleteComponent(Component** component)
 	*component = nullptr;
 }
 
+void SplitLayout::setComponent(Component*& dst, Component* component)
+{
+	deleteComponent(&dst);
+	dst = component;
+}
+
 SplitLayout::SplitLayout(const Size<double>& size, double pow)
-	: Layout(size), pow(pow), component1(nullptr), component2(nullptr)
+	: Layout(size, 2), pow(pow)
 {
 
 }
 
 SplitLayout::~SplitLayout()
 {
-	deleteComponent(&component1);
-	deleteComponent(&component2);
+
 }
 
 void SplitLayout::init(void)
@@ -27,61 +32,11 @@ void SplitLayout::init(void)
 
 void SplitLayout::setComponent1(Component* component)
 {
-	deleteComponent(&component1);
-	component1 = component;
+	setComponent(components[0], component);
 }
 
 void SplitLayout::setComponent2(Component* component)
 {
-	deleteComponent(&component2);
-	component2 = component;
-}
-
-void SplitLayout::mouse(int button, int state, int x, int y)
-{
-	if (component1 != nullptr)
-		component1->mouse(button, state, x, y);
-	if (component2 != nullptr)
-		component2->mouse(button, state, x, y);
-}
-
-void SplitLayout::keyboard(unsigned char key, int x, int y)
-{
-	keyEvent(key, x, y, &Component::keyboard);
-}
-
-void SplitLayout::keyboardOnce(unsigned char key, int x, int y)
-{
-	keyEvent(key, x, y, &Component::keyboardOnce);
-}
-
-void SplitLayout::keyboardup(unsigned char key, int x, int y)
-{
-	keyEvent(key, x, y, &Component::keyboardup);
-}
-
-void SplitLayout::keyboardupOnce(unsigned char key, int x, int y)
-{
-	keyEvent(key, x, y, &Component::keyboardupOnce);
-}
-
-void SplitLayout::special(int key, int x, int y)
-{
-	keyEvent(key, x, y, &Component::special);
-}
-
-void SplitLayout::specialOnce(int key, int x, int y)
-{
-	keyEvent(key, x, y, &Component::specialOnce);
-}
-
-void SplitLayout::specialup(int key, int x, int y)
-{
-	keyEvent(key, x, y, &Component::specialup);
-}
-
-void SplitLayout::specialupOnce(int key, int x, int y)
-{
-	keyEvent(key, x, y, &Component::specialupOnce);
+	setComponent(components[1], component);
 }
 

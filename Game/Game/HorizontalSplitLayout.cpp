@@ -12,11 +12,11 @@ void HorizontalSplitLayout::draw(void)
 {
 	double width = size.getWidth();
 	glPushMatrix();
-	if (component1 != nullptr)
-		component1->draw();
-	glTranslated(width * pow, 0.0, 0.0);
-	if (component2 != nullptr)
-		component2->draw();
+	for (auto itr = components.begin(); itr != components.end(); ++itr) {
+		if (*itr != nullptr)
+			(*itr)->draw();
+		glTranslated(width * pow, 0.0, 0.0);
+	}
 	glPopMatrix();
 }
 
