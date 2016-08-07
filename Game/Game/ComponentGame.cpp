@@ -755,7 +755,6 @@ void ComponentGame::draw(void)
 	}
 	glDisable(GL_TEXTURE_2D);
 	drawCharacterVisibilities(players);
-	drawCharacterVisibilities(decoys);
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
 		const Player& player = **itr;
 		const Vector<double>& playerPosition = player.getPosition();
