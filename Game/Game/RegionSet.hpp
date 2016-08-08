@@ -22,8 +22,8 @@ public:
 	std::list<Region>::iterator searchIterator(const Region& region);
 	Region& search(const Vector<int>& position);
 	const Region& search(const Vector<int>& position) const;
-	void add(const Vector<int>& position);
-	void remove(const Vector<int>& position);
+	void operator+=(const Vector<int>& position);
+	void operator-=(const Vector<int>& position);
 	unsigned getRegionNum(void) const;
 };
 

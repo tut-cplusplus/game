@@ -51,7 +51,7 @@ const Region& RegionSet::search(const Vector<int>& position) const
 	throw RegionNotFoundException();
 }
 
-void RegionSet::add(const Vector<int>& position)
+void RegionSet::operator+=(const Vector<int>& position)
 {
 	unsigned n = sizeof(neighbors) / sizeof(neighbors[0]);
 	//positionが追加されることによって接続される領域のリスト
@@ -92,7 +92,7 @@ void RegionSet::add(const Vector<int>& position)
 	region += position;
 }
 
-void RegionSet::remove(const Vector<int>& position)
+void RegionSet::operator-=(const Vector<int>& position)
 {
 	Region& region = search(position);
 	//未実装

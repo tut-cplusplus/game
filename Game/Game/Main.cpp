@@ -120,15 +120,15 @@ int main(int argc, char** argv)
 {
 	//test code
 	RegionSet regionSet;
-	regionSet.add(Vector<int>(0, 1));
+	regionSet += Vector<int>(0, 1);
 	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet.add(Vector<int>(2, 1));
+	regionSet += Vector<int>(2, 1);
 	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet.add(Vector<int>(1, 2));
+	regionSet += Vector<int>(1, 2);
 	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet.add(Vector<int>(1, 0));
+	regionSet += Vector<int>(1, 0);
 	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet.add(Vector<int>(1, 1));
+	regionSet += Vector<int>(1, 1);
 	cout << "regions : " << regionSet.getRegionNum() << endl;
 	Region region;
 	region += Vector<int>(0, 0);
