@@ -136,13 +136,13 @@ void RegionSet::operator-=(const Vector<int>& position)
 		if (!region.search(position))
 			continue;
 		Region subRegion = getSubRegion(region, position);
-		for (auto itr = neighborPositions.begin(); itr != neighborPositions.end(); ++itr) {
+		for (auto itr = neighborPositions.begin(); itr != neighborPositions.end();) {
 			const Vector<int>& position = *itr;
 			if (subRegion.search(position)) {
 				itr = neighborPositions.erase(itr);
-				if (itr == neighborPositions.end())
-					break;
+				continue;
 			}
+			++itr;
 		}
 		regions.push_back(subRegion);
 	}
