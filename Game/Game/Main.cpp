@@ -130,6 +130,17 @@ int main(int argc, char** argv)
 	cout << "regions : " << regionSet.getRegionNum() << endl;
 	regionSet.add(Vector<int>(1, 1));
 	cout << "regions : " << regionSet.getRegionNum() << endl;
+	Region region;
+	region.add(Vector<int>(0, 0));
+	region.add(Vector<int>(1, 0));
+	region.add(Vector<int>(1, 1));
+	region.add(Vector<int>(1, 2));
+	region.add(Vector<int>(1, 3));
+	Route route = region.breadthFirstSearch(Vector<int>(0, 0), Vector<int>(1, 2));
+	cout << "route distance : " << route.getDistance() << endl;
+	region.remove(Vector<int>(1, 1));
+	route = region.breadthFirstSearch(Vector<int>(0, 0), Vector<int>(1, 2));
+	cout << "route distance : " << route.getDistance() << endl;
 
 	//alutの初期化
 	alutInit(&argc, argv);
