@@ -11,8 +11,6 @@
 #include "FPSManager.hpp"
 #include "FontManager.hpp"
 
-#include "RegionSet.hpp"
-
 #include <AL/alut.h>
 #include <GL/glut.h>
 
@@ -118,31 +116,6 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
-	//test code
-	RegionSet regionSet;
-	regionSet += Vector<int>(0, 1);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet += Vector<int>(2, 1);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet += Vector<int>(1, 2);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet += Vector<int>(1, 0);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet += Vector<int>(1, 1);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet += Vector<int>(0, 0);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet -= Vector<int>(1, 1);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet += Vector<int>(1, 1);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet -= Vector<int>(0, 0);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet -= Vector<int>(1, 1);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-	regionSet += Vector<int>(1, 1);
-	cout << "regions : " << regionSet.getRegionNum() << endl;
-
 	//alutの初期化
 	alutInit(&argc, argv);
 

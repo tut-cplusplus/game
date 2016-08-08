@@ -111,8 +111,6 @@ void ComponentGame::generateMap(void)
 			}
 		}
 	}
-	//test code
-	cout << "num of regions : " << regionSet.getRegionNum() << endl;
 }
 
 vector<int> ComponentGame::getValidDirections(const Vector<int>& _position)
@@ -370,11 +368,8 @@ void ComponentGame::breakBlock(void)
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			if (map[i][j]->getDamage() <= 0) {
-				if (!map[i][j]->isTransparent()) {
+				if (!map[i][j]->isTransparent())
 					regionSet += Vector<int>(j, i);
-					//test code
-					cout << "num of regions : " << regionSet.getRegionNum() << endl;
-				}
 				map[i][j] = map[i][j]->brokenBlock();
 			}
 		}
@@ -421,8 +416,6 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 			delete map[row][col];
 			map[row][col] = block;
 			regionSet -= Vector<int>(col, row);
-			//test code
-			cout << "num of regions : " << regionSet.getRegionNum() << endl;
 		}
 	}
 }

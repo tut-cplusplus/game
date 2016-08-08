@@ -571,8 +571,6 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		map[row][col] = map[row][col]->brokenBlock();
 		Vector<int> nodePosition(col, row);
 		regionSet += nodePosition;
-		//test code
-		cout << "num of regions : " << regionSet.getRegionNum() << endl;
 		audio.play();
 	}
 }
