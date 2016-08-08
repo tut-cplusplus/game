@@ -79,7 +79,7 @@ void RegionSet::add(const Vector<int>& position)
 	}
 	if (!foundRegions.size()) {
 		Region region;
-		region.add(position);
+		region += position;
 		regions.push_back(region);
 		return;
 	}
@@ -89,7 +89,7 @@ void RegionSet::add(const Vector<int>& position)
 		region += src;
 		regions.erase(searchIterator(src));
 	}
-	region.add(position);
+	region += position;
 }
 
 void RegionSet::remove(const Vector<int>& position)

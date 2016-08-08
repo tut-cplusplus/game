@@ -46,7 +46,7 @@ bool Region::isAdable(const Vector<int>& position) const
 	return false;
 }
 
-void Region::add(const Vector<int>& position)
+void Region::operator+=(const Vector<int>& position)
 {
 	positions.push_back(position);
 }
@@ -61,7 +61,7 @@ void Region::remove(list<Vector<int>>::iterator& itr)
 	itr = positions.erase(itr);
 }
 
-void Region::remove(const Vector<int>& position)
+void Region::operator-=(const Vector<int>& position)
 {
 	remove(searchIterator(position));
 }
