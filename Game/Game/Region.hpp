@@ -23,6 +23,8 @@ public:
 	void remove(std::list<Vector<int>>::iterator itr);
 	void remove(std::list<Vector<int>>::iterator& itr);
 	void remove(const Vector<int>& position);
+
+	void operator+=(const Region& region);
 };
 
 #endif

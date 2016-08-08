@@ -66,3 +66,8 @@ void Region::remove(const Vector<int>& position)
 	remove(searchIterator(position));
 }
 
+void Region::operator+=(const Region& region)
+{
+	positions.insert(positions.end(), region.positions.begin(), region.positions.end());
+}
+
