@@ -44,7 +44,7 @@ public:
 
 template <typename T, typename T2>
 Vector<T,T2>::Vector()
-	: x(0.0), y(0.0)
+	: x((T)0.0), y((T)0.0)
 {
 
 }

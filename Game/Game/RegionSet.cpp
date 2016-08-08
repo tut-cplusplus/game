@@ -100,7 +100,7 @@ void RegionSet::operator+=(const Vector<int>& position)
 			Region& region = search(neighborPosition);
 			foundRegions.push_back(&region);
 		}
-		catch (const RegionNotFoundException& e) {
+		catch (const RegionNotFoundException&) {
 
 		}
 	}

@@ -31,11 +31,11 @@ public:
 	Route breadthFirstSearch(const Vector<int>& start, const Vector<int>& end) const;
 
 	void operator+=(const Region& region);
-	unsigned getPositionNum(void) const;
+	size_t getPositionNum(void) const;
 	const std::list<Vector<int>>& getPositions(void) const;
 };
 
-inline unsigned Region::getPositionNum(void) const
+inline size_t Region::getPositionNum(void) const
 {
 	return positions.size();
 }

@@ -27,11 +27,11 @@ public:
 	const Region& search(const Vector<int>& position) const;
 	void operator+=(const Vector<int>& position);
 	void operator-=(const Vector<int>& position);
-	unsigned getRegionNum(void) const;
+	size_t getRegionNum(void) const;
 	const std::list<Region>& getRegions(void) const;
 };
 
-inline unsigned RegionSet::getRegionNum(void) const
+inline size_t RegionSet::getRegionNum(void) const
 {
 	return regions.size();
 }

@@ -16,7 +16,7 @@ public:
 	EnemyGenerator(const std::string& fpath);
 
 	unsigned getFirstSpawnNum(void) const;
-	unsigned getSpawnNum(void) const;
+	size_t getSpawnNum(void) const;
 	unsigned getSpawnedNum(void) const;
 	void getParameter(double& speed, double& viewAngle, double& radius, int& life);
 };
@@ -26,7 +26,7 @@ inline unsigned EnemyGenerator::getFirstSpawnNum(void) const
 	return firstSpawnNum;
 }
 
-inline unsigned EnemyGenerator::getSpawnNum(void) const
+inline size_t EnemyGenerator::getSpawnNum(void) const
 {
 	return speeds.size();
 }

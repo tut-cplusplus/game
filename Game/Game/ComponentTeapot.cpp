@@ -18,7 +18,7 @@ void ComponentTeapot::draw(void)
 {
 	double width = size.getWidth();
 	double height = size.getHeight();
-	int size = (width < height) ? width : height;
+	double size = (width < height) ? width : height;
 	glColor3d(1.0, 1.0, 1.0);
 	glBegin(GL_LINE_LOOP);
 	glVertex2d(0.0, 0.0);
