@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 #include "Region.hpp"
 
@@ -11,22 +12,18 @@ Region::Region()
 
 list<Vector<int>>::iterator Region::searchIterator(const Vector<int>& position)
 {
-	for (auto itr = positions.begin(); itr != positions.end(); ++itr) {
-		Vector<int>& v = *itr;
-		if (v == position)
-			return itr;
-	}
-	throw PositionNotFoundException();
+	auto itr = find(positions.begin(), positions.end(), position);
+	if (itr == positions.end())
+		throw PositionNotFoundException();
+	return itr;
 }
 
 bool Region::search(const Vector<int>& position) const
 {
-	for (auto itr = positions.begin(); itr != positions.end(); ++itr) {
-		const Vector<int>& v = *itr;
-		if (v == position)
-			return true;
-	}
-	return false;
+	auto itr = find(positions.begin(), positions.end(), position);
+	if (itr == positions.end())
+		return false;
+	return true;
 }
 
 bool Region::isAdable(const Vector<int>& position) const
