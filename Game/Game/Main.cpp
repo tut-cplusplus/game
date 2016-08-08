@@ -11,6 +11,8 @@
 #include "FPSManager.hpp"
 #include "FontManager.hpp"
 
+#include "Region.hpp"
+
 #include <AL/alut.h>
 #include <GL/glut.h>
 
@@ -116,6 +118,21 @@ void idle(void);
  */
 int main(int argc, char** argv)
 {
+	//test code
+	Region region;
+	region.add(Vector<int>(0, 0));
+	cout << "adable : " << region.isAdable(Vector<int>(2, 0)) << endl;
+	region.add(Vector<int>(1, 0));
+	cout << "adable : " << region.isAdable(Vector<int>(2, 0)) << endl;
+	if (region.search(Vector<int>(2, 0))) {
+		cout << "removable" << endl;
+		region.remove(Vector<int>(2, 0));
+	} else {
+		cout << "not removable" << endl;
+	}
+	region.remove(Vector<int>(1, 0));
+	cout << "adable : " << region.isAdable(Vector<int>(2, 0)) << endl;
+
 	//alutの初期化
 	alutInit(&argc, argv);
 
