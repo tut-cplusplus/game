@@ -34,8 +34,8 @@ void Player::startPlacing(BlockType blockType)
 	placingBlockType = blockType;
 }
 
-Player::Player(const Vector<double>& position, const Size<double>& size, double speed, const Keypad& keypad)
-	: Character(position, size, speed), keypad(keypad), isChangingDirection(false), isPlacing(false)
+Player::Player(const Vector<double>& position, const Size<double>& size, double speed, int maxStamina, const Keypad& keypad)
+	: Character(position, size, speed), stamina(maxStamina), maxStamina(maxStamina), staminaCount(0), keypad(keypad), isChangingDirection(false), isPlacing(false)
 {
 	init();
 }
@@ -66,6 +66,8 @@ void Player::onRight(void)
 
 void Player::onBreakBlock(void)
 {
+	if (!stamina)
+		return;
 	startBreaking();
 }
 
@@ -163,10 +165,27 @@ void Player::onPlaceDecoyUp(void)
 
 }
 
+void Player::move(void)
+{
+	Character::move();
+	if (stamina == maxStamina)
+		return;
+	if (++staminaCount < (maxStamina - stamina) * 60 * 2)
+		return;
+	staminaCount = 0;
+	stamina++;
+}
+
 void Player::onHit(void)
 {
 	Character::onHit();
 	Character::onStop();
+}
+
+void Player::onBlockBroken(void)
+{
+	stamina--;
+	staminaCount = 0;
 }
 
 void Player::changeColor(void) const

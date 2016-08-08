@@ -10,6 +10,9 @@ public:
 	enum BlockType {WALL, TRAP, DECOY};	//ブロックの種類
 
 private:
+	int stamina;
+	int maxStamina;
+	int staminaCount;
 	Keypad keypad;	//キーパッド
 	bool isChangingDirection;	//向きを変更中かどうか
 	int changeDirectionCount;	//向きを変更中のフレーム数
@@ -23,7 +26,7 @@ protected:
 	void startPlacing(BlockType blockType);
 
 public:
-	Player(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0), double speed = 1.0, const Keypad& keypad = Keypad());
+	Player(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0), double speed = 1.0, int maxStamina = 1, const Keypad& keypad = Keypad());
 	~Player();
 
 	/**
@@ -81,7 +84,9 @@ public:
 	void onPlaceTrapUp(void);
 	void onPlaceDecoyUp(void);
 
+	void move(void);
 	void onHit(void);
+	void onBlockBroken(void);
 	void changeColor(void) const;
 	/**
 	 * 向きの変更を試みる
@@ -106,7 +111,7 @@ public:
 	bool getIsPlacing(void) const;
 	void setIsPlacing(bool isPlacing);
 	BlockType getPlacingBlockType(void) const;
-
+	void useStamina(void);
 };
 
 inline bool Player::getIsPlacing(void) const
@@ -122,5 +127,10 @@ inline void Player::setIsPlacing(bool isPlacing)
 inline Player::BlockType Player::getPlacingBlockType(void) const
 {
 	return placingBlockType;
+}
+
+inline void Player::useStamina(void)
+{
+	stamina--;
 }
 

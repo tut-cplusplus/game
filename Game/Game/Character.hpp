@@ -57,7 +57,7 @@ public:
 	 * 移動する
 	 * 毎フレーム呼び出される
 	 */
-	void move(void);
+	virtual void move(void);
 	/**
 	 * 一マス分の移動が終了したときに呼び出される
 	 */
@@ -66,6 +66,10 @@ public:
 	 * 壁に当たったときに呼び出される
 	 */
 	virtual void onHit(void);
+	/**
+	 * 壁が壊されたときに呼び出される
+	 */
+	virtual void onBlockBroken(void);
 	/**
 	 * 色を変更する
 	 * テクスチャの実装後に削除する

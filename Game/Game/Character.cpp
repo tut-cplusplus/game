@@ -77,6 +77,11 @@ void Character::onHit(void)
 	position = source;
 }
 
+void Character::onBlockBroken(void)
+{
+
+}
+
 void Character::changeColor(void) const
 {
 	glColor3d(1.0, 1.0, 1.0);

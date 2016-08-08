@@ -567,6 +567,7 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		if (!block.isBreakable())
 			continue;
 		//delete map[row][col];
+		character.onBlockBroken();
 		itemBlocks.push_back(new ItemBlock(Vector<double>(col, row), map[row][col]));
 		map[row][col] = map[row][col]->brokenBlock();
 		Vector<int> nodePosition(col, row);
