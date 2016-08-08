@@ -518,12 +518,18 @@ inline bool ComponentGame::isPlaceable(const Vector<double>& position, const std
 	Vector<int> positionInt(position);
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		T& character = **itr;
-		Vector<int> sourceInt(character.getSource());
-		Vector<int> destinationInt(character.getDestination());
-		if (positionInt == sourceInt)
-			return false;
-		if (positionInt == destinationInt)
-			return false;
+		if (!character.getIsMoving()) {
+			Vector<int> characterPositionInt(character.getPosition());
+			if (positionInt == characterPositionInt)
+				return false;
+		} else {
+			Vector<int> sourceInt(character.getSource());
+			Vector<int> destinationInt(character.getDestination());
+			if (positionInt == sourceInt)
+				return false;
+			if (positionInt == destinationInt)
+				return false;
+		}
 	}
 	return true;
 }
