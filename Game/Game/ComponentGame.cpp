@@ -231,10 +231,7 @@ void ComponentGame::drawItemBlocks(const Vector<double>& position, double distan
 {
 	for (auto itr = itemBlocks.begin(); itr != itemBlocks.end(); ++itr) {
 		ItemBlock& itemBlock = **itr;
-		Vector<double> displacement = itemBlock.getPosition() - position;
-		displacement.setX(displacement.getX() * blockSize.getWidth());
-		displacement.setY(displacement.getY() * blockSize.getHeight());
-		if (displacement.norm2() > distance * distance)
+		if (!isHit(itemBlock.getPosition() - position, distance))
 			continue;
 		itemBlock.draw();
 	}
@@ -248,10 +245,7 @@ void ComponentGame::drawEnemyVisibilities(const Vector<double>& position, double
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 		Enemy& enemy = **itr;
 		const Vector<double>& enemyPosition = enemy.getPosition();
-		Vector<double> displacement = position - enemyPosition;
-		displacement.setX(displacement.getX() * blockSize.getWidth());
-		displacement.setY(displacement.getY() * blockSize.getHeight());
-		if (displacement.norm2() > distance * distance)
+		if (!isHit(position - enemyPosition, distance))
 			continue;
 		double x = enemyPosition.getX();
 		double y = enemyPosition.getY();
@@ -319,6 +313,16 @@ bool ComponentGame::isBlocked(const Vector<double>& position1, const Vector<doub
 			return true;
 	}
 	return false;
+}
+
+bool ComponentGame::isHit(const Vector<double>& position, double radius) const
+{
+	Vector<double> displacement(position);
+	displacement.setX(displacement.getX() * blockSize.getWidth());
+	displacement.setY(displacement.getY() * blockSize.getHeight());
+	if (displacement.norm2() > radius * radius)
+		return false;
+	return true;
 }
 
 Block* ComponentGame::isHit(const Character& character, bool (Block::*isTransparent)() const) const
@@ -653,10 +657,7 @@ void ComponentGame::draw(void)
 			for (auto itr = players.begin(); itr != players.end(); ++itr) {
 				const Player& player = **itr;
 				const Vector<double>& playerPosition = player.getPosition();
-				Vector<double> displacement = position - playerPosition;
-				displacement.setX(displacement.getX() * blockSize.getWidth());
-				displacement.setY(displacement.getY() * blockSize.getHeight());
-				if (displacement.norm2() < Global::PLAYER_RADIUS * Global::PLAYER_RADIUS) {
+				if (isHit(position - playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS)) {
 					visible = true;
 					break;
 				}
@@ -676,19 +677,27 @@ void ComponentGame::draw(void)
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
 		const Player& player = **itr;
 		const Vector<double>& playerPosition = player.getPosition();
-		drawCharacters(enemies, playerPosition, Global::PLAYER_RADIUS);
-		drawCharacters(decoys, playerPosition, Global::PLAYER_RADIUS);
-		drawItemBlocks(playerPosition, Global::PLAYER_RADIUS);
+		drawCharacters(enemies, playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+		drawCharacters(decoys, playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+		drawItemBlocks(playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
 	}
 	for (auto itr = decoys.begin(); itr != decoys.end(); ++itr) {
 		const Decoy& decoy = **itr;
 		const Vector<double>& decoyPosition = decoy.getPosition();
-		drawCharacters(enemies, decoyPosition, Global::PLAYER_RADIUS);
-		drawCharacters(decoys, decoyPosition, Global::PLAYER_RADIUS);
-		drawItemBlocks(decoyPosition, Global::PLAYER_RADIUS);
+		drawCharacters(enemies, decoyPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+		drawCharacters(decoys, decoyPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+		drawItemBlocks(decoyPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
 	}
 	glDisable(GL_TEXTURE_2D);
-	//test code
+	drawCharacterVisibilities(players);
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		const Player& player = **itr;
+		const Vector<double>& playerPosition = player.getPosition();
+		drawEnemyVisibilities(playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+	}
+	drawEnemyInformations();
+	if (!Global::DEBUG_MODE)
+		return;
 	static double colors[][3] = {
 		{1.0, 0.0, 0.0},
 		{0.0, 1.0, 0.0},
@@ -721,13 +730,6 @@ void ComponentGame::draw(void)
 			glPopMatrix();
 		}
 	}
-	drawCharacterVisibilities(players);
-	for (auto itr = players.begin(); itr != players.end(); ++itr) {
-		const Player& player = **itr;
-		const Vector<double>& playerPosition = player.getPosition();
-		drawEnemyVisibilities(playerPosition, Global::PLAYER_RADIUS);
-	}
-	drawEnemyInformations();
 }
 
 void ComponentGame::mouse(int button, int state, int x, int y)

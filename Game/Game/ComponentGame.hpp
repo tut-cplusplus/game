@@ -183,6 +183,14 @@ private:
 	 */
 	bool isBlocked(const Vector<double>& position1, const Vector<double>& position2) const;
 	/**
+	 * ある点が半系内かどうか
+	 * 引数の座標系が異なることに注意
+	 *
+	 * @param position マップ座標系における、円の中心からの相対座標
+	 * @param radius ワールド座標系における半径
+	 */
+	bool isHit(const Vector<double>& position, double radius) const;
+	/**
 	 * ある点がブロックに当たっているか判定する
 	 *
 	 * @param position1 ブロックの左下の座標
@@ -405,10 +413,7 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters, cons
 		glPushMatrix();
 		T& character = **itr;
 		const Vector<double>& characterPosition = character.getPosition();
-		Vector<double> displacement = position - characterPosition;
-		displacement.setX(displacement.getX() * blockSize.getWidth());
-		displacement.setY(displacement.getY() * blockSize.getHeight());
-		if (displacement.norm2() > distance * distance)
+		if (!isHit(position - characterPosition, distance))
 			continue;
 		double x = characterPosition.getX();
 		double y = characterPosition.getY();
@@ -434,7 +439,7 @@ void ComponentGame::drawCharacterVisibilities(const std::vector<T*>& characters)
 		const Size<double>& size = character.getSize();
 		double width = size.getWidth();
 		double height = size.getHeight();
-		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, Global::PLAYER_RADIUS, false);
+		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS, false);
 		circularSector.draw();
 		glPopMatrix();
 	}

@@ -9,8 +9,8 @@ public:
 	static const int WORLD_WIDTH;			//描画系の幅
 	static const int WORLD_HEIGHT;		//描画系の高さ
 	static const unsigned KILL_ENEMY_THRESHOLD;	//敵を倒せる空間の最大サイズ
-	static const int PLAYER_DEFAULT_RADIUS;
-	static double PLAYER_RADIUS;	//プレイヤーの視界の半径
+	static const int PLAYER_RADIUS;	//プレイヤーの視界の半径
+	static bool DEBUG_MODE;
 };
 
 #endif
