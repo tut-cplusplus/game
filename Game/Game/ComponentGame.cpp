@@ -207,31 +207,23 @@ void ComponentGame::deleteEnemies(void)
 
 void ComponentGame::killEnemies(void)
 {
-	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+	for (auto itr = enemies.begin(); itr != enemies.end();) {
 		const Enemy& enemy = **itr;
-		if (enemy.getLife())
+		if (enemy.getLife()) {
+			++itr;
 			continue;
+		}
 		const Vector<double>& source = enemy.getSource();
 		Vector<int> node((int)source.getX(), (int)source.getY());
-		/*
-		for (auto itr2 = mapTrees.begin(); itr2 != mapTrees.end(); itr2++) {
-			const Tree<Vector<int>>& mapTree = *itr2;
-			try {
-				mapTree.searchNode(node);
-				if (mapTree.getNodeNum() <= Global::KILL_ENEMY_THRESHOLD) {
-					const Vector<double>& position = enemy.getPosition();
-					itemBlocks.push_back(new ItemBlock(position, new BlockUnbreakableWall(blockSize)));
-					delete *itr;
-					itr = enemies.erase(itr);
-					break;
-				}
-			}
-			catch (...) {
-			}
+		Region& region = regionSet.search(node);
+		if (region.getPositionNum() <= Global::KILL_ENEMY_THRESHOLD) {
+			const Vector<double>& position = enemy.getPosition();
+			itemBlocks.push_back(new ItemBlock(position, new BlockUnbreakableWall(blockSize)));
+			delete *itr;
+			itr = enemies.erase(itr);
+			continue;
 		}
-		*/
-		if (itr == enemies.end())
-			break;
+		++itr;
 	}
 }
 
