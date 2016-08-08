@@ -403,7 +403,7 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 		if (!isPlaceable(destination))
 			continue;
 		Player::BlockType blockType = player.getPlacingBlockType();
-		Block* block;
+		Block* block = nullptr;
 		switch (blockType) {
 		case Player::WALL:
 			block = new BlockNormalWall(blockSize);

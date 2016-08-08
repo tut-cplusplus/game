@@ -35,9 +35,12 @@
     <ClCompile Include="ComponentGame.cpp" />
     <ClCompile Include="ComponentTeapot.cpp" />
     <ClCompile Include="ComponentTexture.cpp" />
+    <ClCompile Include="Decoy.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyGenerator.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FPSManager.cpp" />
+    <ClCompile Include="Global.cpp" />
     <ClCompile Include="HorizontalSplitLayout.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Information.cpp" />
@@ -50,7 +53,10 @@
     <ClCompile Include="NormalEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="Region.cpp" />
+    <ClCompile Include="RegionSet.cpp" />
     <ClCompile Include="RelativeLayout.cpp" />
+    <ClCompile Include="Route.cpp" />
     <ClCompile Include="SpecialKey.cpp" />
     <ClCompile Include="SplitLayout.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -74,10 +80,13 @@
     <ClInclude Include="ComponentGame.hpp" />
     <ClInclude Include="ComponentTeapot.hpp" />
     <ClInclude Include="ComponentTexture.hpp" />
+    <ClInclude Include="Decoy.hpp" />
     <ClInclude Include="Enemy.hpp" />
+    <ClInclude Include="EnemyGenerator.hpp" />
     <ClInclude Include="FontManager.hpp" />
     <ClInclude Include="FPSManager.hpp" />
     <ClInclude Include="Global.hpp" />
+    <ClInclude Include="Graph.hpp" />
     <ClInclude Include="HorizontalSplitLayout.hpp" />
     <ClInclude Include="Image.hpp" />
     <ClInclude Include="Information.hpp" />
@@ -89,11 +98,15 @@
     <ClInclude Include="NormalEnemy.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Rectangle.hpp" />
+    <ClInclude Include="Region.hpp" />
+    <ClInclude Include="RegionSet.hpp" />
     <ClInclude Include="RelativeLayout.hpp" />
+    <ClInclude Include="Route.hpp" />
     <ClInclude Include="Size.hpp" />
     <ClInclude Include="SpecialKey.hpp" />
     <ClInclude Include="SplitLayout.hpp" />
     <ClInclude Include="TextureManager.hpp" />
+    <ClInclude Include="Tree.hpp" />
     <ClInclude Include="Vector.hpp" />
     <ClInclude Include="VerticalSplitLayout.hpp" />
   </ItemGroup>
