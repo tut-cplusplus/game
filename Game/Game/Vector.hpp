@@ -4,7 +4,7 @@
 /**
  * ベクトルクラス．
  */
-template <typename T>
+template <typename T, typename T2 = double>
 class Vector {
 private:
 	T x;	/* x座標 */
@@ -22,7 +22,7 @@ public:
 	/**
 	 * コピーコンストラクタ
 	 */
-	Vector(const Vector<T>& v);
+	Vector(const Vector<T2,T2>& v);
 	double norm2(void) const;
 	/**
 	 * アクセッサ
@@ -32,115 +32,115 @@ public:
 	void setX(const T& x);
 	void setY(const T& y);
 
-	Vector<T> operator-(void) const;
-	void operator+=(const Vector<T>& v);
-	void operator-=(const Vector<T>& v);
+	Vector<T,T2> operator-(void) const;
+	void operator+=(const Vector<T,T2>& v);
+	void operator-=(const Vector<T,T2>& v);
 	void operator*=(const T& value);
 	void operator/=(const T& value);
-	Vector<T> operator+(const Vector<T>& v) const;
-	Vector<T> operator-(const Vector<T>& v) const;
-	bool operator==(const Vector<T>& v) const;
+	Vector<T,T2> operator+(const Vector<T,T2>& v) const;
+	Vector<T,T2> operator-(const Vector<T,T2>& v) const;
+	bool operator==(const Vector<T,T2>& v) const;
 };
 
-template <typename T>
-Vector<T>::Vector()
+template <typename T, typename T2>
+Vector<T,T2>::Vector()
 	: x(0.0), y(0.0)
 {
 
 }
 
-template <typename T>
-Vector<T>::Vector(const T& x, const T& y)
+template <typename T, typename T2>
+Vector<T,T2>::Vector(const Vector<T2,T2>& v)
+	: x((T)v.getX()), y((T)v.getY())
+{
+
+}
+
+template <typename T, typename T2>
+Vector<T,T2>::Vector(const T& x, const T& y)
 	: x(x), y(y)
 {
 
 }
 
-template <typename T>
-Vector<T>::Vector(const Vector<T>& v)
-	: x(v.x), y(v.y)
-{
-
-}
-
-template <typename T>
-inline double Vector<T>::norm2(void) const
+template <typename T, typename T2>
+inline double Vector<T,T2>::norm2(void) const
 {
 	return x * x + y * y;
 }
 
-template <typename T>
-inline T Vector<T>::getX(void) const
+template <typename T, typename T2>
+inline T Vector<T,T2>::getX(void) const
 {
 	return x;
 }
 
-template <typename T>
-inline T Vector<T>::getY(void) const
+template <typename T, typename T2>
+inline T Vector<T,T2>::getY(void) const
 {
 	return y;
 }
 
-template <typename T>
-inline void Vector<T>::setX(const T& x)
+template <typename T, typename T2>
+inline void Vector<T,T2>::setX(const T& x)
 {
 	this->x = x;
 }
 
-template <typename T>
-inline void Vector<T>::setY(const T& y)
+template <typename T, typename T2>
+inline void Vector<T,T2>::setY(const T& y)
 {
 	this->y = y;
 }
 
-template <typename T>
-inline Vector<T> Vector<T>::operator-(void) const
+template <typename T, typename T2>
+inline Vector<T,T2> Vector<T,T2>::operator-(void) const
 {
-	return Vector<T>(-x, -y);
+	return Vector<T,T2>(-x, -y);
 }
 
-template <typename T>
-inline void Vector<T>::operator+=(const Vector<T>& v)
+template <typename T, typename T2>
+inline void Vector<T,T2>::operator+=(const Vector<T,T2>& v)
 {
 	x += v.x;
 	y += v.y;
 }
 
-template <typename T>
-inline void Vector<T>::operator-=(const Vector<T>& v)
+template <typename T, typename T2>
+inline void Vector<T,T2>::operator-=(const Vector<T,T2>& v)
 {
 	(*this)+=(-v);
 }
 
-template <typename T>
-inline void Vector<T>::operator*=(const T& value)
+template <typename T, typename T2>
+inline void Vector<T,T2>::operator*=(const T& value)
 {
 	x *= value;
 	y *= value;
 }
 
-template <typename T>
-inline void Vector<T>::operator/=(const T& value)
+template <typename T, typename T2>
+inline void Vector<T,T2>::operator/=(const T& value)
 {
 	this->operator*=(1 / value);
 }
 
-template <typename T>
-inline Vector<T> Vector<T>::operator+(const Vector<T>& v) const
+template <typename T, typename T2>
+inline Vector<T,T2> Vector<T,T2>::operator+(const Vector<T,T2>& v) const
 {
 	Vector tmp(*this);
 	tmp += v;
 	return tmp;
 }
 
-template <typename T>
-inline Vector<T> Vector<T>::operator-(const Vector<T>& v) const
+template <typename T, typename T2>
+inline Vector<T,T2> Vector<T,T2>::operator-(const Vector<T,T2>& v) const
 {
 	return (*this)+(-v);
 }
 
-template <typename T>
-inline bool Vector<T>::operator==(const Vector<T>& v) const
+template <typename T, typename T2>
+inline bool Vector<T,T2>::operator==(const Vector<T,T2>& v) const
 {
 	return x == v.x && y == v.y;
 }

@@ -515,14 +515,14 @@ inline Block* ComponentGame::isHit(const Vector<double>& position, bool (Block::
 template <typename T>
 inline bool ComponentGame::isPlaceable(const Vector<double>& position, const std::vector<T*>& characters) const
 {
-	int row = (int)position.getY();
-	int col = (int)position.getX();
+	Vector<int> positionInt(position);
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		T& character = **itr;
-		const Vector<double>& position2 = character.getIsMoving() ? character.getSource() : character.getPosition();
-		int row2 = (int)position2.getY();
-		int col2 = (int)position2.getX();
-		if (row == row2 && col == col2)
+		Vector<int> sourceInt(character.getSource());
+		Vector<int> destinationInt(character.getDestination());
+		if (positionInt == sourceInt)
+			return false;
+		if (positionInt == destinationInt)
 			return false;
 	}
 	return true;
