@@ -31,7 +31,13 @@ public:
 	Route breadthFirstSearch(const Vector<int>& start, const Vector<int>& end) const;
 
 	void operator+=(const Region& region);
+	unsigned getPositionNum(void) const;
 };
+
+inline unsigned Region::getPositionNum(void) const
+{
+	return positions.size();
+}
 
 #endif
 

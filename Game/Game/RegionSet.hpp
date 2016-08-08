@@ -15,6 +15,9 @@ public:
 private:
 	std::list<Region> regions;
 
+private:
+	Region getSubRegion(const Region& region, const Vector<int>& position) const;
+
 public:
 	RegionSet();
 

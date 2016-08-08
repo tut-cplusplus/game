@@ -1,4 +1,7 @@
+#include <iostream>
 #include <vector>
+#include <stack>
+#include <queue>
 
 #include "RegionSet.hpp"
 
@@ -10,6 +13,30 @@ Vector<int> RegionSet::neighbors[] = {
 	Vector<int>(0, 1),
 	Vector<int>(0, -1),
 };
+
+Region RegionSet::getSubRegion(const Region& region, const Vector<int>& position) const
+{
+	queue<Vector<int>> positions;
+	Region subRegion;
+	subRegion += position;
+	positions.push(position);
+	while (positions.size()) {
+		Vector<int> position = positions.front();
+		positions.pop();
+		unsigned n = sizeof(neighbors) / sizeof(neighbors[0]);
+		for (unsigned i = 0; i < n; i++) {
+			const Vector<int>& displacement = neighbors[i];
+			Vector<int> neighbor = position + displacement;
+			if (subRegion.search(neighbor))
+				continue;
+			if (!region.search(neighbor))
+				continue;
+			subRegion += neighbor;
+			positions.push(neighbor);
+		}
+	}
+	return subRegion;
+}
 
 RegionSet::RegionSet()
 {
@@ -94,7 +121,31 @@ void RegionSet::operator+=(const Vector<int>& position)
 
 void RegionSet::operator-=(const Vector<int>& position)
 {
-	Region& region = search(position);
-	//未実装
+	auto itr = searchIterator(position);
+	Region& region = *itr;
+	region -= position;
+	unsigned n = sizeof(neighbors) / sizeof(neighbors[0]);
+	list<Vector<int>> neighborPositions;
+	for (unsigned i = 0; i < n; i++) {
+		const Vector<int>& displacement = neighbors[i];
+		neighborPositions.push_back(position + displacement);
+	}
+	while (neighborPositions.size()) {
+		Vector<int> position = neighborPositions.front();
+		neighborPositions.pop_front();
+		if (!region.search(position))
+			continue;
+		Region subRegion = getSubRegion(region, position);
+		for (auto itr = neighborPositions.begin(); itr != neighborPositions.end(); ++itr) {
+			const Vector<int>& position = *itr;
+			if (subRegion.search(position)) {
+				itr = neighborPositions.erase(itr);
+				if (itr == neighborPositions.end())
+					break;
+			}
+		}
+		regions.push_back(subRegion);
+	}
+	regions.erase(itr);
 }
 
