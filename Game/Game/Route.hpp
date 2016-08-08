@@ -14,8 +14,8 @@ public:
 
 	void operator+=(const Vector<int>& position);
 	Route& operator--(void);
-	size_t getPositionNum(void) const;
-	size_t getDistance(void) const;
+	std::list<Vector<int>>::size_type getPositionNum(void) const;
+	std::list<Vector<int>>::size_type getDistance(void) const;
 	const std::list<Vector<int>> getPositions(void) const;
 };
 
@@ -30,12 +30,12 @@ inline Route& Route::operator--(void)
 	return *this;
 }
 
-inline size_t Route::getPositionNum(void) const
+inline std::list<Vector<int>>::size_type Route::getPositionNum(void) const
 {
 	return positions.size();
 }
 
-inline size_t Route::getDistance(void) const
+inline std::list<Vector<int>>::size_type Route::getDistance(void) const
 {
 	return positions.size() - 1;
 }
