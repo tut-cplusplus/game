@@ -293,7 +293,15 @@ bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Utili
 		worldPosition.setY(worldPosition.getY() * rectangleSize.getHeight());
 		if (!circularSector.isHit(worldPosition))
 			continue;
-		if (isBlocked(position, enemyPosition))
+		Vector<double> displacementX(0.1, 0.0);
+		Vector<double> displacementY(0.0, 0.1);
+		if (isBlocked(position + displacementX, enemyPosition + displacementX))
+			continue;
+		if (isBlocked(position - displacementX, enemyPosition - displacementX))
+			continue;
+		if (isBlocked(position + displacementY, enemyPosition + displacementY))
+			continue;
+		if (isBlocked(position - displacementY, enemyPosition - displacementY))
 			continue;
 		return true;
 	}
