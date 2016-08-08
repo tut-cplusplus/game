@@ -368,7 +368,7 @@ void ComponentGame::breakBlock(void)
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			if (map[i][j]->getDamage() <= 0) {
-				if (!map[i][j]->isTransparent())
+				if (!map[i][j]->isTransparentByEnemy())
 					regionSet += Vector<int>(j, i);
 				map[i][j] = map[i][j]->brokenBlock();
 			}
@@ -415,7 +415,8 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 		if (block != nullptr) {
 			delete map[row][col];
 			map[row][col] = block;
-			regionSet -= Vector<int>(col, row);
+			if (!block->isTransparentByEnemy())
+				regionSet -= Vector<int>(col, row);
 		}
 	}
 }
