@@ -14,10 +14,9 @@
 #include "Decoy.hpp"
 #include "Size.hpp"
 #include "ItemBlock.hpp"
-#include "Graph.hpp"
-#include "Tree.hpp"
 #include "Global.hpp"
 #include "EnemyGenerator.hpp"
+#include "RegionSet.hpp"
 
 #include "GL/glut.h"
 #include "AL/alut.h"
@@ -44,28 +43,11 @@ private:
 	std::vector<ItemBlock*> itemBlocks;	//アイテム
 	Size<double> blockSize;			//ブロックの大きさ
 	Audio audio;
-	Graph<Vector<int>> mapGraph;	//マップの空間の認識に用いる（敵の死亡処理用）
-	std::vector<Tree<Vector<int>>> mapTrees;
-	std::vector<Tree<Vector<int>>> mapTreesTmp;
-	bool isMapTreesUpdated;
+	RegionSet regionSet;			//マップの空間の認識に用いる（敵の死亡処理用）
 	Block*** visibleMap;
 	EnemyGenerator enemyGenerator;
 
 private:
-	/**
-	 * 外壁のみのマップに対応するグラフを生成する
-	 */
-	void clearGraph(void);
-	/**
-	 * マップ探索木を更新する
-	 * 毎フレーム呼び出す
-	 */
-	void updateMapTrees(void);
-	/**
-	 * マップ探索木の更新を開始する
-	 * マップの変化時に呼び出す（ブロックの破壊など）
-	 */
-	void startUpdatingMapTrees(void);
 	/**
 	 * マップの配列を生成する
 	 * ただし，ブロックのインスタンス生成は行わない
@@ -583,16 +565,9 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		itemBlocks.push_back(new ItemBlock(Vector<double>(col, row), map[row][col]));
 		map[row][col] = map[row][col]->brokenBlock();
 		Vector<int> nodePosition(col, row);
-		mapGraph.addNode(nodePosition);
-		if (col > 1)
-			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(-1, 0));
-		if (col < MAP_WIDTH - 2)
-			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(1, 0));
-		if (row > 1)
-			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(0, -1));
-		if (row < MAP_HEIGHT - 2)
-			mapGraph.addEdge(nodePosition, nodePosition + Vector<int>(0, 1));
-		startUpdatingMapTrees();
+		regionSet += nodePosition;
+		//test code
+		cout << "num of regions : " << regionSet.getRegionNum() << endl;
 		audio.play();
 	}
 }

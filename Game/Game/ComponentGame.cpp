@@ -21,73 +21,6 @@ const int ComponentGame::MAP_WIDTH = 45;
 const int ComponentGame::MAP_HEIGHT = 45;
 const int ComponentGame::DIVISION_NUMBER = 100;
 
-void ComponentGame::clearGraph(void)
-{
-	mapGraph = Graph<Vector<int>>();
-	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
-		for (int j = 1; j < MAP_WIDTH - 1; j++) {
-			Vector<int> position(j, i);
-			mapGraph.addNode(position);
-			if (j > 1)
-				mapGraph.addEdge(position, Vector<int>(j - 1, i));
-			if (i > 1)
-				mapGraph.addEdge(position, Vector<int>(j, i - 1));
-		}
-	}
-}
-
-void ComponentGame::updateMapTrees(void)
-{
-	if (isMapTreesUpdated)
-		return;
-	if (!mapTreesTmp.size())
-		return;
-	Tree<Vector<int>>& tree = mapTreesTmp[mapTreesTmp.size() - 1];
-	static int cnt = 0;
-	cnt++;
-	tree.update();
-	if (tree.isUpdated()) {
-		const vector<Vector<int>>& nodes = mapGraph.getNodes();
-		bool isUpdated = true;
-		for (auto itr = nodes.begin(); itr != nodes.end(); ++itr) {
-			const Vector<int>& node = *itr;
-			bool flag = false;
-			for (auto itr = mapTreesTmp.begin(); itr != mapTreesTmp.end(); itr++) {
-				const Tree<Vector<int>>& mapTree = *itr;
-				try {
-					mapTree.searchNode(node);
-					flag = true;
-					break;
-				}
-				catch (...) {
-				}
-			}
-			if (flag)
-				continue;
-			Tree<Vector<int>> mapTree(10);
-			mapTree.depthFirstSearch(mapGraph, node);
-			mapTreesTmp.push_back(mapTree);
-			isUpdated = false;
-			break;
-		}
-		if (isUpdated) {
-			isMapTreesUpdated = true;
-			cout << "number of regions : " << mapTreesTmp.size() << " (" << cnt << " frames)" << endl;
-			cnt = 0;
-			mapTrees = mapTreesTmp;
-		}
-	}
-}
-
-void ComponentGame::startUpdatingMapTrees(void)
-{
-	mapTreesTmp = vector<Tree<Vector<int>>>();
-	mapTreesTmp.push_back(Tree<Vector<int>>(10));
-	Tree<Vector<int>>& tree = mapTreesTmp[0];
-	tree.depthFirstSearch(mapGraph);
-	isMapTreesUpdated = false;
-}
-
 void ComponentGame::allocMap(void)
 {
 	try {
@@ -147,7 +80,6 @@ void ComponentGame::generateMap(void)
 		Vector<int>(0, 1),
 		Vector<int>(0, -1),
 	};
-	clearGraph();
 	while (v.size()) {
 		int idx = (int)(rnd(mt) * v.size());
 		Vector<int> position = v[idx];
@@ -165,20 +97,22 @@ void ComponentGame::generateMap(void)
 			int y = position.getY();
 			map[y][x] = new BlockNormalWall(blockSize);
 			visibleMap[y][x] = new BlockNormalWall(blockSize);
-			mapGraph.removeNode(position);
 			if (i == 3)
 				v.push_back(position);
 		}
 	}
+	regionSet = RegionSet();
 	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
 		for (int j = 1; j < MAP_WIDTH - 1; j++) {
 			if (map[i][j] == nullptr) {
 				map[i][j] = new BlockAir(blockSize);
 				visibleMap[i][j] = new BlockAir(blockSize);
+				regionSet += Vector<int>(j, i);
 			}
 		}
 	}
-	startUpdatingMapTrees();
+	//test code
+	cout << "num of regions : " << regionSet.getRegionNum() << endl;
 }
 
 vector<int> ComponentGame::getValidDirections(const Vector<int>& _position)
@@ -279,6 +213,7 @@ void ComponentGame::killEnemies(void)
 			continue;
 		const Vector<double>& source = enemy.getSource();
 		Vector<int> node((int)source.getX(), (int)source.getY());
+		/*
 		for (auto itr2 = mapTrees.begin(); itr2 != mapTrees.end(); itr2++) {
 			const Tree<Vector<int>>& mapTree = *itr2;
 			try {
@@ -294,6 +229,7 @@ void ComponentGame::killEnemies(void)
 			catch (...) {
 			}
 		}
+		*/
 		if (itr == enemies.end())
 			break;
 	}
@@ -437,8 +373,14 @@ void ComponentGame::breakBlock(void)
 {
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
-			if (map[i][j]->getDamage() <= 0)
+			if (map[i][j]->getDamage() <= 0) {
+				if (!map[i][j]->isTransparent()) {
+					regionSet += Vector<int>(j, i);
+					//test code
+					cout << "num of regions : " << regionSet.getRegionNum() << endl;
+				}
 				map[i][j] = map[i][j]->brokenBlock();
+			}
 		}
 	}
 }
@@ -482,8 +424,9 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 		if (block != nullptr) {
 			delete map[row][col];
 			map[row][col] = block;
-			mapGraph.removeNode(Vector<int>(col, row));
-			startUpdatingMapTrees();
+			regionSet -= Vector<int>(col, row);
+			//test code
+			cout << "num of regions : " << regionSet.getRegionNum() << endl;
 		}
 	}
 }
@@ -704,7 +647,6 @@ void ComponentGame::draw(void)
 	findBlockEvent();
 	breakBlockEvent();
 	placeBlockEvent();
-	updateMapTrees();
 	killEnemies();
 	spawnEnemyEvent();
 	double blockWidth = blockSize.getWidth();
