@@ -32,11 +32,17 @@ public:
 
 	void operator+=(const Region& region);
 	unsigned getPositionNum(void) const;
+	const std::list<Vector<int>>& getPositions(void) const;
 };
 
 inline unsigned Region::getPositionNum(void) const
 {
 	return positions.size();
+}
+
+inline const std::list<Vector<int>>& Region::getPositions(void) const
+{
+	return positions;
 }
 
 #endif

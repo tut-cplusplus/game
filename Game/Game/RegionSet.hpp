@@ -28,11 +28,17 @@ public:
 	void operator+=(const Vector<int>& position);
 	void operator-=(const Vector<int>& position);
 	unsigned getRegionNum(void) const;
+	const std::list<Region>& getRegions(void) const;
 };
 
 inline unsigned RegionSet::getRegionNum(void) const
 {
 	return regions.size();
+}
+
+inline const std::list<Region>& RegionSet::getRegions(void) const
+{
+	return regions;
 }
 
 #endif
