@@ -403,24 +403,26 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 			continue;
 		ItemStack::Type blockType = player.getPlacingBlockType();
 		Block* block = nullptr;
+		auto func = [&](ItemStack::Type type){
+			ItemStack& itemStack = player.getItemStack(type);
+			if (!itemStack.getNum())
+				return;
+			--itemStack;
+			switch (type) {
+			case ItemStack::WALL:
+				block = new BlockNormalWall(blockSize);
+				break;
+			case ItemStack::TRAP:
+				block = new BlockTrap(blockSize);
+				break;
+			default:
+				break;
+			};
+		};
 		switch (blockType) {
 		case ItemStack::WALL:
-			{
-				ItemStack& itemStack = player.getItemStack(ItemStack::WALL);
-				if (!itemStack.getNum())
-					break;
-				--itemStack;
-				block = new BlockNormalWall(blockSize);
-			}
-			break;
 		case ItemStack::TRAP:
-			{
-				ItemStack& itemStack = player.getItemStack(ItemStack::TRAP);
-				if (!itemStack.getNum())
-					break;
-				--itemStack;
-				block = new BlockTrap(blockSize);
-			}
+			func(blockType);
 			break;
 		case ItemStack::DECOY:
 			{
@@ -474,14 +476,14 @@ void ComponentGame::setBlockSize(void)
 			visibleMap[i][j]->setSize(blockSize);
 		}
 	}
-	for (auto itr = players.begin(); itr != players.end(); ++itr) {
-		Player& player = **itr;
-		player.setSize(blockSize);
-	}
-	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
-		Enemy& enemy = **itr;
-		enemy.setSize(blockSize);
-	}
+	auto func = [&](auto characters){
+		for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+			auto& character = **itr;
+			character.setSize(blockSize);
+		}
+	};
+	func(players);
+	func(enemies);
 }
 
 void ComponentGame::pickUpItemEvent(void)
@@ -728,20 +730,17 @@ void ComponentGame::draw(void)
 	}
 	glPopMatrix();
 	drawCharacters(players);
-	for (auto itr = players.begin(); itr != players.end(); ++itr) {
-		const Player& player = **itr;
-		const Vector<double>& playerPosition = player.getPosition();
-		drawCharacters(enemies, playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
-		drawCharacters(decoys, playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
-		drawItemBlocks(playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
-	}
-	for (auto itr = decoys.begin(); itr != decoys.end(); ++itr) {
-		const Decoy& decoy = **itr;
-		const Vector<double>& decoyPosition = decoy.getPosition();
-		drawCharacters(enemies, decoyPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
-		drawCharacters(decoys, decoyPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
-		drawItemBlocks(decoyPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
-	}
+	auto func = [&](auto characters){
+		for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
+			auto& character = **itr;
+			const Vector<double>& position = character.getPosition();
+			drawCharacters(enemies, position, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+			drawCharacters(decoys, position, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+			drawItemBlocks(position, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+		}
+	};
+	func(players);
+	func(decoys);
 	glDisable(GL_TEXTURE_2D);
 	drawCharacterVisibilities(players);
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
