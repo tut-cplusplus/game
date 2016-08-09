@@ -13,14 +13,22 @@ public:
 	ItemStack();
 	ItemStack(Type type, unsigned num);
 
-	void operator--(void);
+	ItemStack& operator++(void);
+	ItemStack& operator--(void);
 	Type getType(void) const;
 	int getNum(void) const;
 };
 
-inline void ItemStack::operator--(void)
+inline ItemStack& ItemStack::operator++(void)
+{
+	num++;
+	return *this;
+}
+
+inline ItemStack& ItemStack::operator--(void)
 {
 	num--;
+	return *this;
 }
 
 inline ItemStack::Type ItemStack::getType(void) const

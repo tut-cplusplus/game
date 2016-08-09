@@ -309,6 +309,10 @@ private:
 	 */
 	std::list<Key>::iterator searchKey(const Key& key);
 	/**
+	 *
+	 */
+	void pickUpItemEvent(void);
+	/**
 	 * Characterの移動イベントを発生させる
 	 * EnemyのAIイベントを発生させる
 	 */

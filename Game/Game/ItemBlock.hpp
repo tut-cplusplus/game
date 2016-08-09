@@ -30,6 +30,7 @@ public:
 	 */
 	void setSize(const Size<double>& size);
 	const Vector<double>& getPosition(void) const;
+	const Block& getBlock(void) const;
 };
 
 inline void ItemBlock::setSize(const Size<double>& size)
@@ -40,6 +41,11 @@ inline void ItemBlock::setSize(const Size<double>& size)
 inline const Vector<double>& ItemBlock::getPosition(void) const
 {
 	return position;
+}
+
+inline const Block& ItemBlock::getBlock(void) const
+{
+	return *block;
 }
 
 #endif

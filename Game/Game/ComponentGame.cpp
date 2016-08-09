@@ -485,6 +485,30 @@ void ComponentGame::setBlockSize(void)
 	}
 }
 
+void ComponentGame::pickUpItemEvent(void)
+{
+	for (auto itr = players.begin(); itr != players.end(); ++itr) {
+		Player& player = **itr;
+		const Vector<double>& playerPosition = player.getPosition();
+		for (auto itr = itemBlocks.begin(); itr != itemBlocks.end();) {
+			ItemBlock& itemBlock = **itr;
+			const Vector<double>& itemBlockPosition = itemBlock.getPosition();
+			Vector<double> displacement = itemBlockPosition - playerPosition;
+			if (displacement.norm2() > 1.0) {
+				++itr;
+				continue;
+			}
+			const Block& block = itemBlock.getBlock();
+			ItemStack::Type type = ItemStack::WALL;
+			if (typeid(block) == typeid(BlockTrap))
+				type = ItemStack::TRAP;
+			ItemStack& itemStack = player.getItemStack(type);
+			++itemStack;
+			itr = itemBlocks.erase(itr);
+		}
+	}
+}
+
 void ComponentGame::moveEvent(void)
 {
 	moveCharacters(players);
@@ -672,6 +696,7 @@ void ComponentGame::draw(void)
 	placeBlockEvent();
 	killEnemies();
 	spawnEnemyEvent();
+	pickUpItemEvent();
 	double blockWidth = blockSize.getWidth();
 	double blockHeight = blockSize.getHeight();
 	glEnable(GL_TEXTURE_2D);
