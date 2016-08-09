@@ -4,11 +4,9 @@
 #include "Size.hpp"
 #include "Keypad.hpp"
 #include "Audio.hpp"
+#include "ItemStack.hpp"
 
 class Player : public Character {
-public:
-	enum BlockType {WALL, TRAP, DECOY};	//ブロックの種類
-
 private:
 	int stamina;
 	int maxStamina;
@@ -17,13 +15,14 @@ private:
 	bool isChangingDirection;	//向きを変更中かどうか
 	int changeDirectionCount;	//向きを変更中のフレーム数
 	bool isPlacing;	//ブロックを設置中かどうか
-	BlockType placingBlockType;	//設置中のブロックの種類
+	ItemStack itemStacks[ItemStack::MAX_BLOCK_TYPE];
+	ItemStack::Type placingBlockType;	//設置中のブロックの種類
 
 protected:
 	void init(void);
 	void loadAnimations(void);
 
-	void startPlacing(BlockType blockType);
+	void startPlacing(ItemStack::Type blockType);
 
 public:
 	Player(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0), double speed = 1.0, int maxStamina = 1, const Keypad& keypad = Keypad());
@@ -110,7 +109,8 @@ public:
 	const Keypad& getKeypad(void) const;
 	bool getIsPlacing(void) const;
 	void setIsPlacing(bool isPlacing);
-	BlockType getPlacingBlockType(void) const;
+	ItemStack& getItemStack(ItemStack::Type type);
+	ItemStack::Type getPlacingBlockType(void) const;
 	void useStamina(void);
 };
 
@@ -124,7 +124,12 @@ inline void Player::setIsPlacing(bool isPlacing)
 	this->isPlacing = isPlacing;
 }
 
-inline Player::BlockType Player::getPlacingBlockType(void) const
+inline ItemStack& Player::getItemStack(ItemStack::Type type)
+{
+	return itemStacks[type];
+}
+
+inline ItemStack::Type Player::getPlacingBlockType(void) const
 {
 	return placingBlockType;
 }

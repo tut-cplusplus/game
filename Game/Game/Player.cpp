@@ -28,7 +28,7 @@ void Player::loadAnimations(void)
 	Character::loadAnimations();
 }
 
-void Player::startPlacing(BlockType blockType)
+void Player::startPlacing(ItemStack::Type blockType)
 {
 	isPlacing = true;
 	placingBlockType = blockType;
@@ -38,6 +38,9 @@ Player::Player(const Vector<double>& position, const Size<double>& size, double 
 	: Character(position, size, speed), stamina(maxStamina), maxStamina(maxStamina), staminaCount(0), keypad(keypad), isChangingDirection(false), isPlacing(false)
 {
 	init();
+	itemStacks[ItemStack::WALL] = ItemStack(ItemStack::WALL, 10);
+	itemStacks[ItemStack::TRAP] = ItemStack(ItemStack::TRAP, 10);
+	itemStacks[ItemStack::DECOY] = ItemStack(ItemStack::DECOY, 10);
 }
 
 Player::~Player()
@@ -73,17 +76,17 @@ void Player::onBreakBlock(void)
 
 void Player::onPlaceWall(void)
 {
-	startPlacing(WALL);
+	startPlacing(ItemStack::WALL);
 }
 
 void Player::onPlaceTrap(void)
 {
-	startPlacing(TRAP);
+	startPlacing(ItemStack::TRAP);
 }
 
 void Player::onPlaceDecoy(void)
 {
-	startPlacing(DECOY);
+	startPlacing(ItemStack::DECOY);
 }
 
 void Player::onUpDown(void)

@@ -402,22 +402,47 @@ void ComponentGame::placeBlock(const vector<Player*> players)
 		int col = (int)destination.getX();
 		if (!isPlaceable(destination))
 			continue;
-		Player::BlockType blockType = player.getPlacingBlockType();
+		ItemStack::Type blockType = player.getPlacingBlockType();
 		Block* block = nullptr;
 		switch (blockType) {
-		case Player::WALL:
-			block = new BlockNormalWall(blockSize);
+		case ItemStack::WALL:
+			{
+				ItemStack& itemStack = player.getItemStack(ItemStack::WALL);
+				if (!itemStack.getNum())
+					break;
+				--itemStack;
+				block = new BlockNormalWall(blockSize);
+			}
 			break;
-		case Player::TRAP:
-			block = new BlockTrap(blockSize);
+		case ItemStack::TRAP:
+			{
+				ItemStack& itemStack = player.getItemStack(ItemStack::TRAP);
+				if (!itemStack.getNum())
+					break;
+				--itemStack;
+				block = new BlockTrap(blockSize);
+			}
 			break;
-		case Player::DECOY:
-			block = nullptr;
-			vector<double> distances = getDistances(decoys, destination);
-			for (auto itr = distances.begin(); itr != distances.end(); ++itr)
-				if (*itr < 0.5)
-					return;
+		case ItemStack::DECOY:
+			{
+				vector<double> distances = getDistances(decoys, destination);
+				bool flag = true;
+				for (auto itr = distances.begin(); itr != distances.end(); ++itr) {
+					if (*itr < 0.5) {
+						flag = false;
+						break;
+					}
+				}
+				if (!flag)
+					break;
+				ItemStack& itemStack = player.getItemStack(ItemStack::DECOY);
+				if (!itemStack.getNum())
+					break;
+				--itemStack;
+			}
 			decoys.push_back(new Decoy(destination, player.getSize()));
+			break;
+		default:
 			break;
 		}
 		if (block != nullptr) {
