@@ -35,6 +35,7 @@
     <ClCompile Include="ComponentGame.cpp" />
     <ClCompile Include="ComponentTeapot.cpp" />
     <ClCompile Include="ComponentTexture.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Decoy.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyGenerator.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="ComponentGame.hpp" />
     <ClInclude Include="ComponentTeapot.hpp" />
     <ClInclude Include="ComponentTexture.hpp" />
+    <ClInclude Include="Debug.hpp" />
     <ClInclude Include="Decoy.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="EnemyGenerator.hpp" />
