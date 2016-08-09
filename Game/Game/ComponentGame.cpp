@@ -23,12 +23,14 @@ const int ComponentGame::DIVISION_NUMBER = 100;
 void ComponentGame::allocMap(void)
 {
 	try {
-		map = new Block**[Global::MAP_HEIGHT];
-		visibleMap = new Block**[Global::MAP_HEIGHT];
-		for (int i = 0; i < Global::MAP_HEIGHT; i++) {
-			map[i] = new Block*[Global::MAP_WIDTH];
-			visibleMap[i] = new Block*[Global::MAP_WIDTH];
-		}
+		auto func = [](){
+			Block*** map = new Block**[Global::MAP_HEIGHT];
+			for (int i = 0; i < Global::MAP_HEIGHT; i++)
+				map[i] = new Block*[Global::MAP_WIDTH];
+			return map;
+		};
+		map = func();
+		visibleMap = func();
 	}
 	catch (const bad_alloc&) {
 		throw CannotAllocateException();
@@ -50,28 +52,38 @@ void ComponentGame::generateMap(void)
 			visibleMap[i][j] = nullptr;
 		}
 	}
-	for (int i = 0; i < Global::MAP_HEIGHT; i++) {
-		map[i][0] = new BlockUnbreakableWall(blockSize);
-		visibleMap[i][0] = new BlockUnbreakableWall(blockSize);
-		map[i][Global::MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
-		visibleMap[i][Global::MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
-	}
-	for (int i = 0; i < Global::MAP_WIDTH; i++) {
-		map[0][i] = new BlockUnbreakableWall(blockSize);
-		visibleMap[0][i] = new BlockUnbreakableWall(blockSize);
-		map[Global::MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
-		visibleMap[Global::MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
-	}
+	auto funcRow = [](Block*** map, int i, int fix)->Block*& {
+		return map[i][fix];
+	};
+	auto funcCol = [](Block*** map, int i, int fix)->Block*& {
+		return map[fix][i];
+	};
+	auto funcGenerateWall = [&](auto accessFunc, int max) {
+		for (int i = 0; i < max; i++) {
+			accessFunc(map, i, 0) = new BlockUnbreakableWall(blockSize);
+			accessFunc(visibleMap, i, 0) = new BlockUnbreakableWall(blockSize);
+			accessFunc(map, i, max - 1) = new BlockUnbreakableWall(blockSize);
+			accessFunc(visibleMap, i, max - 1) = new BlockUnbreakableWall(blockSize);
+		}
+	};
+	funcGenerateWall(funcRow, Global::MAP_HEIGHT);
+	funcGenerateWall(funcCol, Global::MAP_WIDTH);
 
 	vector<Vector<int>> v;
-	for (int i = 4; i < Global::MAP_HEIGHT - 1; i += 4) {
-		v.push_back(Vector<int>(0, i));
-		v.push_back(Vector<int>(Global::MAP_WIDTH - 1, i));
-	}
-	for (int i = 4; i < Global::MAP_WIDTH - 1; i += 4) {
-		v.push_back(Vector<int>(i, 0));
-		v.push_back(Vector<int>(i, Global::MAP_HEIGHT - 1));
-	}
+	auto funcVectorRow = [](int i, int fix) {
+		return Vector<int>(fix, i);
+	};
+	auto funcVectorCol = [](int i, int fix) {
+		return Vector<int>(i, fix);
+	};
+	auto funcPushBack = [&](auto vectorFunc, int max) {
+		for (int i = 4; i < max - 1; i += 4) {
+			v.push_back(vectorFunc(i, 0));
+			v.push_back(vectorFunc(i, max - 1));
+		}
+	};
+	funcPushBack(funcVectorRow, Global::MAP_HEIGHT);
+	funcPushBack(funcVectorCol, Global::MAP_WIDTH);
 
 	static Vector<int> directions[] = {
 		Vector<int>(1, 0),
