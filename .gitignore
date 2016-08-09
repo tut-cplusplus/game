@@ -1,3 +1,6 @@
+## Ignore debug files
+map.txt
+
 ## Ignore vim files
 *.swp
 

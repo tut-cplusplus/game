@@ -14,21 +14,20 @@
 #include "LayoutManager.hpp"
 #include "RelativeLayout.hpp"
 #include "ComponentTeapot.hpp"
+#include "Debug.hpp"
 
 #include "GL/glut.h"
 
-const int ComponentGame::MAP_WIDTH = 45;
-const int ComponentGame::MAP_HEIGHT = 45;
 const int ComponentGame::DIVISION_NUMBER = 100;
 
 void ComponentGame::allocMap(void)
 {
 	try {
-		map = new Block**[MAP_HEIGHT];
-		visibleMap = new Block**[MAP_HEIGHT];
-		for (int i = 0; i < MAP_HEIGHT; i++) {
-			map[i] = new Block*[MAP_WIDTH];
-			visibleMap[i] = new Block*[MAP_WIDTH];
+		map = new Block**[Global::MAP_HEIGHT];
+		visibleMap = new Block**[Global::MAP_HEIGHT];
+		for (int i = 0; i < Global::MAP_HEIGHT; i++) {
+			map[i] = new Block*[Global::MAP_WIDTH];
+			visibleMap[i] = new Block*[Global::MAP_WIDTH];
 		}
 	}
 	catch (const bad_alloc&) {
@@ -45,33 +44,33 @@ void ComponentGame::clearMap(void)
 
 void ComponentGame::generateMap(void)
 {
-	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
-		for (int j = 1; j < MAP_WIDTH - 1; j++) {
+	for (int i = 1; i < Global::MAP_HEIGHT - 1; i++) {
+		for (int j = 1; j < Global::MAP_WIDTH - 1; j++) {
 			map[i][j] = nullptr;
 			visibleMap[i][j] = nullptr;
 		}
 	}
-	for (int i = 0; i < MAP_HEIGHT; i++) {
+	for (int i = 0; i < Global::MAP_HEIGHT; i++) {
 		map[i][0] = new BlockUnbreakableWall(blockSize);
 		visibleMap[i][0] = new BlockUnbreakableWall(blockSize);
-		map[i][MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
-		visibleMap[i][MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
+		map[i][Global::MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
+		visibleMap[i][Global::MAP_WIDTH - 1] = new BlockUnbreakableWall(blockSize);
 	}
-	for (int i = 0; i < MAP_WIDTH; i++) {
+	for (int i = 0; i < Global::MAP_WIDTH; i++) {
 		map[0][i] = new BlockUnbreakableWall(blockSize);
 		visibleMap[0][i] = new BlockUnbreakableWall(blockSize);
-		map[MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
-		visibleMap[MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
+		map[Global::MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
+		visibleMap[Global::MAP_HEIGHT - 1][i] = new BlockUnbreakableWall(blockSize);
 	}
 
 	vector<Vector<int>> v;
-	for (int i = 4; i < MAP_HEIGHT - 1; i += 4) {
+	for (int i = 4; i < Global::MAP_HEIGHT - 1; i += 4) {
 		v.push_back(Vector<int>(0, i));
-		v.push_back(Vector<int>(MAP_WIDTH - 1, i));
+		v.push_back(Vector<int>(Global::MAP_WIDTH - 1, i));
 	}
-	for (int i = 4; i < MAP_WIDTH - 1; i += 4) {
+	for (int i = 4; i < Global::MAP_WIDTH - 1; i += 4) {
 		v.push_back(Vector<int>(i, 0));
-		v.push_back(Vector<int>(i, MAP_HEIGHT - 1));
+		v.push_back(Vector<int>(i, Global::MAP_HEIGHT - 1));
 	}
 
 	static Vector<int> directions[] = {
@@ -102,8 +101,8 @@ void ComponentGame::generateMap(void)
 		}
 	}
 	regionSet = RegionSet();
-	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
-		for (int j = 1; j < MAP_WIDTH - 1; j++) {
+	for (int i = 1; i < Global::MAP_HEIGHT - 1; i++) {
+		for (int j = 1; j < Global::MAP_WIDTH - 1; j++) {
 			if (map[i][j] == nullptr) {
 				map[i][j] = new BlockAir(blockSize);
 				visibleMap[i][j] = new BlockAir(blockSize);
@@ -111,6 +110,8 @@ void ComponentGame::generateMap(void)
 			}
 		}
 	}
+	//test code
+	Debug::dump("map.txt", map);
 }
 
 vector<int> ComponentGame::getValidDirections(const Vector<int>& _position)
@@ -132,7 +133,7 @@ vector<int> ComponentGame::getValidDirections(const Vector<int>& _position)
 			position += direction;
 			int x = position.getX();
 			int y = position.getY();
-			if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT) {
+			if (x < 0 || x >= Global::MAP_WIDTH || y < 0 || y >= Global::MAP_HEIGHT) {
 				flag = true;
 				break;
 			}
@@ -151,10 +152,10 @@ void ComponentGame::deleteMap(Block*** map)
 {
 	if (map == nullptr)
 		return;
-	for (int i = 0; i < MAP_HEIGHT; i++) {
+	for (int i = 0; i < Global::MAP_HEIGHT; i++) {
 		if (map[i] == nullptr)
 			continue;
-		for (int j = 0; j < MAP_WIDTH; j++)
+		for (int j = 0; j < Global::MAP_WIDTH; j++)
 			if (map[i][j] != nullptr)
 				delete map[i][j];
 		delete[] map[i];
@@ -359,7 +360,7 @@ bool ComponentGame::isPlaceable(const Vector<double>& position) const
 {
 	int row = (int)position.getY();
 	int col = (int)position.getX();
-	if (row < 0 || row >= MAP_HEIGHT || col < 0 || col >= MAP_WIDTH)
+	if (row < 0 || row >= Global::MAP_HEIGHT || col < 0 || col >= Global::MAP_WIDTH)
 		return false;
 	const Block& block = *map[row][col];
 	if (!block.isTransparent())
@@ -373,8 +374,8 @@ bool ComponentGame::isPlaceable(const Vector<double>& position) const
 
 void ComponentGame::breakBlock(void)
 {
-	for (int i = 0; i < MAP_HEIGHT; i++) {
-		for (int j = 0; j < MAP_WIDTH; j++) {
+	for (int i = 0; i < Global::MAP_HEIGHT; i++) {
+		for (int j = 0; j < Global::MAP_WIDTH; j++) {
 			if (map[i][j]->getDamage() <= 0) {
 				if (!map[i][j]->isTransparentByEnemy())
 					regionSet += Vector<int>(j, i);
@@ -458,8 +459,8 @@ vector<Vector<int>> ComponentGame::getTransparentBlockVectors(void) const
 {
 	vector<Vector<int>> positions;
 	//Characterを配置可能な場所を取得する
-	for (int i = 1; i < MAP_HEIGHT - 1; i++) {
-		for (int j = 1; j < MAP_WIDTH - 1; j++) {
+	for (int i = 1; i < Global::MAP_HEIGHT - 1; i++) {
+		for (int j = 1; j < Global::MAP_WIDTH - 1; j++) {
 			if (map[i][j]->isTransparent())
 				positions.push_back(Vector<int>(j, i));
 		}
@@ -469,8 +470,8 @@ vector<Vector<int>> ComponentGame::getTransparentBlockVectors(void) const
 
 void ComponentGame::setBlockSize(void)
 {
-	for (int i = 0; i < MAP_HEIGHT; i++) {
-		for (int j = 0; j < MAP_WIDTH; j++) {
+	for (int i = 0; i < Global::MAP_HEIGHT; i++) {
+		for (int j = 0; j < Global::MAP_WIDTH; j++) {
 			map[i][j]->setSize(blockSize);
 			visibleMap[i][j]->setSize(blockSize);
 		}
@@ -526,9 +527,9 @@ void ComponentGame::hitEvent(void)
 void ComponentGame::findBlockEvent(void)
 {
 	static int cnt = 0;
-	if (++cnt >= MAP_WIDTH)
+	if (++cnt >= Global::MAP_WIDTH)
 		cnt = 0;
-	for (int i = 0; i < MAP_HEIGHT; i++) {
+	for (int i = 0; i < Global::MAP_HEIGHT; i++) {
 		int j = cnt;
 		Vector<double> position(j, i);
 		Block& block = *map[i][j];
@@ -643,7 +644,7 @@ void ComponentGame::keyEvent(const Key& key, void (Player::*funcUp)(), void (Pla
 }
 
 ComponentGame::ComponentGame(const Size<double>& size, const string& fpath)
-	: Component(size), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize(size.getWidth()/ MAP_WIDTH, size.getHeight() / MAP_HEIGHT), audio("data/music/BreakWall.wav"), enemyGenerator(fpath)
+	: Component(size), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize(size.getWidth()/ Global::MAP_WIDTH, size.getHeight() / Global::MAP_HEIGHT), audio("data/music/BreakWall.wav"), enemyGenerator(fpath)
 {
 	init();
 }
@@ -658,7 +659,7 @@ ComponentGame::~ComponentGame()
 void ComponentGame::setSize(const Size<double>& size)
 {
 	this->size = size;
-	blockSize = Size<double>(size.getWidth() / MAP_WIDTH, size.getHeight() / MAP_HEIGHT);
+	blockSize = Size<double>(size.getWidth() / Global::MAP_WIDTH, size.getHeight() / Global::MAP_HEIGHT);
 	setBlockSize();
 }
 
@@ -701,9 +702,9 @@ void ComponentGame::draw(void)
 	double blockHeight = blockSize.getHeight();
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
-	for (int i = 0; i < MAP_HEIGHT; i++) {
+	for (int i = 0; i < Global::MAP_HEIGHT; i++) {
 		glPushMatrix();
-		for (int j = 0; j < MAP_WIDTH; j++) {
+		for (int j = 0; j < Global::MAP_WIDTH; j++) {
 			bool visible = false;
 			Vector<double> position(j, i);
 			for (auto itr = players.begin(); itr != players.end(); ++itr) {

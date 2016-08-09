@@ -26,8 +26,6 @@ public:
 	class CannotAllocateException{};	//メモリ確保に失敗
 
 private:
-	static const int MAP_WIDTH;			//マップ配列の幅
-	static const int MAP_HEIGHT;		//マップ配列の高さ
 	static const int DIVISION_NUMBER;	//当たり判定における分割数
 
 private:
@@ -405,7 +403,7 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters) cons
 	double distance = Global::WORLD_WIDTH;
 	if (Global::WORLD_HEIGHT > distance)
 		distance = Global::WORLD_HEIGHT;
-	drawCharacters(characters, Vector<double>(MAP_WIDTH / 2, MAP_HEIGHT / 2), distance);
+	drawCharacters(characters, Vector<double>(Global::MAP_WIDTH / 2, Global::MAP_HEIGHT / 2), distance);
 }
 
 template <typename T>
@@ -505,9 +503,9 @@ inline Block* ComponentGame::isHit(const Vector<double>& position, bool (Block::
 {
 	int i = (int)position.getY();
 	int j = (int)position.getX();
-	if (i < 0 || i >= MAP_HEIGHT)
+	if (i < 0 || i >= Global::MAP_HEIGHT)
 		return nullptr;
-	if (j < 0 || j >= MAP_WIDTH)
+	if (j < 0 || j >= Global::MAP_WIDTH)
 		return nullptr;
 	Block& block = *map[i][j];
 	if (((&block)->*isTransparent)())
@@ -569,7 +567,7 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		Vector<double> destination = position + directionVector;
 		int row = (int)destination.getY();
 		int col = (int)destination.getX();
-		if (row < 0 || row >= MAP_HEIGHT || col < 0 || col >= MAP_WIDTH)
+		if (row < 0 || row >= Global::MAP_HEIGHT || col < 0 || col >= Global::MAP_WIDTH)
 			continue;
 		const Block& block = *map[row][col];
 		if (block.isTransparent())
