@@ -211,7 +211,7 @@ void ComponentGame::killEnemies(void)
 			continue;
 		}
 		const Vector<double>& source = enemy.getSource();
-		Vector<int> node((int)source.getX(), (int)source.getY());
+		Vector<int> node(source);
 		Region& region = regionSet.search(node);
 		if (region.getPositionNum() <= Global::KILL_ENEMY_THRESHOLD) {
 			const Vector<double>& position = enemy.getPosition();
