@@ -110,8 +110,6 @@ void ComponentGame::generateMap(void)
 			}
 		}
 	}
-	//test code
-	Debug::dump("map.txt", map);
 }
 
 vector<int> ComponentGame::getValidDirections(const Vector<int>& _position)
