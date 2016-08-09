@@ -154,7 +154,7 @@ inline bool Vector<T,T2>::operator==(const Vector<T,T2>& v) const
 }
 
 template <typename T, typename T2>
-inline std::ostream& operator<<(std::ostream& os, const Vector<T,T2>& v)
+std::ostream& operator<<(std::ostream& os, const Vector<T,T2>& v)
 {
 	os << "(" << v.x << ", " << v.y << ")";
 	return os;

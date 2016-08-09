@@ -57,7 +57,7 @@ void Debug::dump(const std::string& fpath, const RegionSet& regionSet)
 	const list<Region>& regions = regionSet.getRegions();
 	for (auto itr = regions.begin(); itr != regions.end(); ++itr) {
 		const Region& region = *itr;
-		count += region.getPositionNum();
+		count += (unsigned)region.getPositionNum();
 	}
 	ofs << "    transparent block : " << count << endl;
 	count = 0;
@@ -67,7 +67,7 @@ void Debug::dump(const std::string& fpath, const RegionSet& regionSet)
 			try {
 				regionSet.search(Vector<int>(j, i));
 			}
-			catch (const RegionSet::RegionNotFoundException& e) {
+			catch (const RegionSet::RegionNotFoundException&) {
 				map[i][j] = true;
 				count++;
 			}
