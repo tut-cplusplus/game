@@ -672,6 +672,9 @@ void ComponentGame::init(void)
 
 void ComponentGame::draw(void)
 {
+	//debug code begin
+	try {
+	//debug code end
 	if (!players.size()) {
 		RelativeLayout* layout = new RelativeLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT));
 		layout->add(new ComponentTeapot(Size<double>(0, 0)), Vector<double>(0.0, 0.0), true);
@@ -781,6 +784,16 @@ void ComponentGame::draw(void)
 			glPopMatrix();
 		}
 	}
+	//debug code begin
+	}
+	catch (const RegionSet::RegionNotFoundException& e) {
+		cerr << e.what() << endl;
+		Debug::dump("map.txt", map);
+		cerr << "map dumped" << endl;
+		Debug::dump("regionSet.txt", regionSet);
+		cerr << "region set dumped" << endl;
+	}
+	//debug code end
 }
 
 void ComponentGame::mouse(int button, int state, int x, int y)
