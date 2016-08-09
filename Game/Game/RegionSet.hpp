@@ -4,13 +4,19 @@
 #include <list>
 
 #include "Region.hpp"
+#include "Exception.hpp"
+
+using Exception_ = Exception;
 
 class RegionSet {
 private:
 	static Vector<int> neighbors[];
 
 public:
-	class RegionNotFoundException{};
+	class RegionNotFoundException : public Exception {
+	public:
+		RegionNotFoundException(const std::string& file, int line);
+	};
 
 private:
 	std::list<Region> regions;
@@ -31,6 +37,12 @@ public:
 	const std::list<Region>& getRegions(void) const;
 };
 
+inline RegionSet::RegionNotFoundException::RegionNotFoundException(const std::string& file, int line)
+	: Exception_(file, line)
+{
+
+}
+
 inline size_t RegionSet::getRegionNum(void) const
 {
 	return regions.size();
@@ -40,6 +52,8 @@ inline const std::list<Region>& RegionSet::getRegions(void) const
 {
 	return regions;
 }
+
+#define RegionNotFoundException() RegionNotFoundException(__FILE__, __LINE__)
 
 #endif
 
