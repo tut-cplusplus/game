@@ -189,10 +189,10 @@ void ComponentGame::addEnemy(void)
 
 void ComponentGame::addEnemy(const Vector<double>& position)
 {
-	double speed;
-	double viewAngle;
-	double radius;
-	int life;
+	double speed = 0.0;
+	double viewAngle = 0.0;
+	double radius = 0.0;
+	int life = 0.0;
 	enemyGenerator.getParameter(speed, viewAngle, radius, life);
 	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY()), blockSize, speed, viewAngle, radius, life));
 }
