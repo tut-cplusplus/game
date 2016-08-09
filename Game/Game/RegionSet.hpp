@@ -14,8 +14,13 @@ private:
 
 public:
 	class RegionNotFoundException : public Exception {
+	private:
+		Vector<int> position;
+
 	public:
-		RegionNotFoundException(const std::string& file, int line);
+		RegionNotFoundException(const std::string& file, int line, const Vector<int>& position);
+
+		const Vector<int>& getPosition(void) const;
 	};
 
 private:
@@ -37,10 +42,15 @@ public:
 	const std::list<Region>& getRegions(void) const;
 };
 
-inline RegionSet::RegionNotFoundException::RegionNotFoundException(const std::string& file, int line)
-	: Exception_(file, line)
+inline RegionSet::RegionNotFoundException::RegionNotFoundException(const std::string& file, int line, const Vector<int>& position)
+	: Exception_(file, line), position(position)
 {
 
+}
+
+inline const Vector<int>& RegionSet::RegionNotFoundException::getPosition(void) const
+{
+	return position;
 }
 
 inline size_t RegionSet::getRegionNum(void) const
@@ -53,7 +63,7 @@ inline const std::list<Region>& RegionSet::getRegions(void) const
 	return regions;
 }
 
-#define RegionNotFoundException() RegionNotFoundException(__FILE__, __LINE__)
+#define RegionNotFoundException(x) RegionNotFoundException(__FILE__, __LINE__, x)
 
 #endif
 

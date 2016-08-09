@@ -792,6 +792,7 @@ void ComponentGame::draw(void)
 		cerr << "map dumped" << endl;
 		Debug::dump("regionSet.txt", regionSet);
 		cerr << "region set dumped" << endl;
+		cerr << "searched position : " << e.getPosition() << endl;
 	}
 	//debug code end
 }

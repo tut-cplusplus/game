@@ -55,7 +55,7 @@ std::list<Region>::iterator RegionSet::searchIterator(const Region& region)
 		if (&r == &region)
 			return itr;
 	}
-	throw RegionNotFoundException();
+	throw RegionNotFoundException(Vector<int>());
 }
 
 Region& RegionSet::search(const Vector<int>& position)
@@ -65,7 +65,7 @@ Region& RegionSet::search(const Vector<int>& position)
 		if (region.search(position))
 			return region;
 	}
-	throw RegionNotFoundException();
+	throw RegionNotFoundException(Vector<int>());
 }
 
 const Region& RegionSet::search(const Vector<int>& position) const
@@ -75,7 +75,7 @@ const Region& RegionSet::search(const Vector<int>& position) const
 		if (region.search(position))
 			return region;
 	}
-	throw RegionNotFoundException();
+	throw RegionNotFoundException(position);
 }
 
 void RegionSet::operator+=(const Vector<int>& position)
