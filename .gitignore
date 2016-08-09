@@ -1,5 +1,6 @@
 ## Ignore debug files
 map.txt
+regionSet.txt
 
 ## Ignore vim files
 *.swp
