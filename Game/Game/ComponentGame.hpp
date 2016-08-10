@@ -46,6 +46,7 @@ private:
 	EnemyGenerator enemyGenerator;
 
 private:
+	int getPlayerRadius(void) const;
 	Vector<double> convert2worldPosition(const Vector<double>& mapPosition) const;
 	/**
 	 * マップの配列を生成する
@@ -398,6 +399,11 @@ public:
 	virtual void specialupOnce(int key, int x, int y);
 };
 
+inline int ComponentGame::getPlayerRadius(void) const
+{
+	return Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS;
+}
+
 inline Vector<double> ComponentGame::convert2worldPosition(const Vector<double>& mapPosition) const
 {
 	return Vector<double>(mapPosition.getX() * blockSize.getWidth(), mapPosition.getY() * blockSize.getHeight());
@@ -441,7 +447,7 @@ void ComponentGame::drawCharacterVisibilities(const std::vector<T*>& characters)
 		const Size<double>& size = character.getSize();
 		double width = size.getWidth();
 		double height = size.getHeight();
-		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS, false);
+		CircularSector circularSector(Vector<double>(width / 2, height / 2), 0.0, 360.0, getPlayerRadius(), false);
 		circularSector.draw();
 		glPopMatrix();
 	}

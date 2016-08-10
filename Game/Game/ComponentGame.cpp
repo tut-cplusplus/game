@@ -720,7 +720,7 @@ void ComponentGame::draw(void)
 			for (auto itr = players.begin(); itr != players.end(); ++itr) {
 				const Player& player = **itr;
 				const Vector<double>& playerPosition = player.getPosition();
-				if (isHit(position - playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS)) {
+				if (isHit(position - playerPosition, getPlayerRadius())) {
 					visible = true;
 					break;
 				}
@@ -741,9 +741,9 @@ void ComponentGame::draw(void)
 		for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 			auto& character = **itr;
 			const Vector<double>& position = character.getPosition();
-			drawCharacters(enemies, position, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
-			drawCharacters(decoys, position, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
-			drawItemBlocks(position, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+			drawCharacters(enemies, position, getPlayerRadius());
+			drawCharacters(decoys, position, getPlayerRadius());
+			drawItemBlocks(position, getPlayerRadius());
 		}
 	};
 	func(players);
@@ -753,7 +753,7 @@ void ComponentGame::draw(void)
 	for (auto itr = players.begin(); itr != players.end(); ++itr) {
 		const Player& player = **itr;
 		const Vector<double>& playerPosition = player.getPosition();
-		drawEnemyVisibilities(playerPosition, Global::DEBUG_MODE ? Global::WORLD_WIDTH : Global::PLAYER_RADIUS);
+		drawEnemyVisibilities(playerPosition, getPlayerRadius());
 	}
 	drawEnemyInformations();
 	if (!Global::DEBUG_MODE)
