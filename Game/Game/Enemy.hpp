@@ -22,13 +22,14 @@ private:
 	bool isLookingPlayer;
 	std::vector<Information> informations;	//プレイヤーの伝達情報
 	int life;			//ブロックを破壊できる回数
+	double informationSpeed;	//情報伝達速度
 
 protected:
 	void loadAnimations(void);
 
 public:
 
-	Enemy(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0), double speed = 1.0, double viewAngle = 45.0, double radius = 100.0, int life = 0);
+	Enemy(const Vector<double>& position = Vector<double>(0.0, 0.0), const Size<double>& size = Size<double>(0.0, 0.0), double speed = 1.0, double viewAngle = 45.0, double radius = 100.0, int life = 0, double informationSpeed = 0.0);
 	virtual ~Enemy();
 
 	/**
@@ -38,6 +39,7 @@ public:
 	double getRadius(void) const;
 	std::vector<Information>& getInformations(void);
 	int getLife(void) const;
+	double getInformationSpeed(void) const;
 
 	/**
 	 * 毎フレーム呼び出される
@@ -115,6 +117,11 @@ inline vector<Information>& Enemy::getInformations(void)
 inline int Enemy::getLife(void) const
 {
 	return life;
+}
+
+inline double Enemy::getInformationSpeed(void) const
+{
+	return informationSpeed;
 }
 
 #endif

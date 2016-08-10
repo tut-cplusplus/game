@@ -11,6 +11,7 @@ class EnemyGenerator {
 	std::vector<double> viewAngles;
 	std::vector<double> radiuses;
 	std::vector<int> lives;
+	std::vector<double> informationSpeeds; 
 
 public:
 	EnemyGenerator(const std::string& fpath);
@@ -18,7 +19,7 @@ public:
 	unsigned getFirstSpawnNum(void) const;
 	size_t getSpawnNum(void) const;
 	unsigned getSpawnedNum(void) const;
-	void getParameter(double& speed, double& viewAngle, double& radius, int& life);
+	void getParameter(double& speed, double& viewAngle, double& radius, int& life, double& informationSpeed);
 };
 
 inline unsigned EnemyGenerator::getFirstSpawnNum(void) const
@@ -36,7 +37,7 @@ inline unsigned EnemyGenerator::getSpawnedNum(void) const
 	return idx;
 }
 
-inline void EnemyGenerator::getParameter(double& speed, double& viewAngle, double& radius, int& life)
+inline void EnemyGenerator::getParameter(double& speed, double& viewAngle, double& radius, int& life, double& informationSpeed)
 {
 	if (idx == speeds.size())
 		return;
@@ -44,6 +45,7 @@ inline void EnemyGenerator::getParameter(double& speed, double& viewAngle, doubl
 	viewAngle = viewAngles[idx];
 	radius = radiuses[idx];
 	life = lives[idx];
+	informationSpeed = informationSpeeds[idx];
 	idx++;
 }
 

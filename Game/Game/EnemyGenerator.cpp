@@ -20,16 +20,19 @@ EnemyGenerator::EnemyGenerator(const string& fpath)
 	ifs >> dummy;
 	ifs >> dummy;
 	ifs >> dummy;
+	ifs >> dummy;
 	for (unsigned i = 0; i < num; i++) {
 		double speed;
 		double viewAngle;
 		double radius;
 		int life;
-		ifs >> speed >> viewAngle >> radius >> life;
+		double informationSpeed;
+		ifs >> speed >> viewAngle >> radius >> life >> informationSpeed;
 		speeds.push_back(speed);
 		viewAngles.push_back(viewAngle);
 		radiuses.push_back(radius);
 		lives.push_back(life);
+		informationSpeeds.push_back(informationSpeed);
 	}
 }
 

@@ -11,8 +11,8 @@ Information::Information()
 
 }
 
-Information::Information(const Vector<double>& position, double radius, const Character& character)
-	: CircularSector(position, 0.0, 0.0, radius), character(character)
+Information::Information(const Vector<double>& position, double radius, const Character& character, double speed)
+	: CircularSector(position, 0.0, 0.0, radius), character(character), speed(speed)
 {
 
 }
@@ -44,6 +44,6 @@ void Information::draw(void)
 	}
 	glEnd();
 	glPopMatrix();
-	radius += 1.0;
+	radius += speed / 60;
 }
 

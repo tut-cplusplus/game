@@ -204,8 +204,9 @@ void ComponentGame::addEnemy(const Vector<double>& position)
 	double viewAngle = 0.0;
 	double radius = 0.0;
 	int life = 0;
-	enemyGenerator.getParameter(speed, viewAngle, radius, life);
-	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY()), blockSize, speed, viewAngle, radius, life));
+	double informationSpeed = 0.0;
+	enemyGenerator.getParameter(speed, viewAngle, radius, life, informationSpeed);
+	enemies.push_back(new NormalEnemy(Vector<double>(position.getX(), position.getY()), blockSize, speed, viewAngle, radius, life, informationSpeed));
 }
 
 void ComponentGame::deleteEnemies(void)

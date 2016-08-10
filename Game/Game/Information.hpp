@@ -11,10 +11,11 @@ class Information : public CircularSector {
 private:
 	Character character;
 	std::vector<int> IDs;
+	double speed;
 
 public:
 	Information();
-	Information(const Vector<double>& position, double radius, const Character& character);
+	Information(const Vector<double>& position, double radius, const Character& character, double speed);
 
 	void registerID(int ID);
 	bool searchID(int ID) const;

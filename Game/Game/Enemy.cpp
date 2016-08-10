@@ -17,8 +17,8 @@ void Enemy::loadAnimations(void)
 	Character::loadAnimations();
 }
 
-Enemy::Enemy(const Vector<double>& position, const Size<double>& size, double speed, double viewAngle, double radius, int life)
-	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), onEyes(false), count(0), life(life)
+Enemy::Enemy(const Vector<double>& position, const Size<double>& size, double speed, double viewAngle, double radius, int life, double informationSpeed)
+	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), onEyes(false), count(0), life(life), informationSpeed(informationSpeed)
 {
 	init();
 }
@@ -121,7 +121,7 @@ void Enemy::onFindFirst(const Character& character)
 	const Size<double>& size = character.getSize();
 	position.setX(position.getX() * size.getWidth());
 	position.setY(position.getY() * size.getHeight());
-	Information information(position, 50, character);
+	Information information(position, 50, character, informationSpeed);
 	information.registerID(ID);
 	informations.push_back(information);
 }
