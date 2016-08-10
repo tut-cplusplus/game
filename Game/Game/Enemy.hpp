@@ -46,6 +46,8 @@ public:
 	 * AI関係の処理を記述する
 	 */
 	void onMoveAI(void);
+	//test code
+	void move(void);
 	/**
 	 * 壁に衝突したときに呼び出される
 	 * AI関係の処理を記述する

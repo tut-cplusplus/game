@@ -217,6 +217,17 @@ void ComponentGame::deleteEnemies(void)
 
 void ComponentGame::killEnemies(void)
 {
+	auto search = [this](const Enemy& enemy, Region& region) {
+		for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+			if (*itr == &enemy)
+				continue;
+			const Enemy& e = **itr;
+			Region& r = regionSet.search(e.getSource());
+			if (&r == &region && e.getLife())
+				return true;
+		}
+		return false;
+	};
 	for (auto itr = enemies.begin(); itr != enemies.end();) {
 		const Enemy& enemy = **itr;
 		if (enemy.getLife()) {
@@ -226,7 +237,7 @@ void ComponentGame::killEnemies(void)
 		const Vector<double>& source = enemy.getSource();
 		Vector<int> node(source);
 		Region& region = regionSet.search(node);
-		if (region.getPositionNum() <= Global::KILL_ENEMY_THRESHOLD) {
+		if (region.getPositionNum() <= Global::KILL_ENEMY_THRESHOLD && !search(enemy, region)) {
 			const Vector<double>& position = enemy.getPosition();
 			itemBlocks.push_back(new ItemBlock(position, new BlockUnbreakableWall(blockSize)));
 			delete *itr;
