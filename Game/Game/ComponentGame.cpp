@@ -488,7 +488,7 @@ void ComponentGame::setBlockSize(void)
 			visibleMap[i][j]->setSize(blockSize);
 		}
 	}
-	auto func = [&](auto characters){
+	auto func = [&](auto& characters){
 		for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 			auto& character = **itr;
 			character.setSize(blockSize);
@@ -742,7 +742,7 @@ void ComponentGame::draw(void)
 	}
 	glPopMatrix();
 	drawCharacters(players);
-	auto func = [&](auto characters){
+	auto func = [&](const auto& characters){
 		for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 			auto& character = **itr;
 			const Vector<double>& position = character.getPosition();
