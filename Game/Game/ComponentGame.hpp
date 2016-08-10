@@ -46,6 +46,7 @@ private:
 	EnemyGenerator enemyGenerator;
 
 private:
+	Vector<double> convert2worldPosition(const Vector<double>& mapPosition) const;
 	/**
 	 * マップの配列を生成する
 	 * ただし，ブロックのインスタンス生成は行わない
@@ -397,6 +398,11 @@ public:
 	virtual void specialupOnce(int key, int x, int y);
 };
 
+inline Vector<double> ComponentGame::convert2worldPosition(const Vector<double>& mapPosition) const
+{
+	return Vector<double>(mapPosition.getX() * blockSize.getWidth(), mapPosition.getY() * blockSize.getHeight());
+}
+
 template <typename T>
 inline void ComponentGame::drawCharacters(const std::vector<T*> characters) const
 {
@@ -409,17 +415,14 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters) cons
 template <typename T>
 inline void ComponentGame::drawCharacters(const std::vector<T*> characters, const Vector<double>& position, double distance) const
 {
-	double blockWidth = blockSize.getWidth();
-	double blockHeight = blockSize.getHeight();
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		glPushMatrix();
 		T& character = **itr;
 		const Vector<double>& characterPosition = character.getPosition();
 		if (!isHit(position - characterPosition, distance))
 			continue;
-		double x = characterPosition.getX();
-		double y = characterPosition.getY();
-		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		Vector<double> worldPosition = convert2worldPosition(characterPosition);
+		glTranslated(worldPosition.getX(), worldPosition.getY(), 0.0);
 		character.draw();
 		glPopMatrix();
 	}
@@ -428,16 +431,13 @@ inline void ComponentGame::drawCharacters(const std::vector<T*> characters, cons
 template <typename T>
 void ComponentGame::drawCharacterVisibilities(const std::vector<T*>& characters) const
 {
-	double blockWidth = blockSize.getWidth();
-	double blockHeight = blockSize.getHeight();
 	glColor3d(0.0, 1.0, 0.0);
 	for (auto itr = characters.begin(); itr != characters.end(); ++itr) {
 		Character& character = **itr;
 		glPushMatrix();
 		const Vector<double>& position = character.getPosition();
-		double x = position.getX();
-		double y = position.getY();
-		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		Vector<double> worldPosition = convert2worldPosition(position);
+		glTranslated(worldPosition.getX(), worldPosition.getY(), 0.0);
 		const Size<double>& size = character.getSize();
 		double width = size.getWidth();
 		double height = size.getHeight();

@@ -248,18 +248,15 @@ void ComponentGame::drawItemBlocks(const Vector<double>& position, double distan
 
 void ComponentGame::drawEnemyVisibilities(const Vector<double>& position, double distance) const
 {
-	double blockWidth = blockSize.getWidth();
-	double blockHeight = blockSize.getHeight();
 	glColor3d(1.0, 1.0, 1.0);
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 		Enemy& enemy = **itr;
 		const Vector<double>& enemyPosition = enemy.getPosition();
 		if (!isHit(position - enemyPosition, distance))
 			continue;
-		double x = enemyPosition.getX();
-		double y = enemyPosition.getY();
+		Vector<double> worldPosition = convert2worldPosition(enemyPosition);
 		glPushMatrix();
-		glTranslated(x * blockWidth, y * blockHeight, 0.0);
+		glTranslated(worldPosition.getX(), worldPosition.getY(), 0.0);
 		enemy.drawVisibility();
 		glPopMatrix();
 	}
@@ -334,9 +331,7 @@ bool ComponentGame::isBlocked(const Vector<double>& position1, const Vector<doub
 
 bool ComponentGame::isHit(const Vector<double>& position, double radius) const
 {
-	Vector<double> displacement(position);
-	displacement.setX(displacement.getX() * blockSize.getWidth());
-	displacement.setY(displacement.getY() * blockSize.getHeight());
+	Vector<double> displacement = convert2worldPosition(position);
 	if (displacement.norm2() > radius * radius)
 		return false;
 	return true;
