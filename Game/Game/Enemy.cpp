@@ -81,13 +81,6 @@ void Enemy::onMoveAI(void)
 	startMoving();
 }
 
-//test code
-void Enemy::move(void)
-{
-	if (!Global::DEBUG_MODE)
-		Character::move();
-}
-
 void Enemy::onHit(void)
 {
 	Character::onHit();
