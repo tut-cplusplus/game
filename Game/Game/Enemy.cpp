@@ -5,6 +5,7 @@
 #include "Global.hpp"
 #include "Enemy.hpp"
 #include "CircularSector.hpp"
+#include "RegionSet.hpp"
 
 #include <GL/glut.h>
 
@@ -18,7 +19,7 @@ void Enemy::loadAnimations(void)
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size, double speed, double viewAngle, double radius, int life, double informationSpeed)
-	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), onEyes(false), count(0), life(life), informationSpeed(informationSpeed)
+	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), life(life), informationSpeed(informationSpeed), isFindPlayer(false), isLookingPlayer(false), isDestroyBlock(false), isUpdateTarget(false)
 {
 	init();
 }
@@ -28,53 +29,73 @@ Enemy::~Enemy()
 
 }
 
-void Enemy::onMoveAI(void)
+void Enemy::onMoveAI(RegionSet const &regionSet)
 {
-	isFindPlayer = false;
-	//移動中であれば何もしない
-	if (isMoving)
-		return;
 	static random_device rd;
 	static mt19937 mt(rd());
 	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
-	if (first) {
-		//最初だけ方向を決める
-		direction = (Direction)randomDirection(mt);
-		first = false;
+
+	//移動中であれば何もしない
+	if (isMoving) {
+		return;
 	}
 
-	if (!onEyes) {
-		if (count != 0) {
-			count --;
-			std::cout << "find out : " << count << std::endl;
+	//debug
+	list<Vector<int> > pos = route.getPositions();
+	list<Vector<int> >::iterator it;
+	for (it = pos.begin(); it != pos.end();) {
+		std::cout << *it;
+
+		if (++it != pos.end()) {
+			std::cout << " >> ";
+		}
+		else {
+			std::cout << std::endl;
 		}
 	}
-	else {
-		count = 10;
+
+	//HACK: 依存大きくなるけど引数でregionもらいました
+	Vector<int> old(oldTarget);
+	Vector<int> start(position);
+	Vector<int> end(newTarget);
+	Region const region = regionSet.search(start);
+
+	if (region.getPositionNum() <= Global::KILL_ENEMY_THRESHOLD) {
+		isDestroyBlock = true;
 	}
 
-	if (count) {
-		double dx = newTarget.getX() - this->position.getX();
-		double dy = newTarget.getY() - this->position.getY();
+	if (isUpdateTarget) {
+		isUpdateTarget = false;
+		try {
+			route = region.breadthFirstSearch(start, end);
+		}
+		catch (Region::CannotArriveException const &e) {
+			isDestroyBlock = true;
+		}
+	}
 
-		if (pow(dx, 2.0) > pow(dy, 2.0)) {
-			if (dx < 0) {
+	if (isFindPlayer) {
+		if (route.getPositionNum()) {
+			Vector<int> next = route.getNextPosition();
+			route = --route;
+
+			if (next.getX() > start.getX()) {
+				direction = EAST;
+			}
+			else if (next.getX() < start.getX()) {
 				direction = WEST;
 			}
-			else {
-				direction = EAST;
+			else if (next.getY() > start.getY()) {
+				direction = NORTH;
+			}
+			else if (next.getY() < start.getY()) {
+				direction = SOUTH;
 			}
 		}
 		else {
-			if (dy < 0) {
-				direction = SOUTH;
-			}
-			else {
-				direction = NORTH;
-			}
+			isFindPlayer = false;
+			isLookingPlayer = false;
 		}
-
-		onEyes = false;
 	}
 
 	//移動の開始
@@ -83,27 +104,35 @@ void Enemy::onMoveAI(void)
 
 void Enemy::onHit(void)
 {
-	Character::onHit();
 	static random_device rd;
 	static mt19937 mt(rd());
 	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
-	static uniform_int_distribution<int> randomIsBreak(0, 5);
-	if (life && !randomIsBreak(mt)) {
+
+	Character::onHit();
+
+	if (isDestroyBlock && life) {
 		isBreaking = true;
-		life--;
-		return;
+		isDestroyBlock = false;
+		life --;
+		return ;
 	}
-	//方向を決める（変更する）
-	direction = (Direction)randomDirection(mt);
+
+	if (!isBreaking) {
+			direction = (Direction)randomDirection(mt);
+	}
+
 	//移動の開始
 	startMoving();
 }
 
 void Enemy::onFindDirect(const Character& character)
 {
-	isFindPlayer = true;
-	if (!isLookingPlayer)
+	//初めて見つけたプレイヤーを目視したとき情報伝達を行う
+	//もしくは見失ってから再度見つけたとき
+	if (!isLookingPlayer) {
 		onFindFirst(character);
+	}
+
 	isLookingPlayer = true;
 	onFind(character);
 }
@@ -112,7 +141,8 @@ void Enemy::onFind(const Character& character)
 {
 	oldTarget = newTarget;
 	newTarget = character.getPosition();
-	onEyes = true;
+	isFindPlayer = true;
+	isUpdateTarget = true;
 }
 
 void Enemy::onFindFirst(const Character& character)
@@ -126,9 +156,9 @@ void Enemy::onFindFirst(const Character& character)
 	informations.push_back(information);
 }
 
+//視界にブロックが入ったときに最初だけ呼ばれる？
 void Enemy::onFind(const Vector<int>& position, const Block& block)
 {
-
 }
 
 void Enemy::changeColor(void) const
@@ -167,4 +197,3 @@ void Enemy::drawInformations(void)
 		}
 	}
 }
-

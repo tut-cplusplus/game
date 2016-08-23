@@ -17,6 +17,7 @@ public:
 	std::list<Vector<int>>::size_type getPositionNum(void) const;
 	std::list<Vector<int>>::size_type getDistance(void) const;
 	const std::list<Vector<int>> getPositions(void) const;
+	Vector<int> getNextPosition(void) const;
 };
 
 inline void Route::operator+=(const Vector<int>& position)
@@ -26,7 +27,7 @@ inline void Route::operator+=(const Vector<int>& position)
 
 inline Route& Route::operator--(void)
 {
-	positions.pop_back();
+	positions.pop_front();
 	return *this;
 }
 
@@ -45,5 +46,9 @@ inline const std::list<Vector<int>> Route::getPositions(void) const
 	return positions;
 }
 
-#endif
+inline Vector<int> Route::getNextPosition(void) const
+{
+	return *(positions.begin());
+}
 
+#endif

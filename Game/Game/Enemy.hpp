@@ -8,6 +8,10 @@
 #include "Player.hpp"
 #include "Block.hpp"
 #include "Information.hpp"
+#include "Route.hpp"
+#include "Region.hpp"
+#include "RegionSet.hpp"
+
 
 class Enemy : public Character {
 private:
@@ -16,13 +20,14 @@ private:
 	bool first;			//AIのサンプルに使用．不要であれば消す
 	Vector<double> oldTarget;
 	Vector<double> newTarget;
-	bool onEyes;
-	int count;
-	bool isFindPlayer;
-	bool isLookingPlayer;
 	std::vector<Information> informations;	//プレイヤーの伝達情報
 	int life;			//ブロックを破壊できる回数
 	double informationSpeed;	//情報伝達速度
+	bool isFindPlayer;	//プレイヤーを発見中かどうか
+	bool isLookingPlayer;	//プレイヤーを見ているかどうか
+	bool isDestroyBlock;
+	bool isUpdateTarget;
+	Route route;
 
 protected:
 	void loadAnimations(void);
@@ -40,12 +45,13 @@ public:
 	std::vector<Information>& getInformations(void);
 	int getLife(void) const;
 	double getInformationSpeed(void) const;
+	void setDestroyBlockFlag(void);
 
 	/**
 	 * 毎フレーム呼び出される
 	 * AI関係の処理を記述する
 	 */
-	void onMoveAI(void);
+	void onMoveAI(RegionSet const &regionSet);
 	/**
 	 * 壁に衝突したときに呼び出される
 	 * AI関係の処理を記述する
@@ -122,6 +128,12 @@ inline int Enemy::getLife(void) const
 inline double Enemy::getInformationSpeed(void) const
 {
 	return informationSpeed;
+}
+
+inline void Enemy::setDestroyBlockFlag(void)
+{
+	isDestroyBlock = true;
+	return ;
 }
 
 #endif

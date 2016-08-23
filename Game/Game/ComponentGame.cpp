@@ -229,7 +229,7 @@ void ComponentGame::killEnemies(void)
 		return false;
 	};
 	for (auto itr = enemies.begin(); itr != enemies.end();) {
-		const Enemy& enemy = **itr;
+		Enemy& enemy = **itr;
 		if (enemy.getLife()) {
 			++itr;
 			continue;
@@ -285,7 +285,7 @@ void ComponentGame::drawEnemyInformations(void)
 void ComponentGame::moveEnemiesAI(void)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
-		(**itr).onMoveAI();
+		(**itr).onMoveAI(regionSet);
 }
 
 bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Utility::Rectangle& rectangle, const Enemy& enemy) const
