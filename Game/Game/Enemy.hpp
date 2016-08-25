@@ -18,17 +18,15 @@ private:
 	double viewAngle;	//見ている方向
 	double radius;		//視界の半径
 	bool first;			//AIのサンプルに使用．不要であれば消す
-	Vector<double> oldTarget;
-	Vector<double> newTarget;
 	std::vector<Information> informations;	//プレイヤーの伝達情報
 	int life;			//ブロックを破壊できる回数
 	double informationSpeed;	//情報伝達速度
 	bool isFindPlayer;	//プレイヤーを発見中かどうか
-	bool isLookingPlayer;	//プレイヤーを見ているかどうか
-	bool isDestroyBlock;
-	bool isUpdateTarget;
+	bool isLookingPlayer;
+	bool isLookingPlayerThisFrame;
 	Region region;		//敵が把握しているマップ情報
 	Route route;
+	Vector<int> playerPosition;
 
 protected:
 	void loadAnimations(void);
@@ -46,7 +44,6 @@ public:
 	std::vector<Information>& getInformations(void);
 	int getLife(void) const;
 	double getInformationSpeed(void) const;
-	void setDestroyBlockFlag(void);
 
 	/**
 	 * 毎フレーム呼び出される
@@ -107,11 +104,12 @@ public:
 	/**
 	 * 移動経路の表示
 	 */
-	void drawRoute(void);
+	void drawRoute(void) const;
 	/**
 	 * マップの表示
 	 */
-	void drawRegion(void);
+	void drawRegion(void) const;
+	Vector<int> getNearestReachablePosition(void) const;
 };
 
 inline double Enemy::getViewAngle(void) const
@@ -137,12 +135,6 @@ inline int Enemy::getLife(void) const
 inline double Enemy::getInformationSpeed(void) const
 {
 	return informationSpeed;
-}
-
-inline void Enemy::setDestroyBlockFlag(void)
-{
-	isDestroyBlock = true;
-	return ;
 }
 
 #endif

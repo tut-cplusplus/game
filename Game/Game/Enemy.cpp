@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include <random>
 #include <cmath>
+#include <limits>
 
 #include "Global.hpp"
 #include "Enemy.hpp"
@@ -19,7 +20,7 @@ void Enemy::loadAnimations(void)
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size, double speed, double viewAngle, double radius, int life, double informationSpeed)
-	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), life(life), informationSpeed(informationSpeed), isFindPlayer(false), isLookingPlayer(false), isDestroyBlock(false), isUpdateTarget(false)
+	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), life(life), informationSpeed(informationSpeed), isFindPlayer(false)
 {
 	init();
 }
@@ -31,88 +32,96 @@ Enemy::~Enemy()
 
 void Enemy::onMoveAI(RegionSet const &regionSet)
 {
-	static random_device rd;
-	static mt19937 mt(rd());
-	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
+	static std::random_device rd;
+	static std::mt19937 mt;
+	if (!isLookingPlayerThisFrame)
+		isLookingPlayer = false;
+	isLookingPlayerThisFrame = false;
 
 	//移動中であれば何もしない
 	if (isMoving) {
 		return;
 	}
 
-	//HACK: 依存大きくなるけど引数でregionもらいました
-	Vector<int> old(oldTarget);
 	Vector<int> start(position);
-	Vector<int> end(newTarget);
-	Region const region = regionSet.search(start);
+	if (route.getPositionNum()) {
+		Vector<int> next = route.getNextPosition();
+		if (start == next)
+			--route;
+		if (isFindPlayer && !route.getPositionNum() && start == playerPosition)
+			isFindPlayer = false;
+	}
+	if (route.getPositionNum()) {
+		Vector<int> next = route.getNextPosition();
 
-	if (region.getPositionNum() <= Global::KILL_ENEMY_THRESHOLD) {
-		isDestroyBlock = true;
+		if (next.getX() > start.getX()) {
+			direction = EAST;
+		}
+		else if (next.getX() < start.getX()) {
+			direction = WEST;
+		}
+		else if (next.getY() > start.getY()) {
+			direction = NORTH;
+		}
+		else if (next.getY() < start.getY()) {
+			direction = SOUTH;
+		}
+		//移動の開始
+		startMoving();
+		return;
 	}
 
-	if (isUpdateTarget) {
-		isUpdateTarget = false;
+	if (isFindPlayer) {
+		try {
+			route = region.breadthFirstSearch(start, playerPosition);
+		}
+		catch (Region::CannotArriveException const &e) {
+			Vector<int> end = getNearestReachablePosition();
+			try {
+				route = region.breadthFirstSearch(start, end);
+			}
+			catch (Region::CannotArriveException const &e) {
+				isFindPlayer = false;
+			}
+		}
+	} else {
+		const list<Vector<int>>& positions = region.getPositions();
+		if (!positions.size()) {
+			uniform_int_distribution<int> randomDirection(NORTH, WEST);
+			int direction = randomDirection(mt);
+			static Vector<int> directionTable[] = {
+				Vector<int>(),
+				Vector<int>(0, 1),
+				Vector<int>(0, -1),
+				Vector<int>(1, 0),
+				Vector<int>(-1, 0),
+			};
+			route += start + directionTable[direction];
+			return;
+		}
+		std::uniform_int_distribution<int> rnd(0, positions.size() - 1);
+		int idx = rnd(mt);
+		auto itr = positions.begin();
+		while (idx-- > 0)
+			++itr;
+		Vector<int> end = *itr;
 		try {
 			route = region.breadthFirstSearch(start, end);
 		}
 		catch (Region::CannotArriveException const &e) {
-			isDestroyBlock = true;
 		}
 	}
-
-	if (isFindPlayer) {
-		if (route.getPositionNum()) {
-			Vector<int> next = route.getNextPosition();
-			route = --route;
-
-			if (next.getX() > start.getX()) {
-				direction = EAST;
-			}
-			else if (next.getX() < start.getX()) {
-				direction = WEST;
-			}
-			else if (next.getY() > start.getY()) {
-				direction = NORTH;
-			}
-			else if (next.getY() < start.getY()) {
-				direction = SOUTH;
-			}
-		}
-		else {
-			isFindPlayer = false;
-			isLookingPlayer = false;
-		}
-	}
-
-	//移動の開始
-	startMoving();
 }
 
 void Enemy::onHit(void)
 {
-	static random_device rd;
-	static mt19937 mt(rd());
-	static uniform_int_distribution<int> randomDirection(NORTH, WEST);
-
 	Character::onHit();
-
-	if (isDestroyBlock && life) {
-		isBreaking = true;
-		isDestroyBlock = false;
-		life --;
-		return ;
-	}
-
-	if (!isBreaking) {
-			direction = (Direction)randomDirection(mt);
-	}
-
-	//移動の開始
-	startMoving();
+	route = Route();
 }
 
 void Enemy::onFindDirect(const Character& character)
 {
+	isLookingPlayerThisFrame = true;
 	//初めて見つけたプレイヤーを目視したとき情報伝達を行う
 	//もしくは見失ってから再度見つけたとき
 	if (!isLookingPlayer) {
@@ -125,10 +134,8 @@ void Enemy::onFindDirect(const Character& character)
 
 void Enemy::onFind(const Character& character)
 {
-	oldTarget = newTarget;
-	newTarget = character.getPosition();
+	playerPosition = Vector<int>(character.getPosition());
 	isFindPlayer = true;
-	isUpdateTarget = true;
 }
 
 void Enemy::onFindFirst(const Character& character)
@@ -193,7 +200,7 @@ void Enemy::drawInformations(void)
 	}
 }
 
-void Enemy::drawRoute(void)
+void Enemy::drawRoute(void) const
 {
 	glColor3d(1.0, 1.0, 1.0);
 	const list<Vector<int>>& positions = route.getPositions();
@@ -216,7 +223,7 @@ void Enemy::drawRoute(void)
 	}
 }
 
-void Enemy::drawRegion(void)
+void Enemy::drawRegion(void) const
 {
 	static double colors[][3] = {
 		{1.0, 0.0, 0.0},
@@ -247,5 +254,21 @@ void Enemy::drawRegion(void)
 		glEnd();
 		glPopMatrix();
 	}
+}
+
+Vector<int> Enemy::getNearestReachablePosition(void) const
+{
+	double minNorm = numeric_limits<double>::max();
+	Vector<int> minPosition;
+	const list<Vector<int>>& positions = region.getPositions();
+	for (auto itr = positions.begin(); itr != positions.end(); ++itr) {
+		const Vector<int>& position = *itr;
+		double norm = (position - playerPosition).norm2();
+		if (norm < minNorm) {
+			minNorm = norm;
+			minPosition = position;
+		}
+	}
+	return minPosition;
 }
 
