@@ -560,8 +560,6 @@ void ComponentGame::findBlockEvent(void)
 		int j = cnt;
 		Vector<double> position(j, i);
 		Block& block = *map[i][j];
-		if (block.isTransparent())
-			continue;
 		for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
 			Enemy& enemy = **itr;
 			if (isFound(position, block, enemy))
