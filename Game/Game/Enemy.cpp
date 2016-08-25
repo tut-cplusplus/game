@@ -85,8 +85,7 @@ void Enemy::onMoveAI(RegionSet const &regionSet)
 			}
 		}
 	} else {
-		const list<Vector<int>>& positions = region.getPositions();
-		if (!positions.size()) {
+		auto randomRoute = [&]() {
 			uniform_int_distribution<int> randomDirection(NORTH, WEST);
 			int direction = randomDirection(mt);
 			static Vector<int> directionTable[] = {
@@ -97,6 +96,10 @@ void Enemy::onMoveAI(RegionSet const &regionSet)
 				Vector<int>(-1, 0),
 			};
 			route += start + directionTable[direction];
+		};
+		const list<Vector<int>>& positions = region.getPositions();
+		if (!positions.size()) {
+			randomRoute();
 			return;
 		}
 		std::uniform_int_distribution<int> rnd(0, positions.size() - 1);
@@ -108,7 +111,10 @@ void Enemy::onMoveAI(RegionSet const &regionSet)
 		try {
 			route = region.breadthFirstSearch(start, end);
 		}
+		//このcatch節は、敵自身がマップに含まれない場合に通過する
+		//毎フレームマップ全体を走査しないため、このcatch節が必要
 		catch (Region::CannotArriveException const &e) {
+			randomRoute();
 		}
 	}
 }
