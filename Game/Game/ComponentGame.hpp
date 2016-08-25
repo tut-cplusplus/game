@@ -151,6 +151,10 @@ private:
 	 */
 	void drawEnemyRoutes(void);
 	/**
+	 * 敵のマップを描画する
+	 */
+	void drawEnemyRegions(void);
+	/**
 	 * キャラクターを移動させる
 	 *
 	 * @param characters キャラクターのvector配列

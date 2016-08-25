@@ -27,6 +27,7 @@ private:
 	bool isLookingPlayer;	//プレイヤーを見ているかどうか
 	bool isDestroyBlock;
 	bool isUpdateTarget;
+	Region region;		//敵が把握しているマップ情報
 	Route route;
 
 protected:
@@ -107,6 +108,10 @@ public:
 	 * 移動経路の表示
 	 */
 	void drawRoute(void);
+	/**
+	 * マップの表示
+	 */
+	void drawRegion(void);
 };
 
 inline double Enemy::getViewAngle(void) const

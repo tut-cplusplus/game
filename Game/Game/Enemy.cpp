@@ -142,9 +142,18 @@ void Enemy::onFindFirst(const Character& character)
 	informations.push_back(information);
 }
 
-//視界にブロックが入ったときに最初だけ呼ばれる？
 void Enemy::onFind(const Vector<int>& position, const Block& block)
 {
+	bool flag = region.search(position);
+	if (block.isTransparentByEnemy()) {
+		if (flag)
+			return;
+		region += position;
+	} else {
+		if (!flag)
+			return;
+		region -= position;
+	}
 }
 
 void Enemy::changeColor(void) const
@@ -186,7 +195,43 @@ void Enemy::drawInformations(void)
 
 void Enemy::drawRoute(void)
 {
+	glColor3d(1.0, 1.0, 1.0);
 	const list<Vector<int>>& positions = route.getPositions();
+	const Size<double>& size = getSize();
+	double width = size.getWidth();
+	double height = size.getHeight();
+	for (auto itr = positions.begin(); itr != positions.end(); ++itr) {
+		const Vector<int>& position = *itr;
+		glPushMatrix();
+		glTranslated(position.getX() * width, position.getY() * height, 0.0);
+		glBegin(GL_LINE_LOOP);
+		glVertex2d(0.0, 0.0);
+		glVertex2d(width, 0.0);
+		glVertex2d(width, height);
+		glVertex2d(0.0, height);
+		glVertex2d(width, 0.0);
+		glVertex2d(width, height);
+		glEnd();
+		glPopMatrix();
+	}
+}
+
+void Enemy::drawRegion(void)
+{
+	static double colors[][3] = {
+		{1.0, 0.0, 0.0},
+		{0.0, 1.0, 0.0},
+		{0.0, 0.0, 1.0},
+		{1.0, 1.0, 0.0},
+		{1.0, 0.0, 1.0},
+		{0.0, 1.0, 1.0},
+		{1.0, 1.0, 1.0},
+	};
+	unsigned n = sizeof(colors) / sizeof(colors[0]);
+	unsigned idx = getID() % n;
+	const double* color = colors[idx];
+	glColor3d(color[0], color[1], color[2]);
+	const list<Vector<int>>& positions = region.getPositions();
 	const Size<double>& size = getSize();
 	double width = size.getWidth();
 	double height = size.getHeight();

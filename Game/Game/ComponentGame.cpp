@@ -290,6 +290,14 @@ void ComponentGame::drawEnemyRoutes(void)
 	}
 }
 
+void ComponentGame::drawEnemyRegions(void)
+{
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		Enemy& enemy = **itr;
+		enemy.drawRegion();
+	}
+}
+
 void ComponentGame::moveEnemiesAI(void)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
@@ -775,6 +783,7 @@ void ComponentGame::draw(void)
 	}
 	drawEnemyInformations();
 	drawEnemyRoutes();
+	drawEnemyRegions();
 	if (!Global::DEBUG_MODE)
 		return;
 	static double colors[][3] = {
