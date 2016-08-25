@@ -27,6 +27,7 @@ private:
 	Region region;		//敵が把握しているマップ情報
 	Route route;
 	Vector<int> playerPosition;
+	bool isDestroyBock;
 
 protected:
 	void loadAnimations(void);
@@ -45,11 +46,12 @@ public:
 	int getLife(void) const;
 	double getInformationSpeed(void) const;
 
+	void updateRoute(void);
 	/**
 	 * 毎フレーム呼び出される
 	 * AI関係の処理を記述する
 	 */
-	void onMoveAI(RegionSet const &regionSet);
+	void onMoveAI();
 	/**
 	 * 壁に衝突したときに呼び出される
 	 * AI関係の処理を記述する

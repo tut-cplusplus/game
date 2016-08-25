@@ -301,7 +301,7 @@ void ComponentGame::drawEnemyRegions(void)
 void ComponentGame::moveEnemiesAI(void)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
-		(**itr).onMoveAI(regionSet);
+		(**itr).onMoveAI();
 }
 
 bool ComponentGame::isFound(const Vector<double>& rectanglePosition, const Utility::Rectangle& rectangle, const Enemy& enemy) const

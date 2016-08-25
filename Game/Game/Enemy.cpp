@@ -20,7 +20,7 @@ void Enemy::loadAnimations(void)
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size, double speed, double viewAngle, double radius, int life, double informationSpeed)
-	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), life(life), informationSpeed(informationSpeed), isFindPlayer(false)
+	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), life(life), informationSpeed(informationSpeed), isFindPlayer(false), isDestroyBock(false)
 {
 	init();
 }
@@ -30,47 +30,12 @@ Enemy::~Enemy()
 
 }
 
-void Enemy::onMoveAI(RegionSet const &regionSet)
+void Enemy::updateRoute(void)
 {
 	static std::random_device rd;
 	static std::mt19937 mt;
-	if (!isLookingPlayerThisFrame)
-		isLookingPlayer = false;
-	isLookingPlayerThisFrame = false;
-
-	//移動中であれば何もしない
-	if (isMoving) {
-		return;
-	}
 
 	Vector<int> start(position);
-	if (route.getPositionNum()) {
-		Vector<int> next = route.getNextPosition();
-		if (start == next)
-			--route;
-		if (isFindPlayer && !route.getPositionNum() && start == playerPosition)
-			isFindPlayer = false;
-	}
-	if (route.getPositionNum()) {
-		Vector<int> next = route.getNextPosition();
-
-		if (next.getX() > start.getX()) {
-			direction = EAST;
-		}
-		else if (next.getX() < start.getX()) {
-			direction = WEST;
-		}
-		else if (next.getY() > start.getY()) {
-			direction = NORTH;
-		}
-		else if (next.getY() < start.getY()) {
-			direction = SOUTH;
-		}
-		//移動の開始
-		startMoving();
-		return;
-	}
-
 	if (isFindPlayer) {
 		try {
 			route = region.breadthFirstSearch(start, playerPosition);
@@ -79,6 +44,7 @@ void Enemy::onMoveAI(RegionSet const &regionSet)
 			Vector<int> end = getNearestReachablePosition();
 			try {
 				route = region.breadthFirstSearch(start, end);
+				isDestroyBock = true;
 			}
 			catch (Region::CannotArriveException const &e) {
 				isFindPlayer = false;
@@ -119,10 +85,68 @@ void Enemy::onMoveAI(RegionSet const &regionSet)
 	}
 }
 
+void Enemy::onMoveAI()
+{
+	if (!isLookingPlayerThisFrame)
+		isLookingPlayer = false;
+	isLookingPlayerThisFrame = false;
+
+	//移動中であれば何もしない
+	if (isMoving) {
+		return;
+	}
+
+	Vector<int> start(position);
+	if (route.getPositionNum()) {
+		Vector<int> next = route.getNextPosition();
+		if (start == next)
+			--route;
+		if (isFindPlayer && !route.getPositionNum() && start == playerPosition)
+			isFindPlayer = false;
+	}
+
+	if (route.getPositionNum()) {
+		Vector<int> next = route.getNextPosition();
+
+		if (next.getX() > start.getX()) {
+			direction = EAST;
+		}
+		else if (next.getX() < start.getX()) {
+			direction = WEST;
+		}
+		else if (next.getY() > start.getY()) {
+			direction = NORTH;
+		}
+		else if (next.getY() < start.getY()) {
+			direction = SOUTH;
+		}
+		//移動の開始
+		startMoving();
+		return;
+	}
+
+	updateRoute();
+}
+
 void Enemy::onHit(void)
 {
 	Character::onHit();
 	route = Route();
+	static Vector<int> directionTable[] = {
+		Vector<int>(),
+		Vector<int>(0, 1),
+		Vector<int>(0, -1),
+		Vector<int>(1, 0),
+		Vector<int>(-1, 0),
+	};
+	Vector<int> newPosition = Vector<int>(getSource()) + directionTable[getDirection()];
+	if (region.search(newPosition))
+		region -= newPosition;
+
+	if (isDestroyBock) {
+		isBreaking = true;
+		isDestroyBock = false;
+	}
 }
 
 void Enemy::onFindDirect(const Character& character)
@@ -142,6 +166,7 @@ void Enemy::onFind(const Character& character)
 {
 	playerPosition = Vector<int>(character.getPosition());
 	isFindPlayer = true;
+	updateRoute();
 }
 
 void Enemy::onFindFirst(const Character& character)
