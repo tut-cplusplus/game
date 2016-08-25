@@ -41,13 +41,7 @@ void Enemy::updateRoute(void)
 			route = region.breadthFirstSearch(start, playerPosition);
 		}
 		catch (Region::CannotArriveException const &e) {
-			Vector<int> end = getNearestReachablePosition();
-			try {
-				route = region.breadthFirstSearch(start, end);
-			}
-			catch (Region::CannotArriveException const &e) {
-				isFindPlayer = false;
-			}
+			route = Route(start, playerPosition);
 		}
 	} else {
 		auto randomRoute = [&]() {
@@ -129,12 +123,17 @@ void Enemy::onMoveAI()
 
 void Enemy::onHit(void)
 {
-	if (life) {
+	static std::random_device rd;
+	static std::mt19937 mt;
+	uniform_int_distribution<int> rnd(0, 5);
+	Character::onHit();
+	if ((isFindPlayer || !rnd(mt)) && life) {
 		isBreaking = true;
 		life--;
+		return;
 	}
 
-	Character::onHit();
+	isFindPlayer = false;
 	route = Route();
 	static Vector<int> directionTable[] = {
 		Vector<int>(),

@@ -11,6 +11,7 @@ private:
 
 public:
 	Route();
+	Route(const Vector<int>& start, const Vector<int>& end);
 
 	void operator+=(const Vector<int>& position);
 	Route& operator--(void);

@@ -47,6 +47,7 @@ public:
 	Vector<T,T2> operator+(const Vector<T,T2>& v) const;
 	Vector<T,T2> operator-(const Vector<T,T2>& v) const;
 	bool operator==(const Vector<T,T2>& v) const;
+	bool operator!=(const Vector<T,T2>& v) const;
 	friend std::ostream& operator<<<T,T2>(std::ostream& os, const Vector<T,T2>& v);
 };
 
@@ -151,6 +152,12 @@ template <typename T, typename T2>
 inline bool Vector<T,T2>::operator==(const Vector<T,T2>& v) const
 {
 	return x == v.x && y == v.y;
+}
+
+template <typename T, typename T2>
+inline bool Vector<T,T2>::operator!=(const Vector<T,T2>& v) const
+{
+	return !operator==(v);
 }
 
 template <typename T, typename T2>
