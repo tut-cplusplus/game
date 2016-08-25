@@ -781,11 +781,11 @@ void ComponentGame::draw(void)
 		const Vector<double>& playerPosition = player.getPosition();
 		drawEnemyVisibilities(playerPosition, getPlayerRadius());
 	}
+	if (!Global::DEBUG_MODE)
+		return;
 	drawEnemyInformations();
 	drawEnemyRoutes();
 	drawEnemyRegions();
-	if (!Global::DEBUG_MODE)
-		return;
 	//debug code begin
 	}
 	catch (const RegionSet::RegionNotFoundException& e) {
