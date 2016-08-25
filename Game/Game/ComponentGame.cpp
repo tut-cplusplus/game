@@ -677,7 +677,7 @@ void ComponentGame::keyEvent(const Key& key, void (Player::*funcUp)(), void (Pla
 }
 
 ComponentGame::ComponentGame(const Size<double>& size, const string& fpath)
-	: Component(size), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize(size.getWidth()/ Global::MAP_WIDTH, size.getHeight() / Global::MAP_HEIGHT), audio("data/music/BreakWall.wav"), enemyGenerator(fpath)
+	: Component(size), mt(rd()), rnd(0.0, 1.0), map(nullptr), blockSize(size.getWidth()/ Global::MAP_WIDTH, size.getHeight() / Global::MAP_HEIGHT), enemyGenerator(fpath)
 {
 	init();
 }

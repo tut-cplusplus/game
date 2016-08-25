@@ -10,6 +10,7 @@
 #include "ComponentGame.hpp"
 #include "FPSManager.hpp"
 #include "FontManager.hpp"
+#include "AudioManager.hpp"
 
 #include <AL/alut.h>
 #include <GL/glut.h>
@@ -153,6 +154,7 @@ int main(int argc, char** argv)
 void init(void)
 {
 	TextureManager::init();
+	AudioManager::init();
 	FontManager::init();
 	RelativeLayout* layout = new RelativeLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT));
 	VerticalSplitLayout* verticalSplitLayout = new VerticalSplitLayout(Size<double>(0, 0), 0.05);

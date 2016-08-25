@@ -17,6 +17,7 @@
 #include "Global.hpp"
 #include "EnemyGenerator.hpp"
 #include "RegionSet.hpp"
+#include "AudioManager.hpp"
 
 #include "GL/glut.h"
 #include "AL/alut.h"
@@ -40,7 +41,6 @@ private:
 	std::vector<Enemy*> enemies;	//敵
 	std::vector<ItemBlock*> itemBlocks;	//アイテム
 	Size<double> blockSize;			//ブロックの大きさ
-	Audio audio;
 	RegionSet regionSet;			//マップの空間の認識に用いる（敵の死亡処理用）
 	Block*** visibleMap;
 	EnemyGenerator enemyGenerator;
@@ -595,7 +595,7 @@ inline void ComponentGame::breakBlock(const std::vector<T*> characters)
 		if (!map[row][col]->isTransparentByEnemy())
 			regionSet += nodePosition;
 		map[row][col] = map[row][col]->brokenBlock();
-		audio.play();
+		AudioManager::play("data/music/BreakWall.wav");
 	}
 }
 
