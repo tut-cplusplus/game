@@ -197,3 +197,24 @@ void Enemy::drawInformations(void)
 		}
 	}
 }
+
+void Enemy::drawRoute(void)
+{
+	const list<Vector<int>>& positions = route.getPositions();
+	const Size<double>& size = getSize();
+	double width = size.getWidth();
+	double height = size.getHeight();
+	for (auto itr = positions.begin(); itr != positions.end(); ++itr) {
+		const Vector<int>& position = *itr;
+		glPushMatrix();
+		glTranslated(position.getX() * width, position.getY() * height, 0.0);
+		glBegin(GL_LINE_LOOP);
+		glVertex2d(0.0, 0.0);
+		glVertex2d(width, 0.0);
+		glVertex2d(width, height);
+		glVertex2d(0.0, height);
+		glEnd();
+		glPopMatrix();
+	}
+}
+

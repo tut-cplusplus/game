@@ -282,6 +282,14 @@ void ComponentGame::drawEnemyInformations(void)
 	}
 }
 
+void ComponentGame::drawEnemyRoutes(void)
+{
+	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr) {
+		Enemy& enemy = **itr;
+		enemy.drawRoute();
+	}
+}
+
 void ComponentGame::moveEnemiesAI(void)
 {
 	for (auto itr = enemies.begin(); itr != enemies.end(); ++itr)
@@ -768,6 +776,7 @@ void ComponentGame::draw(void)
 		drawEnemyVisibilities(playerPosition, getPlayerRadius());
 	}
 	drawEnemyInformations();
+	drawEnemyRoutes();
 	if (!Global::DEBUG_MODE)
 		return;
 	static double colors[][3] = {

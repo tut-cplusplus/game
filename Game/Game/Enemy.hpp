@@ -103,6 +103,10 @@ public:
 	 * 情報伝達の表示
 	 */
 	void drawInformations(void);
+	/**
+	 * 移動経路の表示
+	 */
+	void drawRoute(void);
 };
 
 inline double Enemy::getViewAngle(void) const
