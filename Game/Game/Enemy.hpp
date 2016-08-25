@@ -27,7 +27,6 @@ private:
 	Region region;		//敵が把握しているマップ情報
 	Route route;
 	Vector<int> playerPosition;
-	bool isDestroyBock;
 
 protected:
 	void loadAnimations(void);

@@ -20,7 +20,7 @@ void Enemy::loadAnimations(void)
 }
 
 Enemy::Enemy(const Vector<double>& position, const Size<double>& size, double speed, double viewAngle, double radius, int life, double informationSpeed)
-	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), life(life), informationSpeed(informationSpeed), isFindPlayer(false), isDestroyBock(false)
+	: Character(position, size, speed), viewAngle(viewAngle), radius(radius), first(true), life(life), informationSpeed(informationSpeed), isFindPlayer(false)
 {
 	init();
 }
@@ -44,7 +44,6 @@ void Enemy::updateRoute(void)
 			Vector<int> end = getNearestReachablePosition();
 			try {
 				route = region.breadthFirstSearch(start, end);
-				isDestroyBock = true;
 			}
 			catch (Region::CannotArriveException const &e) {
 				isFindPlayer = false;
@@ -130,6 +129,11 @@ void Enemy::onMoveAI()
 
 void Enemy::onHit(void)
 {
+	if (life) {
+		isBreaking = true;
+		life--;
+	}
+
 	Character::onHit();
 	route = Route();
 	static Vector<int> directionTable[] = {
@@ -142,11 +146,6 @@ void Enemy::onHit(void)
 	Vector<int> newPosition = Vector<int>(getSource()) + directionTable[getDirection()];
 	if (region.search(newPosition))
 		region -= newPosition;
-
-	if (isDestroyBock) {
-		isBreaking = true;
-		isDestroyBock = false;
-	}
 }
 
 void Enemy::onFindDirect(const Character& character)
