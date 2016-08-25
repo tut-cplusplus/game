@@ -40,20 +40,6 @@ void Enemy::onMoveAI(RegionSet const &regionSet)
 		return;
 	}
 
-	//debug
-	list<Vector<int> > pos = route.getPositions();
-	list<Vector<int> >::iterator it;
-	for (it = pos.begin(); it != pos.end();) {
-		std::cout << *it;
-
-		if (++it != pos.end()) {
-			std::cout << " >> ";
-		}
-		else {
-			std::cout << std::endl;
-		}
-	}
-
 	//HACK: 依存大きくなるけど引数でregionもらいました
 	Vector<int> old(oldTarget);
 	Vector<int> start(position);
