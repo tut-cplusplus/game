@@ -786,38 +786,6 @@ void ComponentGame::draw(void)
 	drawEnemyRegions();
 	if (!Global::DEBUG_MODE)
 		return;
-	static double colors[][3] = {
-		{1.0, 0.0, 0.0},
-		{0.0, 1.0, 0.0},
-		{0.0, 0.0, 1.0},
-		{1.0, 1.0, 0.0},
-		{0.0, 1.0, 1.0},
-		{1.0, 0.0, 1.0},
-	};
-	unsigned n = sizeof(colors) / sizeof(colors[0]);
-	unsigned idx = 0;
-	const list<Region>& regions = regionSet.getRegions();
-	for (auto itr = regions.begin(); itr != regions.end(); ++itr) {
-		double* color = colors[idx++];
-		idx %= n;
-		glColor3d(color[0], color[1], color[2]);
-		const Region& region = *itr;
-		const list<Vector<int>>& positions = region.getPositions();
-		for (auto itr = positions.begin(); itr != positions.end(); ++itr) {
-			const Vector<int>& position = *itr;
-			glPushMatrix();
-			double width = blockSize.getWidth();
-			double height = blockSize.getHeight();
-			glTranslated(position.getX() * width, position.getY() * height, 0.0);
-			glBegin(GL_LINE_LOOP);
-			glVertex2d(0.0, 0.0);
-			glVertex2d(width, 0.0);
-			glVertex2d(width, height);
-			glVertex2d(0.0, height);
-			glEnd();
-			glPopMatrix();
-		}
-	}
 	//debug code begin
 	}
 	catch (const RegionSet::RegionNotFoundException& e) {
