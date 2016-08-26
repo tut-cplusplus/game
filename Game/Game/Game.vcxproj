@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockAir.cpp" />
     <ClCompile Include="BlockBrokenTrap.cpp" />
@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp" />
-    <ClInclude Include="Audio.hpp" />
+    <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="Block.hpp" />
     <ClInclude Include="BlockAir.hpp" />
     <ClInclude Include="BlockBrokenTrap.hpp" />
