@@ -84,11 +84,6 @@ void Enemy::onMoveAI()
 		isLookingPlayer = false;
 	isLookingPlayerThisFrame = false;
 
-	//移動中であれば何もしない
-	if (isMoving) {
-		return;
-	}
-
 	Vector<int> start(position);
 	if (route.getPositionNum()) {
 		Vector<int> next = route.getNextPosition();
@@ -97,6 +92,12 @@ void Enemy::onMoveAI()
 		if (isFindPlayer && !route.getPositionNum() && start == playerPosition)
 			isFindPlayer = false;
 	}
+
+	//移動中であれば何もしない
+	if (isMoving) {
+		return;
+	}
+
 
 	if (route.getPositionNum()) {
 		Vector<int> next = route.getNextPosition();
