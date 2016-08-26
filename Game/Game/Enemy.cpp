@@ -40,7 +40,7 @@ void Enemy::updateRoute(void)
 		try {
 			route = region.breadthFirstSearch(start, playerPosition);
 		}
-		catch (Region::CannotArriveException const &e) {
+		catch (const Region::CannotArriveException&) {
 			route = Route(start, playerPosition);
 		}
 	} else {
@@ -61,7 +61,7 @@ void Enemy::updateRoute(void)
 			randomRoute();
 			return;
 		}
-		std::uniform_int_distribution<int> rnd(0, positions.size() - 1);
+		std::uniform_int_distribution<int> rnd(0, (int)positions.size() - 1);
 		int idx = rnd(mt);
 		auto itr = positions.begin();
 		while (idx-- > 0)
@@ -72,7 +72,7 @@ void Enemy::updateRoute(void)
 		}
 		//このcatch節は、敵自身がマップに含まれない場合に通過する
 		//毎フレームマップ全体を走査しないため、このcatch節が必要
-		catch (Region::CannotArriveException const &e) {
+		catch (const Region::CannotArriveException&) {
 			randomRoute();
 		}
 	}
