@@ -33,6 +33,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentFPS.cpp" />
     <ClCompile Include="ComponentGame.cpp" />
+    <ClCompile Include="ComponentGameClear.cpp" />
     <ClCompile Include="ComponentGameOver.cpp" />
     <ClCompile Include="ComponentTeapot.cpp" />
     <ClCompile Include="ComponentTexture.cpp" />
@@ -43,7 +44,6 @@
     <ClCompile Include="EnemyGenerator.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="FPSManager.cpp" />
-    <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="HorizontalSplitLayout.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -83,6 +83,7 @@
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="ComponentFPS.hpp" />
     <ClInclude Include="ComponentGame.hpp" />
+    <ClInclude Include="ComponentGameClear.hpp" />
     <ClInclude Include="ComponentGameOver.hpp" />
     <ClInclude Include="ComponentTeapot.hpp" />
     <ClInclude Include="ComponentTexture.hpp" />
@@ -93,7 +94,6 @@
     <ClInclude Include="EnemyGenerator.hpp" />
     <ClInclude Include="FontManager.hpp" />
     <ClInclude Include="FPSManager.hpp" />
-    <ClInclude Include="GameClear.hpp" />
     <ClInclude Include="Global.hpp" />
     <ClInclude Include="Graph.hpp" />
     <ClInclude Include="HorizontalSplitLayout.hpp" />

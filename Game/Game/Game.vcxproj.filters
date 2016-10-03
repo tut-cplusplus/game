@@ -153,7 +153,7 @@
     <ClCompile Include="ComponentGameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameClear.cpp">
+    <ClCompile Include="ComponentGameClear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -308,7 +308,7 @@
     <ClInclude Include="ComponentGameOver.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameClear.hpp">
+    <ClInclude Include="ComponentGameClear.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
