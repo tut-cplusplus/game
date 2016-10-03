@@ -16,7 +16,7 @@
 #include "ComponentTeapot.hpp"
 #include "Debug.hpp"
 #include "ComponentGameOver.hpp"
-#include "GameClear.hpp"
+#include "ComponentGameClear.hpp"
 
 #include "GL/glut.h"
 
@@ -720,7 +720,7 @@ void ComponentGame::draw(void)
 	}
 	if (!enemies.size()) {
 		RelativeLayout* layout = new RelativeLayout(Size<double>(Global::WORLD_WIDTH, Global::WORLD_HEIGHT));
-		layout->add(new GameClear(Size<double>(0, 0)), Vector<double>(0.0, 0.0), true);
+		layout->add(new ComponentGameClear(Size<double>(0, 0)), Vector<double>(0.0, 0.0), true);
 		cout << "game clear" << endl;
 		throw layout;
 	}

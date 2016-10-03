@@ -1,15 +1,15 @@
-#include "GameClear.hpp"
+#include "ComponentGameClear.hpp"
 #include "TextureManager.hpp"
 #include "RelativeLayout.hpp"
 #include "Global.hpp"
 #include "ComponentTitle.hpp"
 
-GameClear::GameClear(const Size<double>& size)
+ComponentGameClear::ComponentGameClear(const Size<double>& size)
 	: Component(size), game_restart(false), id(TextureManager::registerTexture("data/images/GameClear.ppm"))
 {
 }
 
-void GameClear::draw(void)
+void ComponentGameClear::draw(void)
 {
 	double width = Global::WORLD_WIDTH;
 	double height = Global::WORLD_HEIGHT;
@@ -34,7 +34,7 @@ void GameClear::draw(void)
 	}
 }
 
-void GameClear::keyboard(unsigned char key, int x, int y)
+void ComponentGameClear::keyboard(unsigned char key, int x, int y)
 {
 	game_restart = key == 't';
 }
